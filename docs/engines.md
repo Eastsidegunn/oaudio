@@ -109,7 +109,7 @@ Two things found while measuring:
 looking each word up in a dictionary and skips words that are not there,
 with only a log line. The runner loads the same dictionary and rewrites
 unknown words before synthesis: as the fewest dictionary words that spell
-them ("Oaudio" becomes "o voice"), or letter by letter if no reasonable split
+them (this project's former name, "Ovoice", became "o voice"), or letter by letter if no reasonable split
 exists ("LibriSpeech" is spelled out). Nothing is dropped, but names will not
 sound right. Proper pronunciation needs a grapheme-to-phoneme model, which
 the engine can accept through an interface the runner does not use yet.

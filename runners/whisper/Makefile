@@ -4,7 +4,9 @@ WHISPER_TAG ?= v1.9.5
 SRC := third_party/whisper.cpp
 OUT ?= ../../bin
 UNAME := $(shell uname -s)
-CMAKE_FLAGS := -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_EXAMPLES=OFF
+# GGML_NATIVE is off so that a build runs on any CPU of its architecture, not
+# only the one that compiled it (a release built on a new Mac must run on an M1).
+CMAKE_FLAGS := -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_EXAMPLES=OFF
 LIBDIRS = $(SRC)/build/src $(SRC)/build/ggml/src $(SRC)/build/ggml/src/ggml-metal $(SRC)/build/ggml/src/ggml-blas
 ifeq ($(UNAME),Darwin)
 CMAKE_FLAGS += -DGGML_METAL=ON -DGGML_METAL_EMBED_LIBRARY=ON
