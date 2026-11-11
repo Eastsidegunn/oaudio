@@ -89,6 +89,13 @@ type realtime struct {
 	lastItem string
 	dirty    bool // audio arrived since the last detection pass
 	queue    chan rtUtterance
+
+	// With a streaming model (realtime_stream.go): the utterance being
+	// recognized as it is spoken, and the absolute sample up to which its
+	// audio has been queued.
+	streamItem string
+	streamPos  int
+	ops        chan rtOp
 }
 
 func newID(prefix string) string {
@@ -155,6 +162,7 @@ func (s *Server) handleRealtime(w http.ResponseWriter, r *http.Request) {
 		s: s, conn: conn, ctx: ctx,
 		detect: true, thresh: 0.5, prefixMS: 300, silentMS: rtDefaultVADMS,
 		queue: make(chan rtUtterance, 64),
+		ops:   make(chan rtOp, 256),
 	}
 	// The model may come from the URL, as the SDK's connect(model=...) sends
 	// it, or later from session.update.
@@ -179,9 +187,10 @@ func (s *Server) handleRealtime(w http.ResponseWriter, r *http.Request) {
 	rt.send(map[string]any{"type": "session.created", "session": rt.sessionObject()})
 
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(3)
 	go func() { defer wg.Done(); rt.transcribeLoop() }()
 	go func() { defer wg.Done(); rt.detectLoop() }()
+	go func() { defer wg.Done(); rt.streamLoop() }()
 
 	for {
 		_, data, err := conn.ReadMessage()
@@ -230,15 +239,40 @@ func (rt *realtime) handle(data []byte) {
 		if u.itemID == "" {
 			u.itemID = newID("item")
 		}
+		// An utterance already being streamed is finished as a stream.
+		streamed := rt.streamItem != "" && rt.streamItem == u.itemID
+		var tail []float32
+		if streamed {
+			from := rt.streamPos - rt.bufStart
+			if from < 0 {
+				from = 0
+			}
+			if from < len(rt.buf) {
+				tail = append(tail, rt.buf[from:]...)
+			}
+			rt.streamItem = ""
+		}
 		rt.bufStart += len(rt.buf)
 		rt.buf, rt.speaking, rt.itemID = nil, false, ""
 		rt.mu.Unlock()
+		if streamed {
+			if len(tail) > 0 {
+				rt.enqueue(rtOp{kind: rtFeed, item: u.itemID, samples: tail})
+			}
+			rt.announce(u.itemID)
+			rt.enqueue(rtOp{kind: rtEnd, item: u.itemID})
+			return
+		}
 		rt.commit(u)
 	case "input_audio_buffer.clear":
 		rt.mu.Lock()
+		dropped := rt.streamItem
 		rt.bufStart += len(rt.buf)
-		rt.buf, rt.speaking, rt.itemID = nil, false, ""
+		rt.buf, rt.speaking, rt.itemID, rt.streamItem = nil, false, "", ""
 		rt.mu.Unlock()
+		if dropped != "" {
+			rt.enqueue(rtOp{kind: rtAbort, item: dropped})
+		}
 		rt.send(map[string]any{"type": "input_audio_buffer.cleared"})
 	default:
 		rt.sendError("unsupported_event", fmt.Sprintf("event type %q is not supported; this server implements transcription sessions", ev.Type), ev.EventID)
@@ -368,6 +402,10 @@ func (rt *realtime) detectLoop() {
 			if !rt.speaking {
 				rt.speaking, rt.itemID = true, newID("item")
 				item := rt.itemID
+				if rt.model != nil && rt.model.Has(manifest.CapStream) {
+					rt.streamItem = item
+					rt.streamPos = start + int(maxf(sp.Start-float64(prefixMS)/1000, consumed)*rtRate)
+				}
 				rt.mu.Unlock()
 				rt.send(map[string]any{"type": "input_audio_buffer.speech_started", "item_id": item,
 					"audio_start_ms": ms(maxf(sp.Start-float64(prefixMS)/1000, 0))})
@@ -375,6 +413,7 @@ func (rt *realtime) detectLoop() {
 				rt.mu.Unlock()
 			}
 			if !ended && !tooLong && last {
+				rt.feed(snapshot, start, len(snapshot))
 				break // still talking
 			}
 			end := sp.End
@@ -388,10 +427,20 @@ func (rt *realtime) detectLoop() {
 			}
 			rt.mu.Lock()
 			item := rt.itemID
+			streamed := item != "" && item == rt.streamItem
 			rt.speaking, rt.itemID = false, ""
 			rt.mu.Unlock()
 			rt.send(map[string]any{"type": "input_audio_buffer.speech_stopped", "item_id": item, "audio_end_ms": ms(end)})
-			rt.commit(rtUtterance{itemID: item, samples: append([]float32(nil), snapshot[from:to]...)})
+			if streamed {
+				rt.feed(snapshot, start, to)
+				rt.mu.Lock()
+				rt.streamItem = ""
+				rt.mu.Unlock()
+				rt.announce(item)
+				rt.enqueue(rtOp{kind: rtEnd, item: item})
+			} else {
+				rt.commit(rtUtterance{itemID: item, samples: append([]float32(nil), snapshot[from:to]...)})
+			}
 			consumed = float64(to) / rtRate
 		}
 		// Drop what has been committed, and old silence when nobody is speaking.
@@ -413,15 +462,15 @@ func (rt *realtime) detectLoop() {
 	}
 }
 
-// commit announces an utterance and queues it for transcription.
-func (rt *realtime) commit(u rtUtterance) {
+// announce tells the client that an utterance is committed and is now an item.
+func (rt *realtime) announce(item string) {
 	rt.mu.Lock()
 	prev := rt.lastItem
-	rt.lastItem = u.itemID
+	rt.lastItem = item
 	rt.mu.Unlock()
-	committed := map[string]any{"type": "input_audio_buffer.committed", "item_id": u.itemID}
+	committed := map[string]any{"type": "input_audio_buffer.committed", "item_id": item}
 	added := map[string]any{"type": "conversation.item.added", "item": map[string]any{
-		"id": u.itemID, "object": "realtime.item", "type": "message", "role": "user", "status": "completed",
+		"id": item, "object": "realtime.item", "type": "message", "role": "user", "status": "completed",
 		"content": []map[string]any{{"type": "input_audio", "transcript": nil}},
 	}}
 	if prev != "" {
@@ -430,6 +479,11 @@ func (rt *realtime) commit(u rtUtterance) {
 	}
 	rt.send(committed)
 	rt.send(added)
+}
+
+// commit announces an utterance and queues it for transcription.
+func (rt *realtime) commit(u rtUtterance) {
+	rt.announce(u.itemID)
 	select {
 	case rt.queue <- u:
 	case <-rt.ctx.Done():

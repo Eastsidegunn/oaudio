@@ -1,0 +1,93 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "nemotron-asr",
+  "tag": "streaming-0.6b-560ms-int8",
+  "aliases": [
+    "latest"
+  ],
+  "task": "stt",
+  "engine": "sherpa-onnx",
+  "family": "online-transducer",
+  "description": "NVIDIA Nemotron 3.5 ASR Streaming 0.6B (8-bit), 560 ms chunks: recognizes speech while it is being spoken, in 35 languages including Korean, Japanese and English, with punctuation and capitals. In a realtime session its words arrive as the speaker talks. Give it the language: without one it guesses from the first words, and can guess wrong.",
+  "upstream": {
+    "model": "nvidia/nemotron-3.5-asr-streaming-0.6b",
+    "authors": "NVIDIA",
+    "url": "https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b"
+  },
+  "source": {
+    "type": "url",
+    "files": [
+      {
+        "path": "sherpa-onnx-nemotron-3.5-asr-streaming-0.6b-560ms-int8-2026-06-11.tar.bz2",
+        "size": 475271763,
+        "sha256": "c6bf5e0df765f9d5b43bc9e0536d4b4b3e7d40bdf5ecf13e45f134c51c05ae3a",
+        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-nemotron-3.5-asr-streaming-0.6b-560ms-int8-2026-06-11.tar.bz2",
+        "extract": "tar.bz2",
+        "strip_components": 1,
+        "exclude": [
+          "test_wavs/"
+        ]
+      }
+    ]
+  },
+  "license": {
+    "spdx": "LicenseRef-OpenMDW-1.1",
+    "url": "https://openmdw.ai/license/1-1/",
+    "commercial_use": true,
+    "notes": "Weights by NVIDIA under the OpenMDW License 1.1: use, modification and redistribution, commercial included; a copy of the license and the notices travel with redistributed weights. ONNX conversion by the sherpa-onnx project."
+  },
+  "languages": [
+    "en",
+    "ko",
+    "ja",
+    "zh",
+    "es",
+    "de",
+    "fr",
+    "it",
+    "ar",
+    "pt",
+    "ru",
+    "hi",
+    "vi",
+    "he",
+    "nl",
+    "cs",
+    "da",
+    "pl",
+    "no",
+    "sv",
+    "th",
+    "tr",
+    "bg",
+    "el",
+    "et",
+    "fi",
+    "hr",
+    "hu",
+    "lt",
+    "lv",
+    "ro",
+    "sk",
+    "uk",
+    "mt",
+    "sl"
+  ],
+  "capabilities": [
+    "segment_timestamps",
+    "word_timestamps",
+    "language_detect",
+    "stream"
+  ],
+  "audio": {
+    "sample_rate": 16000
+  },
+  "engine_config": {
+    "encoder": "encoder.int8.onnx",
+    "decoder": "decoder.int8.onnx",
+    "joiner": "joiner.int8.onnx",
+    "tokens": "tokens.txt",
+    "feature_dim": "128",
+    "language_option": "1"
+  }
+}

@@ -143,7 +143,14 @@ class SherpaDirect:
         f = lambda key: os.path.join(model_dir, cfg[key])
         make = sherpa_onnx.OfflineRecognizer
         family = m["family"]
-        if family == "sense-voice":
+        self.online = family == "online-transducer"
+        self.language_option = cfg.get("language_option") == "1"
+        self.tail = float(cfg.get("tail_seconds", "0.8"))
+        if self.online:
+            self.rec = sherpa_onnx.OnlineRecognizer.from_transducer(
+                encoder=f("encoder"), decoder=f("decoder"), joiner=f("joiner"), tokens=f("tokens"),
+                feature_dim=int(cfg.get("feature_dim", "80")), num_threads=8, decoding_method="greedy_search")
+        elif family == "sense-voice":
             self.rec = make.from_sense_voice(model=f("model"), tokens=f("tokens"), language=language or "auto",
                                              use_itn=cfg.get("inverse_text_normalization") != "false", num_threads=8)
         elif family == "transducer":
@@ -170,6 +177,20 @@ class SherpaDirect:
             pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
                                  capture_output=True, check=True).stdout
         samples = self.np.frombuffer(pcm, dtype=self.np.int16).astype(self.np.float32) / 32768
+        if self.online:
+            # The whole recording at once, then the same closing silence the
+            # runner appends. The text is the tokens joined, as the runner
+            # does: sherpa-onnx's own text drops the spaces between Hangul.
+            stream = self.rec.create_stream()
+            if self.language_option:
+                stream.set_option("language", language or "auto")
+            stream.accept_waveform(16000, samples)
+            stream.accept_waveform(16000, self.np.zeros(int(self.tail * 16000), dtype=self.np.float32))
+            stream.input_finished()
+            while self.rec.is_ready(stream):
+                self.rec.decode_stream(stream)
+            tokens = json.loads(self.rec.get_result_as_json_string(stream))["tokens"]
+            return " ".join("".join(tokens).replace("▁", " ").split())
         stream = self.rec.create_stream()
         stream.accept_waveform(16000, samples)
         self.rec.decode_stream(stream)

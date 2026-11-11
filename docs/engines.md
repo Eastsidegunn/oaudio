@@ -8,7 +8,7 @@ engine as a separate runner process (`runner-protocol.md`).
 | Engine | Models in the catalog | Platforms | State |
 |---|---|---|---|
 | `whisper.cpp` | `whisper:*` (recognition) | built and run on macOS arm64 with Metal | Working and measured. `runners/whisper`. |
-| `sherpa-onnx` | `sensevoice`, `qwen3-asr`, `parakeet` and `moonshine` (recognition), `kokoro` and `supertonic` (synthesis), `pocket-tts` (voice cloning), `silero-vad` (speech detection), `pyannote-diarize` (diarization) | built and run on macOS arm64, CPU | Working and measured. `runners/sherpa`. |
+| `sherpa-onnx` | `sensevoice`, `qwen3-asr`, `parakeet` and `moonshine` (recognition), `nemotron-asr` (streaming recognition), `kokoro` and `supertonic` (synthesis), `pocket-tts` (voice cloning), `silero-vad` (speech detection), `pyannote-diarize` (diarization) | built and run on macOS arm64, CPU | Working and measured. `runners/sherpa`. |
 | `audio.cpp` | `qwen3-tts` and `chatterbox` (voice cloning, Korean included) | built and run on macOS arm64 with Metal | Working and measured. `runners/audiocpp`. |
 | `speech.cpp` | `haas-ja` (Japanese recognition), `qwen3-tts:0.6b-customvoice-q8` (synthesis with nine built-in speakers), `irodori-tts` (Japanese synthesis and cloning) | built and run on macOS arm64 with Metal | Working and measured. `runners/speechcpp`. |
 | `apple` | `apple-say` (synthesis), `apple-speech` (recognition) | macOS; recognition needs macOS 26+ on Apple Silicon | Working and measured. Built into the `oaudio` binary. |
@@ -60,6 +60,7 @@ The manifest's `family` selects the code path:
 | `pocket` | `tts` | Voice cloning only: every request needs a custom voice. English. |
 | `supertonic` | `tts` | Ten preset voices, 31 languages. Takes raw text, so it needs no dictionary and pronounces unfamiliar words. The language comes from the request, or is guessed from the script (Hangul, kana, Arabic, Devanagari, Greek); Latin-script text is taken as English unless told otherwise. |
 | `sense-voice`, `transducer`, `qwen3-asr`, `dolphin`, `moonshine` | `stt` | sherpa-onnx's non-streaming recognizers, one code path for all. See below. |
+| `online-transducer` | `stt` | sherpa-onnx's streaming recognizer: words while someone is still speaking. See below. |
 | `silero` | `vad` | A fresh detector per request, since a detector carries state between windows. |
 | `pyannote` | `diarize` | pyannote segmentation plus a speaker-embedding model and clustering. |
 
@@ -104,6 +105,26 @@ Two things found while measuring:
   rounds when it converts a length in seconds back to samples; truncating
   lost a sample on some lengths and changed three Parakeet transcripts in
   2,620.
+
+**Streaming recognition** (`online-transducer`, [ADR 0008](adr/0008-streaming-recognition.md)).
+sherpa-onnx's `OnlineRecognizer` decodes audio in fixed chunks as it arrives
+and never takes back a word, so the runner serves `POST /v1/stream` (realtime
+sessions send it each new 200 ms of an utterance) as well as
+`/v1/transcribe`, for which it feeds the whole recording through one stream
+and reports a segment per finished sentence. Its keys: `encoder`,
+`decoder`, `joiner`, `tokens`, `feature_dim` (128 for Nemotron, default
+80), `language_option` (`1` when the model takes the language as a
+per-stream option, as Nemotron 3.5 does; without a language it is told
+`auto`), and `tail_seconds`, the silence appended at the end to flush the
+model's look-ahead (default 0.8). Tried with Nemotron 3.5 ASR Streaming
+0.6B, 560 ms chunks. Two findings:
+
+- sherpa-onnx's assembled text for this model drops the spaces between
+  Hangul syllables ("조국이당신을위해"), though the model emits them as
+  tokens. The runner builds the text from the tokens instead.
+- Told nothing, the model guesses the language from the first words, and
+  can guess wrong: its own Japanese test recording began in Korean under
+  `auto`. Clients should pass the language.
 
 **Unknown words in Kokoro.** sherpa-onnx 2.x pronounces Kokoro text by
 looking each word up in a dictionary and skips words that are not there,

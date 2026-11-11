@@ -168,6 +168,36 @@ func (c *Conn) postPCM(ctx context.Context, path string, q url.Values, pcm []byt
 	return json.NewDecoder(resp.Body).Decode(out)
 }
 
+// Stream sends the next piece of an utterance (mono s16le PCM, possibly
+// empty) to the stream opts.Session, which opts.Start begins, and returns
+// the transcript so far. With opts.End the stream is finished and
+// forgotten, and the result is final.
+func (c *Conn) Stream(ctx context.Context, opts StreamOptions, pcm []byte) (StreamResult, error) {
+	q := url.Values{"session": {opts.Session}, "sample_rate": {strconv.Itoa(opts.SampleRate)}}
+	if opts.Language != "" {
+		q.Set("language", opts.Language)
+	}
+	if opts.Start {
+		q.Set("start", "1")
+	}
+	if opts.End {
+		q.Set("end", "1")
+	}
+	var out StreamResult
+	return out, c.postPCM(ctx, "/v1/stream", q, pcm, &out)
+}
+
+// CloseStream abandons a stream that will not be finished.
+func (c *Conn) CloseStream(ctx context.Context, session string) error {
+	req, _ := http.NewRequestWithContext(ctx, http.MethodDelete, "http://"+c.Addr+"/v1/stream?"+url.Values{"session": {session}}.Encode(), nil)
+	resp, err := c.http.Do(req)
+	if err != nil {
+		return err
+	}
+	resp.Body.Close()
+	return nil
+}
+
 // Detect sends mono s16le PCM and returns the spans of speech in it.
 func (c *Conn) Detect(ctx context.Context, pcm []byte, opts DetectOptions) ([]Span, error) {
 	q := url.Values{"sample_rate": {strconv.Itoa(opts.SampleRate)}}

@@ -145,6 +145,25 @@ const (
 	EventError   = "error"
 )
 
+// StreamOptions are the query parameters of POST /v1/stream, which
+// recognizes one utterance while it is still being spoken. The request body
+// is the next piece of the utterance as mono s16le PCM at SampleRate.
+type StreamOptions struct {
+	Session    string `json:"session"`            // chosen by the daemon
+	SampleRate int    `json:"sample_rate"`        // the manifest's audio.sample_rate
+	Language   string `json:"language,omitempty"` // ISO 639-1, empty to detect; read with Start
+	Start      bool   `json:"start,omitempty"`    // the first piece: start a new stream
+	End        bool   `json:"end,omitempty"`      // the utterance is over: finish, answer, forget
+}
+
+// StreamResult answers POST /v1/stream with the whole transcript so far, not
+// the change, so that a runner keeps no record of what it has already said.
+type StreamResult struct {
+	Text     string `json:"text"`
+	Done     bool   `json:"done"`               // true on the answer to End
+	Language string `json:"language,omitempty"` // with Done, the language heard if known
+}
+
 // Engine is implemented by every Go runner.
 type Engine interface {
 	Info() Info
@@ -168,6 +187,27 @@ type Transcriber interface {
 	// emit once per segment in order, and returns the spoken language
 	// (ISO 639-1) if known.
 	Transcribe(ctx context.Context, samples []float32, opts TranscribeOptions, emit func(Segment) error) (language string, err error)
+}
+
+// Streamer is a Transcriber that can also recognize an utterance while it is
+// being spoken. Models whose manifest declares the "stream" capability are
+// served by one.
+type Streamer interface {
+	Transcriber
+	// OpenStream starts recognizing one utterance.
+	OpenStream(opts StreamOptions) (Stream, error)
+}
+
+// Stream is one utterance being recognized as it arrives. Calls on one
+// stream never overlap, and Close is always the last call.
+type Stream interface {
+	// Accept adds mono samples in [-1, 1] and returns the transcript so far.
+	Accept(samples []float32) (text string, err error)
+	// Finish marks the end of the utterance and returns the final transcript
+	// and the language heard (ISO 639-1, empty when unknown).
+	Finish() (text, language string, err error)
+	// Close releases the stream, finished or not.
+	Close()
 }
 
 // Detector is an Engine that finds speech in audio.
@@ -202,6 +242,7 @@ type Model struct {
 	Audio struct {
 		SampleRate int `json:"sample_rate"`
 	} `json:"audio"`
+	Languages    []string          `json:"languages"`
 	Voices       []Voice           `json:"voices"`
 	DefaultVoice string            `json:"default_voice"`
 	EngineConfig map[string]string `json:"engine_config"`

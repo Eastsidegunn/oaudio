@@ -44,6 +44,38 @@ The same check on four Korean FLEURS recordings joined with pauses: all four
 turns came back, a median of 0.96 s after the speaker stopped with
 `sensevoice` and 1.2 s with `whisper`.
 
+**Words while the speaker is still talking** ([ADR 0008](adr/0008-streaming-recognition.md)).
+The same script, extended to time every delta, on two recordings made of
+eight test recordings each joined with 1.5 s pauses (Korean: FLEURS, 125 s;
+English: LibriSpeech test-clean, 80 s), streamed at real-time speed with
+Silero VAD and 500 ms of silence ending a turn. Turn detection cut both at
+pauses inside sentences too, into 12 and 11 turns, the same for every
+model. Times are in the audio's own clock: "after onset" from the start of
+the turn, "after the end" from the moment speech stopped
+(`bench/results/realtime-stream-*.json`).
+
+| | Korean, `nemotron-asr` | Korean, `sensevoice` | English, `nemotron-asr` | English, `parakeet` |
+|---|---|---|---|---|
+| Turns with words before the speaker stopped | 12 of 12 | 0 of 12 | 10 of 11 | 0 of 11 |
+| First words, median, after onset | 1.41 s | 6.40 s | 1.09 s | 4.71 s |
+| Share of the text that arrived while speaking | 88% | 0% | 89% | 0% |
+| Interval between deltas while speaking, median | 0.60 s | — | 0.60 s | — |
+| Final transcript, median, after the end | 0.77 s | 0.82 s | 0.74 s | 0.82 s |
+| Deltas adding up to `.completed` exactly | 12 of 12 | 12 of 12 | 11 of 11 | 11 of 11 |
+| CER over the whole recording | 14.8% | 10.0% | 0.8% | 0.6% |
+
+The non-streaming models' first words come with their transcript, after
+the turn has ended, so their "first words after onset" is the length of a
+turn plus the final lag. The 0.6 s cadence is the model's 560 ms chunk.
+
+The Korean CER of both models is higher here than on the FLEURS files
+(7.78% and 6.44%), and the cause is the turn cutting, not the streaming:
+the same turns cut out of the recording and sent as files to
+`/v1/audio/transcriptions` gave `nemotron-asr` CER 14.8% again, with 11 of
+the 12 transcripts identical to the realtime ones, and this recording
+transcribed whole as one file gave 15.9%. Eight sentences is a small
+sample; the full-set figures above are the ones to compare models by.
+
 Not checked: the JavaScript SDK, Open WebUI, Pipecat, LiveKit Agents.
 
 **Against another server.** `bench/compat_matrix.py` is a neutral version of
@@ -82,6 +114,9 @@ original file for the macOS recognizer.
 | sherpa-onnx, `qwen3-asr` | FLEURS Korean test, complete | 382 | 382 / 382 | 14.64% | 4.55% |
 | sherpa-onnx, `sensevoice` | FLEURS Korean test, complete | 382 | 382 / 382 | 22.48% | 6.44% |
 | speech.cpp, `haas-ja` | FLEURS Japanese test, complete | 650 | 650 / 650 | — | 4.21% |
+| sherpa-onnx, `nemotron-asr` (streaming) | FLEURS Korean test, complete | 382 | 382 / 382 | 27.44% | 7.78% |
+| sherpa-onnx, `nemotron-asr` (streaming) | FLEURS Japanese test, complete | 650 | 650 / 650 | — | 15.47% |
+| sherpa-onnx, `nemotron-asr` (streaming) | LibriSpeech test-clean, 500 evenly spaced | 500 | 500 / 500 | 3.46% | 1.22% |
 | sherpa-onnx, `parakeet` | LibriSpeech test-clean, complete | 2,620 | 2,613 / 2,620 | 2.28% | 0.84% |
 | sherpa-onnx, `qwen3-asr` | LibriSpeech test-clean, 500 evenly spaced | 500 | 499 / 500 | 2.27% | 0.79% |
 | sherpa-onnx, `moonshine:base-en` | LibriSpeech test-clean, complete | 2,620 | 2,616 / 2,620 | 3.23% | 1.25% |
@@ -133,6 +168,26 @@ comparison, without a direct run: SenseVoice CER 7.67%, Qwen3-ASR 11.86%.
 Seven of Qwen3-ASR's 650 transcripts are a two-character Chinese word
 (提纲 or 提言) instead of the sentence; that was not investigated further.
 Japanese WER is not given: the text has no spaces between words.
+
+**The streaming recognizer.** `nemotron-asr` (Nemotron 3.5 ASR Streaming
+0.6B, 560 ms chunks) was given the same 16-bit files on both paths. Through
+Oaudio the runner feeds each recording through one stream in 100 ms pieces
+and reports a segment per sentence; the direct run gives sherpa-onnx's
+Python package the whole recording at once. Both append the same 0.8 s of
+silence before finishing and both build the text from the model's tokens
+(sherpa-onnx's own text for this model drops the spaces between Hangul
+syllables; `engines.md`). Every transcript matched, in all three sets, so
+feeding a recording in pieces changes nothing. NVIDIA's model card gives
+7.1 to 7.6% CER on FLEURS Korean for its own runs; 7.78% here is for the
+8-bit export. It is less accurate than the non-streaming models on the
+same sets (Korean: Whisper turbo 3.25%, Qwen3-ASR 4.55%, SenseVoice 6.44%;
+English: Parakeet 2.28% WER) and well behind `haas-ja` in Japanese (4.21%
+against 15.47%): it is in the catalog for realtime, where it is the only
+model that can show words while someone is speaking (section 1). Time per
+recording, Oaudio against direct: English −19 ms, Japanese +12 ms, Korean
++292 ms on the first full run and −21 ms when 100 of the same recordings
+were run again; the first figure is not explained, and the direct run's
+time is the engine's alone.
 
 Read against Whisper large-v3-turbo on the same Korean set (CER 3.25%):
 Qwen3-ASR at 8 bits is less accurate (4.55%) and SenseVoice less again
@@ -406,7 +461,11 @@ one request at a time per runner; keep-alive expiry, `0` and "forever";
 least-recently-used eviction; waiting when every model is busy; a failed
 load; a crashed runner dropped and reloaded; stop; shutdown; the WebSocket
 handshake, fragmentation, ping/pong, close, and five kinds of protocol
-violation; a realtime session end to end; custom voices; speaker assignment.
+violation; a realtime session end to end, and one with a streaming model
+(deltas before `speech_stopped`, adding up to the transcript); streams
+started, grown, ended, abandoned and refused (404 for an unknown stream);
+resampling a stream piece by piece giving exactly the samples of resampling
+it whole; custom voices; speaker assignment.
 
 Against real processes (`runner/runner_test.go`, `scripts/e2e.sh`): the
 readiness handshake, stopping a runner ends its process, a runner that fails
@@ -437,6 +496,15 @@ Linux archives, which only the release workflow builds and installs.
   run on Linux or Windows. Linux and Windows builds of the server compile and
   were not run.
 - **CI has never run**, neither `ci.yml` nor `release.yml`.
+- **Streaming against OpenAI's own service.** The event order with deltas
+  before `speech_stopped` follows the SDK's types and documentation; no
+  OpenAI realtime session was recorded to compare against.
+- **Other chunk sizes of Nemotron** (80 to 1120 ms), the trade between first
+  words and accuracy they give, and any streaming model but Nemotron.
+- **Streaming with languages other than Korean, English and Japanese**, or
+  with `auto`, which misheard the model's own Japanese test recording.
+- **Many streaming sessions at once** on one runner: each piece is a short
+  request, so they interleave, but nothing measured how many keep up.
 - **An install on a second, clean Mac.** Section 9 isolated the install on
   the development machine; system libraries and frameworks were still that
   machine's.

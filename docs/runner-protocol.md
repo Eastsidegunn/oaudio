@@ -59,6 +59,7 @@ oaudio-runner-<engine> --manifest <file> --model-dir <dir>
   | `family` | free text the manifest's author chose, to tell model families of one engine apart |
   | `source.files[].path` | the model's files, relative to `--model-dir`, under their upstream names |
   | `audio.sample_rate` | for `stt`, `vad` and `diarize`, the rate of all audio the runner will receive |
+  | `languages` | ISO 639-1 codes the model knows; a request for another may be refused with 400 |
   | `voices`, `default_voice` | for `tts`, the built-in voices the manifest declares |
   | `capabilities` | what the daemon will ask for; for example a reference recording is only sent with `voice_clone` |
   | `engine_config` | string to string, the engine's own settings; their meaning is up to the runner |
@@ -134,6 +135,7 @@ the daemon.
 | `GET /v1/info` | all |
 | `GET /v1/voices`, `POST /v1/synthesize` | `tts` |
 | `POST /v1/transcribe` | `stt` |
+| `POST /v1/stream`, `DELETE /v1/stream` | `stt`, for models that declare `stream` |
 | `POST /v1/vad` | `vad` |
 | `POST /v1/diarize` | `diarize` |
 
@@ -231,6 +233,64 @@ per line, written as recognition proceeds:
   client gets 400 and not a server error. An `error` line is always reported
   to the client as a server error (500).
 
+### `POST /v1/stream`
+
+Recognition of one utterance while it is still being spoken, for a model
+whose manifest declares the `stream` capability. The daemon uses it in
+realtime sessions: from the moment its speech detector hears someone start,
+it sends the new audio about every 200 ms and passes each growth of the
+transcript to the client at once. A runner that does not declare `stream`
+never receives it, and SHOULD answer 501 if it does. A runner that streams
+still answers `/v1/transcribe` for whole recordings.
+
+Query parameters:
+
+| Parameter | |
+|---|---|
+| `session` | An id the daemon chose for this utterance. Required. |
+| `sample_rate` | The manifest's `audio.sample_rate`. Required. |
+| `start` | `1` on the first piece: begin a new stream for `session` (replacing one of that id, if any). |
+| `language` | ISO 639-1, or absent to detect. Read with `start`. |
+| `end` | `1` on the last piece: the utterance is over. |
+
+Request body: the next piece of the utterance as PCM, possibly empty
+(always on its own with `end=1` when the end came with no new audio).
+
+Response: status **200**, `Content-Type: application/json`:
+
+```json
+{"text":"조국이 당신을 위해","done":false}
+{"text":"조국이 당신을 위해 무엇을 해줄 수 있는지 묻지 말고","done":true,"language":"ko"}
+```
+
+- `text` is the **whole transcript so far**, not the change. The daemon
+  keeps what it has already sent and works out what is new.
+- The transcript SHOULD only grow: each `text` begins with the previous one.
+  The daemon sends the client only additions (the API's deltas are
+  append-only), so a revision is held back until the text grows past it, and
+  the final transcript is always sent whole.
+- With `end=1` the runner finishes the utterance (flushing whatever the
+  model holds back), answers with `"done": true`, the final transcript and
+  the language heard (`""` or absent when unknown), and forgets the stream.
+- A piece without `start=1` for a session the runner does not know MUST be
+  answered **404** with an error body. This happens after the runner
+  restarted, or dropped a stream it kept too long; the audio before is lost,
+  and transcribing the rest alone would give a wrong transcript that looks
+  right. The daemon reports the item's transcription as failed.
+- A refusal before the stream exists (a language the model lacks, a missing
+  parameter) is 400, as under [Errors](#errors).
+- Requests remain one at a time: pieces of different streams can follow each
+  other, and other requests can come between them. A runner keeps its open
+  streams between requests. It MAY drop a stream untouched for a long while
+  (the Go helper drops them after two minutes, or the least recently used
+  beyond sixteen); the daemon ends every stream it starts.
+
+### `DELETE /v1/stream`
+
+Query parameter `session`. Abandons the stream (the client cleared its
+audio, or went away); the answer is **204** whether or not the runner knew
+the stream.
+
 ### `POST /v1/vad`
 
 Query parameters: `sample_rate` (the manifest's), and optionally `threshold`
@@ -306,7 +366,8 @@ cloned voices, deciding which models stay in memory, and the public API.
 ## Checking a runner
 
 `tools/runner-check` starts a runner exactly as the daemon does, exercises the
-endpoints of the manifest's task, checks the shape of every answer against
+endpoints of the manifest's task (and `/v1/stream` when the manifest
+declares `stream`, feeding the audio in 200 ms pieces), checks the shape of every answer against
 this page, and checks that the runner exits when its stdin closes:
 
 ```sh
@@ -342,6 +403,11 @@ are added within version 1, which is why a runner ignores what it does not
 know. A daemon refuses a runner of another version.
 
 ## Changes to this page
+
+**2026-11-12, streaming recognition** ([ADR 0008](adr/0008-streaming-recognition.md)),
+added within version 1: the `stream` capability, `POST` and `DELETE
+/v1/stream`, and `languages` among the manifest members a runner usually
+needs. A runner that does not stream is unaffected.
 
 Rewritten on 2026-11-12 as a standalone specification, checked against the
 code. Where the earlier page and the code disagreed, the code was kept, except

@@ -27,7 +27,8 @@ model card, not the export's.
 2. Korean or multilingual voice cloning: filled by Qwen3-TTS and Chatterbox
 3. Korean recognition smaller and faster than Whisper large-v3-turbo: filled
    by SenseVoice, at a cost in accuracy
-4. Streaming recognition for realtime: open
+4. Streaming recognition for realtime: filled by Nemotron 3.5 ASR Streaming
+   (ADR 0008)
 5. English recognition faster than Whisper: filled by Parakeet and Moonshine
 6. Cloning that sounds more like the source than Pocket TTS: filled by
    Qwen3-TTS and Chatterbox

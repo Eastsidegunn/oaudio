@@ -21,6 +21,7 @@ import (
 	"math"
 	"net/http"
 	"os"
+	"slices"
 	"strings"
 	"time"
 
@@ -99,6 +100,9 @@ func main() {
 		switch m.Task {
 		case "stt":
 			checkRecognition(base, p, pcm, rate)
+			if contains(caps.Capabilities, "stream") {
+				checkStreaming(base, pcm, rate)
+			}
 		case "vad":
 			checkDetection(base, p, pcm, rate)
 		case "diarize":
@@ -217,6 +221,61 @@ func checkRecognition(base string, p *runner.Process, pcm []byte, rate int) {
 	}
 	status, body := do("POST", base+"/v1/transcribe", pcm)
 	check("no sample_rate is refused with 400 and {\"error\"}", status == 400 && hasError(body), "status %d %s", status, short(body))
+}
+
+// checkStreaming feeds the audio to POST /v1/stream in 200 ms pieces, as the
+// daemon does during a realtime session.
+func checkStreaming(base string, pcm []byte, rate int) {
+	piece := rate / 5 * 2
+	url := func(q string) string {
+		return fmt.Sprintf("%s/v1/stream?session=check&sample_rate=%d%s", base, rate, q)
+	}
+	var texts []string
+	ok, grows, detail := true, true, ""
+	for i := 0; i < len(pcm); i += piece {
+		q := ""
+		if i == 0 {
+			q = "&start=1"
+		}
+		status, body := do("POST", url(q), pcm[i:min(i+piece, len(pcm))])
+		var res runner.StreamResult
+		if status != 200 || json.Unmarshal(body, &res) != nil || res.Done {
+			ok, detail = false, fmt.Sprintf("piece %d: status %d %s", i/piece, status, short(body))
+			break
+		}
+		if n := len(texts); n > 0 && !strings.HasPrefix(res.Text, texts[n-1]) {
+			grows = false
+		}
+		texts = append(texts, res.Text)
+	}
+	if ok {
+		detail = fmt.Sprintf("%d pieces", len(texts))
+	}
+	check("/v1/stream answers each piece with 200 and the transcript so far", ok, "%s", detail)
+	advise("the transcript only grows from piece to piece", grows, "%d distinct", len(slices.Compact(slices.Clone(texts))))
+	status, body := do("POST", url("&end=1"), nil)
+	var res runner.StreamResult
+	check("end=1 answers with done and the final transcript", status == 200 && json.Unmarshal(body, &res) == nil && res.Done,
+		"status %d %s", status, short(body))
+	fmt.Printf("      first text after %.1f s: %q\n", firstText(texts, piece, rate), res.Text)
+	status, body = do("POST", url(""), pcm[:min(piece, len(pcm))])
+	check("an ended stream is unknown: 404 and {\"error\"}", status == 404 && hasError(body), "status %d %s", status, short(body))
+	do("POST", url("&start=1"), nil)
+	status, _ = do("DELETE", url(""), nil)
+	check("DELETE abandons a stream", status >= 200 && status < 300, "status %d", status)
+	status, _ = do("POST", url(""), nil)
+	check("an abandoned stream is unknown: 404", status == 404, "status %d", status)
+	status, body = do("POST", base+"/v1/stream?session=check&start=1", pcm[:min(piece, len(pcm))])
+	check("no sample_rate is refused with 400 and {\"error\"}", status == 400 && hasError(body), "status %d %s", status, short(body))
+}
+
+func firstText(texts []string, piece, rate int) float64 {
+	for i, t := range texts {
+		if t != "" {
+			return float64((i+1)*piece) / 2 / float64(rate)
+		}
+	}
+	return -1
 }
 
 func checkDetection(base string, p *runner.Process, pcm []byte, rate int) {

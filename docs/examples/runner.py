@@ -3,8 +3,9 @@
 
 It "recognizes" speech by reporting how loud the audio is, which is enough
 to show every part of the protocol a recognizer needs: the arguments, the
-handshake, /v1/info, a streamed NDJSON answer, errors, one request at a
-time, and exiting when stdin closes. Replace `recognize` with a real model.
+handshake, /v1/info, a streamed NDJSON answer, recognition while audio is
+still arriving (/v1/stream), errors, one request at a time, and exiting
+when stdin closes. Replace `recognize` with a real model.
 
   go run ./tools/runner-check --manifest docs/examples/runner-manifest.json --model-dir . -- python3 docs/examples/runner.py
 """
@@ -21,6 +22,7 @@ manifest = json.load(open(args.manifest))
 # Loading may take up to five minutes; print nothing on stdout meanwhile.
 
 lock = threading.Lock()  # the daemon sends one request at a time; be safe anyway
+streams = {}  # session -> samples so far, for /v1/stream
 
 
 def recognize(samples, rate):
@@ -50,9 +52,40 @@ class Handler(BaseHTTPRequestHandler):
             return self.answer(200, {"protocol": 1, "engine": "example", "engine_version": "1", "tasks": ["stt"]})
         self.answer(404, {"error": "not found"})
 
+    def do_DELETE(self):
+        url = urlparse(self.path)
+        q = {k: v[0] for k, v in parse_qs(url.query).items()}
+        with lock:
+            streams.pop(q.get("session"), None)
+        self.send_response(204)
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
+    def stream(self, q, body):
+        """One piece of an utterance; answers with the whole transcript so far."""
+        rate, session = int(q.get("sample_rate", 0)), q.get("session", "")
+        if rate <= 0 or not session:
+            return self.answer(400, {"error": "session and sample_rate are required"})
+        with lock:
+            if q.get("start") == "1":
+                streams[session] = []
+            if session not in streams:
+                return self.answer(404, {"error": "unknown stream"})
+            streams[session] += struct.unpack(f"<{len(body) // 2}h", body[:len(body) // 2 * 2])
+            samples, end = streams[session], q.get("end") == "1"
+            # Only whole seconds are reported until the end, so the text only grows.
+            whole = samples if end else samples[:len(samples) // rate * rate]
+            text = "".join(t for _, _, t in recognize(whole, rate)).strip()
+            if end:
+                del streams[session]
+                return self.answer(200, {"text": text, "done": True, "language": q.get("language", "")})
+            self.answer(200, {"text": text, "done": False})
+
     def do_POST(self):
         url = urlparse(self.path)
         body = self.rfile.read(int(self.headers.get("Content-Length", 0)))
+        if url.path == "/v1/stream":
+            return self.stream({k: v[0] for k, v in parse_qs(url.query).items()}, body)
         if url.path != "/v1/transcribe":
             return self.answer(501, {"error": "this runner only transcribes"})
         q = {k: v[0] for k, v in parse_qs(url.query).items()}

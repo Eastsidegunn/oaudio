@@ -8,6 +8,6 @@
   "upstream": {"model": "none"},
   "source": {"type": "system"},
   "license": {"spdx": "Apache-2.0", "commercial_use": true},
-  "capabilities": ["segment_timestamps"],
+  "capabilities": ["segment_timestamps", "stream"],
   "audio": {"sample_rate": 16000}
 }

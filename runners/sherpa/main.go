@@ -1,6 +1,7 @@
 // Command oaudio-runner-sherpa-onnx runs ONNX speech models through
 // sherpa-onnx (https://github.com/k2-fsa/sherpa-onnx, Apache-2.0) and
-// ONNX Runtime: recognition (SenseVoice, Parakeet, Qwen3-ASR, Moonshine),
+// ONNX Runtime: recognition (SenseVoice, Parakeet, Qwen3-ASR, Moonshine, and
+// Nemotron streaming, which recognizes speech while it is spoken),
 // Kokoro and Supertonic synthesis, Pocket TTS voice cloning, Silero voice
 // activity detection, and pyannote speaker diarization.
 //
@@ -81,6 +82,8 @@ func load(m runner.Model) (runner.Engine, error) {
 		return loadSupertonic(m, p)
 	case "stt/sense-voice", "stt/transducer", "stt/qwen3-asr", "stt/dolphin", "stt/moonshine":
 		return loadRecognizer(m, p)
+	case "stt/online-transducer":
+		return loadOnline(m, p)
 	case "vad/silero":
 		return loadVAD(p)
 	case "diarize/pyannote":

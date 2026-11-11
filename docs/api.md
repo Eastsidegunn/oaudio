@@ -189,12 +189,30 @@ Audio in is 16-bit mono PCM at 24 kHz, base64-encoded, in pieces of any size.
 | `session.created`, `session.updated` | On connect, and after each `session.update`. |
 | `input_audio_buffer.speech_started` / `.speech_stopped` | Turn detection heard an utterance begin / end. |
 | `input_audio_buffer.committed`, `conversation.item.added` | An utterance was handed to the recognizer. |
-| `conversation.item.input_audio_transcription.delta` | A piece of the transcript. |
+| `conversation.item.input_audio_transcription.delta` | A piece of the transcript, appended to what came before. With a streaming model (below), while the person is still speaking. |
 | `conversation.item.input_audio_transcription.completed` | The whole transcript of one utterance. |
 | `conversation.item.input_audio_transcription.failed`, `error` | Something went wrong; the session continues. |
 
 Turn detection uses the installed voice activity detection model when there
 is exactly one, and loudness otherwise. An utterance is cut at 30 seconds.
+
+**Words while someone is speaking.** With a model that recognizes as it
+listens (`stream` in `oaudio show`, such as `nemotron-asr`) and server turn
+detection on, the audio of an utterance goes to the model as it arrives, and
+the transcript's growth is sent as deltas straight away, before
+`speech_stopped`. An item's events then run: `speech_started`, deltas,
+`speech_stopped`, `committed`, `conversation.item.added`, any last deltas,
+`.completed`. Deltas only ever append, and `.completed` carries the final
+transcript whole. Other models, and sessions with turn detection off,
+transcribe each utterance after it ends, as above.
+
+```python
+for event in conn:
+    if event.type == "conversation.item.input_audio_transcription.delta":
+        print(event.delta, end="", flush=True)        # words as they are said
+    elif event.type == "conversation.item.input_audio_transcription.completed":
+        print()
+```
 Conversation sessions, `response.create` and audio output are not
 implemented: they need a language model.
 
