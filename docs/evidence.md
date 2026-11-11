@@ -61,8 +61,9 @@ engine with no Oaudio code involved; compare the transcripts and score both
 with jiwer and the Whisper text normalizers (`bench/asr_eval.py`).
 
 "Direct" is whisper.cpp's own HTTP server for Whisper, the engine's Python
-package for sherpa-onnx, and the Swift helper reading the original file for
-the macOS recognizer.
+package for sherpa-onnx, speech.cpp's own command line (`speech asr`, every
+file in one process) for speech.cpp, and the Swift helper reading the
+original file for the macOS recognizer.
 
 | Engine and model | Test set | Recordings | Identical transcripts | WER | CER |
 |---|---|---|---|---|---|
@@ -73,6 +74,7 @@ the macOS recognizer.
 | macOS, `apple-speech` | FLEURS Korean test, complete | 382 | 382 / 382 | 14.25% | 3.40% |
 | sherpa-onnx, `qwen3-asr` | FLEURS Korean test, complete | 382 | 382 / 382 | 14.64% | 4.55% |
 | sherpa-onnx, `sensevoice` | FLEURS Korean test, complete | 382 | 382 / 382 | 22.48% | 6.44% |
+| speech.cpp, `haas-ja` | FLEURS Japanese test, complete | 650 | 650 / 650 | — | 4.21% |
 | sherpa-onnx, `parakeet` | LibriSpeech test-clean, complete | 2,620 | 2,613 / 2,620 | 2.28% | 0.84% |
 | sherpa-onnx, `qwen3-asr` | LibriSpeech test-clean, 500 evenly spaced | 500 | 499 / 500 | 2.27% | 0.79% |
 | sherpa-onnx, `moonshine:base-en` | LibriSpeech test-clean, complete | 2,620 | 2,616 / 2,620 | 3.23% | 1.25% |
@@ -107,6 +109,23 @@ those numbers, and each would have gone unnoticed without the comparison:
 - Turning a length in seconds back into samples by truncation dropped the
   last sample of some recordings and changed three Parakeet transcripts in
   2,620. The runner now rounds.
+
+**Japanese.** `haas-ja` was given FLEURS' 32-bit float files converted
+once to 16-bit WAV, so both paths read the same samples; every one of the
+650 transcripts matched speech.cpp's own. All 650 recordings are under 28 s,
+so none was cut into regions. For the regions, 12 FLEURS recordings were
+joined with a second of silence between them (148 s): through Oaudio the
+text came back identical, character for character, to `speech asr --vad
+silero-vad`. Recognized whole in one request instead, the same audio lost
+all of its punctuation (17 marks by region, none whole) and scored worse,
+CER 7.17% against 6.09% by region; no sentence was dropped on this
+recording, though speech.cpp's documentation reports that happening on
+others, which is the reason the runner cuts long recordings. The models already in
+the catalog were run through Oaudio on the same 650 recordings for
+comparison, without a direct run: SenseVoice CER 7.67%, Qwen3-ASR 11.86%.
+Seven of Qwen3-ASR's 650 transcripts are a two-character Chinese word
+(提纲 or 提言) instead of the sentence; that was not investigated further.
+Japanese WER is not given: the text has no spaces between words.
 
 Read against Whisper large-v3-turbo on the same Korean set (CER 3.25%):
 Qwen3-ASR at 8 bits is less accurate (4.55%) and SenseVoice less again
@@ -145,6 +164,7 @@ Per request, from the same runs. "Direct" is the engine without Oaudio.
 | macOS recognizer, one LibriSpeech recording (FLAC) | 145.2 ms | 164.4 ms | 19.2 ms |
 | macOS synthesis, one English sentence | 431.8 ms | 438.3 ms | 6.6 ms |
 | Diarization, one 38 s conversation | 907.6 ms | 869.2 ms | −38.4 ms |
+| speech.cpp `haas-ja`, one FLEURS recording (13.1 s, WAV) | 32.8 ms | 67.6 ms | 34.8 ms |
 
 Read these as "a few to twenty milliseconds, the larger figure when an
 upload must be decoded by starting ffmpeg". The negative rows are not Oaudio
@@ -158,7 +178,14 @@ base.en 0.012, Whisper turbo 0.025 to 0.041, macOS recognizer 0.009 to 0.022,
 SenseVoice 0.007 to 0.009, Moonshine tiny 0.008 and base 0.012, Parakeet
 0.022, Qwen3-ASR 0.065, Silero VAD 0.003, diarization 0.023, Kokoro 0.14,
 Supertonic 0.18, Pocket TTS 0.19 to 0.23, Qwen3-TTS 0.43 to 0.56,
-Chatterbox 0.58 to 0.65, macOS synthesis 0.05 to 0.11.
+Chatterbox 0.58 to 0.65, macOS synthesis 0.05 to 0.11, `haas-ja` 0.005.
+
+The `haas-ja` row is the largest added time in the table, though both
+figures are under 1% of the audio. Its direct figure is one `speech asr`
+process recognizing all 650 files (model load included, under a second),
+so per recording it has no HTTP request at all; through Oaudio each
+recording is also uploaded, decoded, and sent to the worker as base64 text
+through a pipe. Which of those costs most was not measured.
 
 For the sherpa-onnx recognizers, a request through Oaudio took within 8 ms
 of the engine's Python package per recording, sometimes less than it
@@ -362,6 +389,12 @@ Linux archives, which only the release workflow builds and installs.
   not run through Oaudio, and neither was a Mac slower than an M5 Pro, where
   the cloning models may fall behind real time.
 - **Whether Chatterbox's watermark survives** in audio.cpp's port.
+- **speech.cpp beyond one model on Metal.** Only `haas-ja` was run, on an M5
+  Pro. Its CPU and Vulkan backends, its other recognizers (ReazonSpeech,
+  Parakeet ja) and its synthesis models were not run through Oaudio. The
+  `GGML_NATIVE=OFF` build was not run on a different CPU.
+- **Japanese beyond FLEURS**: conversational, noisy or long-form speech, and
+  any listener's judgement of the punctuation.
 - **Cloning across languages** (a Korean voice speaking English, or the
   reverse), and reference recordings that are short, noisy or not read
   speech.
@@ -371,7 +404,7 @@ Linux archives, which only the release workflow builds and installs.
 - LibriSpeech test-clean: Panayotov et al., CC BY 4.0, openslr.org/12.
   Archive SHA-256 `39fde525e59672dc6d1551919b1478f724438a95aa55f874b576be21967e6c23`.
 - FLEURS: Conneau et al., CC BY 4.0, huggingface.co/datasets/google/fleurs
-  (`ko_kr`, test split).
+  (`ko_kr`, test split; `ja_jp`, test split, read at revision `70bb2e84`).
 - Zeroth-Korean test set: Jo and Lee, CC BY 4.0, openslr.org/40, read from
   huggingface.co/datasets/kresnik/zeroth_korean at revision `1fe93789`
   (457 recordings, 10 speakers).

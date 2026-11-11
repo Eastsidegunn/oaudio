@@ -29,13 +29,14 @@ rm -rf "$STAGE" "dist/$NAME.tar.gz" "dist/$NAME.tar.gz.sha256"
 mkdir -p "$STAGE"
 make -C runners/whisper clean
 make -C runners/audiocpp clean
+make -C runners/speechcpp clean
 make BIN="$STAGE" VERSION="$VERSION" all runners
 cp LICENSE NOTICE "$STAGE/"
 printf '%s\n' "$VERSION" > "$STAGE/VERSION"
 
 # Everything in the archive must run on a machine without the build tree.
 if [ "$OS" = darwin ]; then
-  for f in "$STAGE"/oaudio* "$STAGE"/audiocpp_server; do
+  for f in "$STAGE"/oaudio* "$STAGE"/audiocpp_server "$STAGE"/speechcpp; do
     if otool -L "$f" | tail -n +2 | grep -vE '^\s*(/usr/lib/|/System/|@rpath/lib(sherpa-onnx|onnxruntime))'; then
       echo "package: $f links a library that is not shipped" >&2; exit 1
     fi
@@ -49,7 +50,7 @@ else
     install -m 0644 "$gomp" "$STAGE/lib/"
     patchelf --set-rpath '$ORIGIN/lib' "$STAGE/oaudio-runner-whisper.cpp"
   fi
-  for f in "$STAGE"/oaudio* "$STAGE"/audiocpp_server; do
+  for f in "$STAGE"/oaudio* "$STAGE"/audiocpp_server "$STAGE"/speechcpp; do
     if ldd "$f" 2>/dev/null | grep 'not found'; then
       echo "package: $f links a library that is not shipped" >&2; exit 1
     fi

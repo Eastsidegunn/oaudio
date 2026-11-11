@@ -176,6 +176,29 @@ class SherpaDirect:
         return stream.result.text
 
 
+class SpeechcppDirect:
+    """speech.cpp's own command line, `speech asr`, on every file in one
+    process: the engine with nothing of Oaudio in front of it. Results are
+    computed in one batch, whose time (model load included, about a second)
+    is the run's time."""
+
+    batch = True
+
+    def __init__(self, binary, model_file, language):
+        self.cmd = [binary, "asr", model_file, "--format", "json"]
+        if language:
+            self.cmd += ["--language", language]
+
+    def __call__(self, paths):
+        out = subprocess.run(self.cmd + list(paths), capture_output=True, text=True, check=True).stdout
+        texts = {}
+        for line in out.splitlines():
+            if line.strip():
+                o = json.loads(line)
+                texts[o["file"]] = o.get("text", "")
+        return [texts[p] for p in paths]
+
+
 def score(refs, hyps, language):
     norm = EnglishTextNormalizer() if language == "en" else BasicTextNormalizer()
     r = [" ".join(norm(x).split()) for x in refs]
@@ -195,7 +218,9 @@ def main():
     ap.add_argument("--model", required=True)
     ap.add_argument("--base-url", default="http://127.0.0.1:11535/v1")
     ap.add_argument("--limit", type=int, default=200)
-    ap.add_argument("--direct", choices=["apple", "whisper-server", "sherpa"], help="also run the engine directly")
+    ap.add_argument("--direct", choices=["apple", "whisper-server", "sherpa", "speechcpp"], help="also run the engine directly")
+    ap.add_argument("--speechcpp", default="bin/speechcpp", help="for --direct speechcpp: speech.cpp's executable")
+    ap.add_argument("--model-file", help="for --direct speechcpp: the model's GGUF file")
     ap.add_argument("--manifest", help="for --direct sherpa: the model's manifest")
     ap.add_argument("--model-dir", help="for --direct sherpa: the directory holding the model's files")
     ap.add_argument("--auto-language", action="store_true", help="do not tell the model the language; score as --language")
@@ -244,16 +269,24 @@ def main():
     elif args.direct == "sherpa":
         sdirect = SherpaDirect(args.manifest, args.model_dir, hint)
         runs["direct"] = lambda p: sdirect(hint, p)
+    elif args.direct == "speechcpp":
+        runs["direct"] = SpeechcppDirect(args.speechcpp, args.model_file, hint)
 
     report = {"dataset": args.dataset, "language": args.language, "model": args.model,
               "pcm16_input": args.pcm16, "utterances": len(items), "audio_seconds": round(audio_s, 1), "runs": {}}
     hyps = {}
     for name, fn in runs.items():
-        fn(items[0][0])  # warm up: model load is not what is being measured
-        out, t0 = [], time.time()
-        for path, _ in items:
-            out.append(fn(path))
-        took = time.time() - t0
+        if getattr(fn, "batch", False):
+            fn([items[0][0]])  # warm up the file cache
+            t0 = time.time()
+            out = fn([p for p, _ in items])
+            took = time.time() - t0
+        else:
+            fn(items[0][0])  # warm up: model load is not what is being measured
+            out, t0 = [], time.time()
+            for path, _ in items:
+                out.append(fn(path))
+            took = time.time() - t0
         hyps[name] = out
         report["runs"][name] = {**score(refs, out, args.language), "seconds": round(took, 2),
                                 "rtf": round(took / audio_s, 5), "ms_per_utterance": round(1000 * took / len(items), 1)}
