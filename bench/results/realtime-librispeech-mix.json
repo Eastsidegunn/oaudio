@@ -1,0 +1,78 @@
+{
+ "turns": 10,
+ "event_types": [
+  "conversation.item.added",
+  "conversation.item.input_audio_transcription.completed",
+  "conversation.item.input_audio_transcription.delta",
+  "input_audio_buffer.cleared",
+  "input_audio_buffer.committed",
+  "input_audio_buffer.speech_started",
+  "input_audio_buffer.speech_stopped"
+ ],
+ "missing_event_types": [],
+ "median_lag_after_speech_end_s": 0.77,
+ "silence_ms": 500,
+ "speed": 1.0,
+ "results": [
+  {
+   "transcript": "\"Rejoice in thy growth,\" said the sunbeams.",
+   "end_ms": 3852,
+   "lag_s": 0.68,
+   "transcribe_s": 0.07
+  },
+  {
+   "transcript": "Another preacher after reproaching him to his face with his misgovernment,",
+   "end_ms": 10196,
+   "lag_s": 0.77,
+   "transcribe_s": 0.1
+  },
+  {
+   "transcript": "Or did this song to be sung?",
+   "end_ms": 12776,
+   "lag_s": 0.74,
+   "transcribe_s": 0.06
+  },
+  {
+   "transcript": "'Tis now winter out of doors,' thought the tree.",
+   "end_ms": 18148,
+   "lag_s": 0.8,
+   "transcribe_s": 0.08
+  },
+  {
+   "transcript": "His death in this conjuncture was a public misfortune.",
+   "end_ms": 24220,
+   "lag_s": 0.73,
+   "transcribe_s": 0.08
+  },
+  {
+   "transcript": "It blazed up famously, \"Help! Help!\"",
+   "end_ms": 29156,
+   "lag_s": 0.78,
+   "transcribe_s": 0.07
+  },
+  {
+   "transcript": "Have mercy, Lord, on me, I pray.",
+   "end_ms": 32900,
+   "lag_s": 0.83,
+   "transcribe_s": 0.07
+  },
+  {
+   "transcript": "for men with me devour.",
+   "end_ms": 35416,
+   "lag_s": 0.7,
+   "transcribe_s": 0.06
+  },
+  {
+   "transcript": "And the whole night.",
+   "end_ms": 37908,
+   "lag_s": 0.79,
+   "transcribe_s": 0.05
+  },
+  {
+   "transcript": "The tree stood still and in deep thought.",
+   "end_ms": 41224,
+   "lag_s": 0.7,
+   "transcribe_s": 0.07
+  }
+ ]
+}

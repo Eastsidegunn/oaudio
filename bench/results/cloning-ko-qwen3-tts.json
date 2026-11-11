@@ -1,0 +1,292 @@
+{
+ "tts": "qwen3-tts",
+ "stt": "whisper",
+ "language": "ko",
+ "speakers": 10,
+ "clones": 30,
+ "verifier": "wespeaker_en_voxceleb_resnet34.onnx",
+ "similarity_clone_vs_same_speaker": 0.785,
+ "similarity_clone_vs_other_speakers": 0.496,
+ "similarity_real_vs_real_same_speaker": 0.891,
+ "similarity_real_vs_real_other_speakers": 0.577,
+ "real_recording_closest_to_its_own_speaker": "10/10",
+ "clone_closest_to_its_source_speaker": "28/30",
+ "wer_of_cloned_speech": 0.296,
+ "cer_of_cloned_speech": 0.078,
+ "wer_of_real_speech": 0.2538,
+ "cer_of_real_speech": 0.0507,
+ "rtf": 0.515,
+ "ms_per_sentence": 3445,
+ "rows": [
+  {
+   "speaker": "137",
+   "same": 0.751,
+   "others_mean": 0.537,
+   "nearest_is_source": true,
+   "seconds": 19.11,
+   "text": "천 구백 육십 년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다.",
+   "heard": "1960년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다."
+  },
+  {
+   "speaker": "137",
+   "same": 0.784,
+   "others_mean": 0.517,
+   "nearest_is_source": true,
+   "seconds": 3.09,
+   "text": "이 일 자동차업계에 따르면 임팔라는 지난달 삼십 일 일 하루에만 구백 대가 넘는 계약이 이뤄진 것으로 파악됐다.",
+   "heard": "2.1 자동차 업계에 따르면 임팔라는 지난달 31일 하루에만 900대가 넘는 계약이 이뤄진 것으로 파악됐다."
+  },
+  {
+   "speaker": "137",
+   "same": 0.737,
+   "others_mean": 0.518,
+   "nearest_is_source": true,
+   "seconds": 1.78,
+   "text": "우리는 위기의 진앙이 아닌 안전지대가 됐다는 말까지 나올 정도였다.",
+   "heard": "우리는 위기의 진앙이 아닌 안전지대가 됐다는 말까지 나올 정도였다."
+  },
+  {
+   "speaker": "147",
+   "same": 0.823,
+   "others_mean": 0.573,
+   "nearest_is_source": true,
+   "seconds": 4.87,
+   "text": "이 일 자동차업계에 따르면 임팔라는 지난달 삼십 일 일 하루에만 구백 대가 넘는 계약이 이뤄진 것으로 파악됐다.",
+   "heard": "이 1 자동차 업계에 따르면 임팔라는 지난달 31일 하루에만 900대가 넘는 계약이 이뤄진 것으로 파악됐다."
+  },
+  {
+   "speaker": "147",
+   "same": 0.826,
+   "others_mean": 0.493,
+   "nearest_is_source": true,
+   "seconds": 1.86,
+   "text": "우리는 위기의 진앙이 아닌 안전지대가 됐다는 말까지 나올 정도였다.",
+   "heard": "우리는 위기의 진앙이 아닌 안전지대가 됐다는 말까지 나올 정도였다."
+  },
+  {
+   "speaker": "147",
+   "same": 0.795,
+   "others_mean": 0.502,
+   "nearest_is_source": true,
+   "seconds": 2.22,
+   "text": "이 전 회장의 장례식은 별세 시점인 십 사 일을 기준으로 일곱 일장으로 치뤄진다.",
+   "heard": "이 전 회장의 장례식은 별세 시점인 14일을 기준으로 7일장으로 치러진다."
+  },
+  {
+   "speaker": "149",
+   "same": 0.847,
+   "others_mean": 0.498,
+   "nearest_is_source": true,
+   "seconds": 3.67,
+   "text": "이 생활 방식을 추구하는 남성들은 자기 자신 특히 자신의 외모에 지나치게 많은 주의를 기울인다.",
+   "heard": "이 생활 방식을 추구하는 남성들은 자기 자신 특히 자신의 외모에 지나치게 많은 주의를 기울인다"
+  },
+  {
+   "speaker": "149",
+   "same": 0.629,
+   "others_mean": 0.471,
+   "nearest_is_source": true,
+   "seconds": 1.81,
+   "text": "특히 중소형 빌딩은 개인투자자의 전폭적인 지지를 받고 있다.",
+   "heard": "특히 중소형 빌딩은 개인 투자자의 전폭적인 지지를 받고 있다"
+  },
+  {
+   "speaker": "149",
+   "same": 0.756,
+   "others_mean": 0.581,
+   "nearest_is_source": true,
+   "seconds": 2.32,
+   "text": "미국에서는 흑인이나 히스패닉이 고위직에 진출할 생각도 하지 않는다.",
+   "heard": "미국에서는 흑인이나 히스패닉이 고위직에 진출할 생각도 하지 않는다."
+  },
+  {
+   "speaker": "118",
+   "same": 0.711,
+   "others_mean": 0.371,
+   "nearest_is_source": true,
+   "seconds": 3.91,
+   "text": "미국에서는 흑인이나 히스패닉이 고위직에 진출할 생각도 하지 않는다.",
+   "heard": "미국에서는 흑인이나 히스패닉이 고위직에 진출할 생각도 하지 않는다."
+  },
+  {
+   "speaker": "118",
+   "same": 0.693,
+   "others_mean": 0.306,
+   "nearest_is_source": true,
+   "seconds": 3.0,
+   "text": "몬터규는 자녀들이 사랑을 제대로 못 받고 크면 매우 심각한 결과가 초래된다는 결론을 내렸습니다.",
+   "heard": "몬터그는 자녀들의 사랑을 제대로 못 받고 크면 매우 심각한 결과가 초래된다는 결론을 내렸습니다."
+  },
+  {
+   "speaker": "118",
+   "same": 0.691,
+   "others_mean": 0.391,
+   "nearest_is_source": true,
+   "seconds": 1.67,
+   "text": "지난해 이들 크루즈관광객의 평균 체류기간은 오 쩜 구 사 시간.",
+   "heard": "지난해 이들 크루즈 관광객의 평균 체류 기간은 5.94시간"
+  },
+  {
+   "speaker": "121",
+   "same": 0.791,
+   "others_mean": 0.501,
+   "nearest_is_source": true,
+   "seconds": 4.47,
+   "text": "대외변수에 실적 불안감까지 겹치면서 코스피 낙폭이 어느 정도 수준까지 이어질지 가늠하기도 어려운 상황이다.",
+   "heard": "대회 변수에 실적 불안감까지 겹치면서 코스피 낙폭이 어느 정도 수준까지 이어질지 가늠하기도 어려운 상황이다."
+  },
+  {
+   "speaker": "121",
+   "same": 0.745,
+   "others_mean": 0.444,
+   "nearest_is_source": true,
+   "seconds": 3.3,
+   "text": "한 중견법조인은 성추행을 한 대학교수를 구속하면 그게 반 대학정서를 확산시키는 것이냐 고 반문하면서 사안을 있는 그대로 보면 된다.",
+   "heard": "한 중견 법조인은 성추행을 한 대학 교수를 구속하면 그게 반대학 정서를 확산시키는 것이냐 고 반문하면서 사안을 읽는 그대로 보면 된다."
+  },
+  {
+   "speaker": "121",
+   "same": 0.761,
+   "others_mean": 0.47,
+   "nearest_is_source": true,
+   "seconds": 2.19,
+   "text": "공정위는 이천 십 삼 년 유통산업발전법 개정을 근거로 이 공약이 이행된 것으로 평가했다.",
+   "heard": "공정위는 2013년 유통산업발전법 개정을 근거로 이 공약이 이행된 것으로 평가했다."
+  },
+  {
+   "speaker": "126",
+   "same": 0.77,
+   "others_mean": 0.568,
+   "nearest_is_source": true,
+   "seconds": 3.33,
+   "text": "공정위는 이천 십 삼 년 유통산업발전법 개정을 근거로 이 공약이 이행된 것으로 평가했다.",
+   "heard": "공정위는 2013년 유통산업발전법 개정을 근거로 이 공약이 이행된 것으로 평가했다."
+  },
+  {
+   "speaker": "126",
+   "same": 0.762,
+   "others_mean": 0.521,
+   "nearest_is_source": true,
+   "seconds": 2.67,
+   "text": "이천 십 오 년에는 전국 모든 대학을 평가해 오 등급으로 나누고 등급에 따라 정원감축을 추진했다.",
+   "heard": "2015년에는 전국 모든 대학을 평가해 5등급으로 나누고 등급에 따라 정원 감축을 추진했다."
+  },
+  {
+   "speaker": "126",
+   "same": 0.805,
+   "others_mean": 0.553,
+   "nearest_is_source": true,
+   "seconds": 2.56,
+   "text": "대한주택보증 입장에서는 손실 가능성을 최소화하기 위해 수수료를 높게 요구할 수밖에 없는 구조다.",
+   "heard": "대한주택보증 입장에서는 손실 가능성을 최소화하기 위해 수수료를 높게 요구할 수밖에 없는 구조다."
+  },
+  {
+   "speaker": "105",
+   "same": 0.82,
+   "others_mean": 0.516,
+   "nearest_is_source": true,
+   "seconds": 5.17,
+   "text": "사진과 실제 급식이 일치하는지를 학교운영위원회가 일일이 확인해야 하는데 현실적으로 불가능하기 때문입니다.",
+   "heard": "사진과 실제 급식이 일치하는지를 학교 운영위원회가 일일이 확인해야 하는데 현실적으로 불가능하기 때문입니다."
+  },
+  {
+   "speaker": "105",
+   "same": 0.871,
+   "others_mean": 0.512,
+   "nearest_is_source": true,
+   "seconds": 3.0,
+   "text": "천 구백 육십 년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다.",
+   "heard": "1960년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다."
+  },
+  {
+   "speaker": "105",
+   "same": 0.863,
+   "others_mean": 0.482,
+   "nearest_is_source": true,
+   "seconds": 3.53,
+   "text": "이 일 자동차업계에 따르면 임팔라는 지난달 삼십 일 일 하루에만 구백 대가 넘는 계약이 이뤄진 것으로 파악됐다.",
+   "heard": "2. 1 자동차 업계에 따르면 임팔라는 지난달 31일 하루에만 900대가 넘는 계약이 이뤄진 것으로 파악됐다."
+  },
+  {
+   "speaker": "104",
+   "same": 0.898,
+   "others_mean": 0.551,
+   "nearest_is_source": true,
+   "seconds": 3.27,
+   "text": "천 구백 육십 년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다.",
+   "heard": "1960년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다."
+  },
+  {
+   "speaker": "104",
+   "same": 0.867,
+   "others_mean": 0.577,
+   "nearest_is_source": false,
+   "seconds": 2.83,
+   "text": "이 일 자동차업계에 따르면 임팔라는 지난달 삼십 일 일 하루에만 구백 대가 넘는 계약이 이뤄진 것으로 파악됐다.",
+   "heard": "2일 자동차업계에 따르면 임팔라는 지난달 31일 하루에만 900대가 넘는 계약이 이뤄진 것으로 파악됐다."
+  },
+  {
+   "speaker": "104",
+   "same": 0.864,
+   "others_mean": 0.534,
+   "nearest_is_source": true,
+   "seconds": 1.7,
+   "text": "우리는 위기의 진앙이 아닌 안전지대가 됐다는 말까지 나올 정도였다.",
+   "heard": "우리는 위기의 진앙이 아닌 안전지대가 됐다는 말까지 나올 정도였다."
+  },
+  {
+   "speaker": "132",
+   "same": 0.765,
+   "others_mean": 0.496,
+   "nearest_is_source": true,
+   "seconds": 3.54,
+   "text": "이 전 회장의 장례식은 별세 시점인 십 사 일을 기준으로 일곱 일장으로 치뤄진다.",
+   "heard": "이 전 회장의 장례식은 별세 시점인 14일을 기준으로 7일장으로 치러진다"
+  },
+  {
+   "speaker": "132",
+   "same": 0.734,
+   "others_mean": 0.404,
+   "nearest_is_source": true,
+   "seconds": 2.06,
+   "text": "한 특허법인은 전국을 돌며 쉰 다섯 건을 수임 십 사 억여원을 벌어들인 것으로 나타났다.",
+   "heard": "특허법인은 전국을 돌며 55건을 수임 14억여 원을 벌어들인 것으로 나타났다."
+  },
+  {
+   "speaker": "132",
+   "same": 0.77,
+   "others_mean": 0.415,
+   "nearest_is_source": true,
+   "seconds": 2.51,
+   "text": "이 생활 방식을 추구하는 남성들은 자기 자신 특히 자신의 외모에 지나치게 많은 주의를 기울인다.",
+   "heard": "이 생활 방식을 추구하는 남성들은 자기 자신, 특히 자신의 외모에 지나치게 많은 주의를 기울인다."
+  },
+  {
+   "speaker": "112",
+   "same": 0.762,
+   "others_mean": 0.495,
+   "nearest_is_source": true,
+   "seconds": 3.39,
+   "text": "미국에서는 흑인이나 히스패닉이 고위직에 진출할 생각도 하지 않는다.",
+   "heard": "미국에서는 흑인이나 히스패닉이 고위직에 진출할 생각도 하지 않는다."
+  },
+  {
+   "speaker": "112",
+   "same": 0.82,
+   "others_mean": 0.574,
+   "nearest_is_source": false,
+   "seconds": 2.67,
+   "text": "몬터규는 자녀들이 사랑을 제대로 못 받고 크면 매우 심각한 결과가 초래된다는 결론을 내렸습니다.",
+   "heard": "몬터규는 자녀들이 사랑을 제대로 못 받고 크면 매우 심각한 결과가 초래된다는 결론을 내렸습니다."
+  },
+  {
+   "speaker": "112",
+   "same": 0.85,
+   "others_mean": 0.512,
+   "nearest_is_source": true,
+   "seconds": 1.84,
+   "text": "지난해 이들 크루즈관광객의 평균 체류기간은 오 쩜 구 사 시간.",
+   "heard": "지난해 이들 크루즈 관광객의 평균 체류 기간은 5.94시간"
+  }
+ ]
+}

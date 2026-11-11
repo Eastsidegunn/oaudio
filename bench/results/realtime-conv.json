@@ -1,0 +1,42 @@
+{
+ "turns": 4,
+ "event_types": [
+  "conversation.item.added",
+  "conversation.item.input_audio_transcription.completed",
+  "conversation.item.input_audio_transcription.delta",
+  "input_audio_buffer.cleared",
+  "input_audio_buffer.committed",
+  "input_audio_buffer.speech_started",
+  "input_audio_buffer.speech_stopped"
+ ],
+ "missing_event_types": [],
+ "median_lag_after_speech_end_s": 0.84,
+ "silence_ms": 500,
+ "speed": 1.0,
+ "results": [
+  {
+   "transcript": "Good morning. Did you get a chance to review the quarterly report?",
+   "end_ms": 3468,
+   "lag_s": 0.75,
+   "transcribe_s": 0.16
+  },
+  {
+   "transcript": "I did. The numbers look better than we expected, especially in Europe.",
+   "end_ms": 9280,
+   "lag_s": 0.88,
+   "transcribe_s": 0.09
+  },
+  {
+   "transcript": "That is great news. Should we present it to the board on Friday?",
+   "end_ms": 13236,
+   "lag_s": 0.7,
+   "transcribe_s": 0.08
+  },
+  {
+   "transcript": "Friday works for me. I will prepare these slides tonight.",
+   "end_ms": 17704,
+   "lag_s": 0.84,
+   "transcribe_s": 0.08
+  }
+ ]
+}

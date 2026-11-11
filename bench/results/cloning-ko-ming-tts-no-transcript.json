@@ -1,0 +1,101 @@
+{
+ "tts": "ming-tts",
+ "stt": "whisper",
+ "language": "ko",
+ "speakers": 10,
+ "verifier": "wespeaker_en_voxceleb_resnet34.onnx",
+ "similarity_clone_vs_same_speaker": 0.733,
+ "similarity_clone_vs_other_speakers": 0.558,
+ "similarity_real_vs_real_same_speaker": 0.891,
+ "similarity_real_vs_real_other_speakers": 0.577,
+ "real_recording_closest_to_its_own_speaker": "10/10",
+ "clone_closest_to_its_source_speaker": "4/10",
+ "wer_of_cloned_speech": 0.1984,
+ "cer_of_cloned_speech": 0.0455,
+ "wer_of_real_speech": 0.2538,
+ "cer_of_real_speech": 0.0507,
+ "rtf": 0.661,
+ "ms_per_sentence": 4127,
+ "rows": [
+  {
+   "speaker": "137",
+   "same": 0.79,
+   "others_mean": 0.601,
+   "nearest_is_source": true,
+   "text": "천 구백 육십 년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다.",
+   "heard": "천 구백 육십 년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다"
+  },
+  {
+   "speaker": "147",
+   "same": 0.688,
+   "others_mean": 0.566,
+   "nearest_is_source": false,
+   "text": "몬터규는 자녀들이 사랑을 제대로 못 받고 크면 매우 심각한 결과가 초래된다는 결론을 내렸습니다.",
+   "heard": "몬터규는 자녀들이 사랑을 제대로 못 받고 크면 매우 심각한 결과가 초래된다는 결론을 내렸습니다."
+  },
+  {
+   "speaker": "149",
+   "same": 0.734,
+   "others_mean": 0.487,
+   "nearest_is_source": true,
+   "text": "사진과 실제 급식이 일치하는지를 학교운영위원회가 일일이 확인해야 하는데 현실적으로 불가능하기 때문입니다.",
+   "heard": "사진과 실제 급식이 일치하는지를 학교 운영위원회가 일일이 확인해야 하는데 현실적으로 불가능하기 때문입니다."
+  },
+  {
+   "speaker": "118",
+   "same": 0.582,
+   "others_mean": 0.524,
+   "nearest_is_source": false,
+   "text": "천 구백 육십 년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다.",
+   "heard": "1960년대 초반 우리는 남부 아프리카에서 여행하는 봉사를 수행하라는 임무를 받았습니다."
+  },
+  {
+   "speaker": "121",
+   "same": 0.764,
+   "others_mean": 0.588,
+   "nearest_is_source": false,
+   "text": "이 일 자동차업계에 따르면 임팔라는 지난달 삼십 일 일 하루에만 구백 대가 넘는 계약이 이뤄진 것으로 파악됐다.",
+   "heard": "이 일 자동차업계에 따르면 임팔라는 지난달 31일 하루에만 900대가 넘는 계약이 이뤄진 것으로 파악됐다."
+  },
+  {
+   "speaker": "126",
+   "same": 0.706,
+   "others_mean": 0.599,
+   "nearest_is_source": false,
+   "text": "우리는 위기의 진앙이 아닌 안전지대가 됐다는 말까지 나올 정도였다.",
+   "heard": "우리는 위기의 진앙이 아닌 안전지대가 됐다는 말까지 나올 정도였다."
+  },
+  {
+   "speaker": "105",
+   "same": 0.71,
+   "others_mean": 0.578,
+   "nearest_is_source": false,
+   "text": "한 특허법인은 전국을 돌며 쉰 다섯 건을 수임 십 사 억여원을 벌어들인 것으로 나타났다.",
+   "heard": "한 특허법인은 전국을 돌며 55건을 수임 14억여 원을 벌어들인 것으로 나타났다."
+  },
+  {
+   "speaker": "104",
+   "same": 0.846,
+   "others_mean": 0.492,
+   "nearest_is_source": true,
+   "text": "한 특허법인은 전국을 돌며 쉰 다섯 건을 수임 십 사 억여원을 벌어들인 것으로 나타났다.",
+   "heard": "한 특허법인은 전국을 돌며 쉰다섯 건을 수임십사 억영원을 벌어들인 것으로 나타났다"
+  },
+  {
+   "speaker": "132",
+   "same": 0.58,
+   "others_mean": 0.617,
+   "nearest_is_source": false,
+   "text": "이 생활 방식을 추구하는 남성들은 자기 자신 특히 자신의 외모에 지나치게 많은 주의를 기울인다.",
+   "heard": "이 생활 방식을 추구하는 남성들은 자기 자신 특히 자신의 외모에 지나치게 많은 주의를 기울인다."
+  },
+  {
+   "speaker": "112",
+   "same": 0.931,
+   "others_mean": 0.525,
+   "nearest_is_source": true,
+   "text": "특히 중소형 빌딩은 개인투자자의 전폭적인 지지를 받고 있다.",
+   "heard": "특히 중소형 빌딩은 개인 투자자의 전폭적인 지지를 받고 있다."
+  }
+ ]
+}

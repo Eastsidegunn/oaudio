@@ -1,0 +1,27 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "apple-say",
+  "tag": "system",
+  "aliases": ["latest"],
+  "task": "tts",
+  "engine": "apple",
+  "family": "apple-system-voices",
+  "description": "The voices installed in macOS. Nothing to download; audio is generated on device.",
+  "upstream": {
+    "model": "macOS system voices",
+    "authors": "Apple",
+    "url": "https://support.apple.com/guide/mac-help/change-the-voice-your-mac-uses-to-speak-text-mchlp2290/mac"
+  },
+  "source": { "type": "system" },
+  "license": {
+    "spdx": "LicenseRef-Apple-macOS-SLA",
+    "url": "https://www.apple.com/legal/sla/",
+    "commercial_use": false,
+    "notes": "System voices are licensed with macOS. Whether audio made with them may be used commercially depends on Apple's license, which this project has not analysed; it is marked non-commercial until someone has. Read Apple's terms before shipping audio made with these voices."
+  },
+  "languages": ["multi"],
+  "capabilities": ["speed"],
+  "audio": { "sample_rate": 22050 },
+  "default_voice": "Samantha",
+  "platforms": ["darwin/*"]
+}

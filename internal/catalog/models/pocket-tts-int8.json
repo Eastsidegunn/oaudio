@@ -1,0 +1,57 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "pocket-tts",
+  "tag": "int8",
+  "aliases": [
+    "latest"
+  ],
+  "task": "tts",
+  "engine": "sherpa-onnx",
+  "family": "pocket",
+  "description": "Pocket TTS (8-bit): speaks English in a voice copied from a few seconds of reference audio, on a CPU. It has no built-in voices; create one with `oaudio voice create`.",
+  "upstream": {
+    "model": "kyutai/pocket-tts",
+    "authors": "Kyutai",
+    "url": "https://huggingface.co/kyutai/pocket-tts"
+  },
+  "source": {
+    "type": "url",
+    "files": [
+      {
+        "path": "sherpa-onnx-pocket-tts-int8-2026-01-26.tar.bz2",
+        "size": 98336520,
+        "sha256": "2f3b88823cbbb9bf0b2477ec8ae7b3fec417b3a87b6bb5f256dba66f2ad967cb",
+        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/sherpa-onnx-pocket-tts-int8-2026-01-26.tar.bz2",
+        "extract": "tar.bz2",
+        "strip_components": 1,
+        "exclude": [
+          "test_wavs/"
+        ]
+      }
+    ]
+  },
+  "license": {
+    "spdx": "CC-BY-4.0",
+    "url": "https://huggingface.co/kyutai/pocket-tts",
+    "commercial_use": false,
+    "notes": "Kyutai publishes the weights under CC-BY-4.0, which allows commercial use with credit, and the archive carries that license file. But the README inside the same archive, written by the ONNX exporter, says \"It is for non-commercial.\" The two disagree, so this is marked non-commercial until the authors settle it. The original repository asks users to accept its terms before download. Clone a voice only with the speaker's consent."
+  },
+  "languages": [
+    "en"
+  ],
+  "capabilities": [
+    "voice_clone"
+  ],
+  "audio": {
+    "sample_rate": 24000
+  },
+  "engine_config": {
+    "lm_flow": "lm_flow.int8.onnx",
+    "lm_main": "lm_main.int8.onnx",
+    "encoder": "encoder.onnx",
+    "decoder": "decoder.int8.onnx",
+    "text_conditioner": "text_conditioner.onnx",
+    "vocab": "vocab.json",
+    "token_scores": "token_scores.json"
+  }
+}

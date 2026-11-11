@@ -1,0 +1,65 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "pyannote-diarize",
+  "tag": "3.0",
+  "aliases": [
+    "latest"
+  ],
+  "task": "diarize",
+  "engine": "sherpa-onnx",
+  "family": "pyannote",
+  "description": "Speaker diarization: pyannote segmentation 3.0 finds speaker changes, a CAM++ speaker-embedding model groups them into speakers.",
+  "upstream": {
+    "model": "pyannote/segmentation-3.0 + 3D-Speaker CAM++",
+    "authors": "Hervé Bredin (CNRS); Alibaba 3D-Speaker",
+    "url": "https://huggingface.co/pyannote/segmentation-3.0"
+  },
+  "source": {
+    "type": "huggingface",
+    "repo": "csukuangfj/sherpa-onnx-pyannote-segmentation-3-0",
+    "revision": "9403a6902bb58e3d5ae8c7e77c3422de279db2e0",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1061,
+        "git_blob_sha1": "e5e0c2daded4524693e062d3e4fd016bbfb9a308"
+      },
+      {
+        "path": "model.onnx",
+        "size": 5992913,
+        "sha256": "220ad67ca923bef2fa91f2390c786097bf305bceb5e261d4af67b38e938e1079"
+      },
+      {
+        "path": "3dspeaker_speech_campplus_sv_zh_en_16k-common_advanced.onnx",
+        "size": 28281164,
+        "sha256": "aa3cfc16963a10586a9393f5035d6d6b57e98d358b347f80c2a30bf4f00ceba2",
+        "repo": "csukuangfj/speaker-embedding-models",
+        "revision": "0743f301363dec56491a490f6d6cbc9d67f9a3bf"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "url": "https://huggingface.co/pyannote/segmentation-3.0",
+    "commercial_use": true,
+    "notes": "Segmentation model by pyannote (MIT). The original is gated on Hugging Face; this is the ONNX export redistributed by the sherpa-onnx project with the MIT license file.",
+    "components": [
+      {
+        "name": "3dspeaker_speech_campplus_sv_zh_en_16k-common_advanced.onnx",
+        "spdx": "Apache-2.0",
+        "note": "Speaker-embedding model from Alibaba's 3D-Speaker project."
+      }
+    ]
+  },
+  "languages": [
+    "multi"
+  ],
+  "audio": {
+    "sample_rate": 16000
+  },
+  "engine_config": {
+    "segmentation": "model.onnx",
+    "embedding": "3dspeaker_speech_campplus_sv_zh_en_16k-common_advanced.onnx",
+    "threshold": "0.8"
+  }
+}

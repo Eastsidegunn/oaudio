@@ -1,0 +1,61 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "qwen3-tts",
+  "tag": "0.6b-base-q8",
+  "aliases": [
+    "latest"
+  ],
+  "task": "tts",
+  "engine": "audio.cpp",
+  "family": "qwen3_tts",
+  "description": "Qwen3-TTS 0.6B Base (8-bit): speaks ten languages, Korean included, in a voice copied from a few seconds of reference audio. It has no built-in voices; create one with `oaudio voice create`, with or without a transcript.",
+  "upstream": {
+    "model": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+    "authors": "Alibaba Cloud, Qwen team",
+    "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base"
+  },
+  "source": {
+    "type": "huggingface",
+    "repo": "audio-cpp/audio.cpp-gguf",
+    "revision": "73ce4162f6cce370dd533c6782b772135c1b2a8e",
+    "files": [
+      {
+        "path": "Qwen3-TTS-12Hz-0.6B-Base-GGUF/qwen3-tts-12hz-0.6b-base-q8_0.gguf",
+        "size": 1991217728,
+        "sha256": "c7d0e6c9485a25ae1f6a4c0796f0023230a0051c44cbd2bd05d73770f2cce637"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+    "commercial_use": true,
+    "notes": "Weights by the Qwen team under Apache-2.0. GGUF conversion by the audio.cpp project. Clone a voice only with the speaker's consent."
+  },
+  "languages": [
+    "ko",
+    "en",
+    "zh",
+    "ja",
+    "de",
+    "fr",
+    "ru",
+    "pt",
+    "es",
+    "it"
+  ],
+  "capabilities": [
+    "voice_clone"
+  ],
+  "audio": {
+    "sample_rate": 24000
+  },
+  "engine_config": {
+    "family": "qwen3_tts",
+    "model": "Qwen3-TTS-12Hz-0.6B-Base-GGUF/qwen3-tts-12hz-0.6b-base-q8_0.gguf",
+    "mode": "streaming",
+    "languages": "ko,en,zh,ja,de,fr,ru,pt,es,it",
+    "reference_text": "optional",
+    "no_reference_text_options": "{\"x_vector_only_mode\":true}"
+  }
+}

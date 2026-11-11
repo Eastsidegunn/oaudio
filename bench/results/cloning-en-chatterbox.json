@@ -1,0 +1,563 @@
+{
+ "tts": "chatterbox",
+ "stt": "whisper:base.en-q5_1",
+ "language": "en",
+ "speakers": 20,
+ "clones": 60,
+ "reference_transcript": true,
+ "verifier": "wespeaker_en_voxceleb_resnet34.onnx",
+ "similarity_clone_vs_same_speaker": 0.79,
+ "similarity_clone_vs_other_speakers": 0.53,
+ "similarity_real_vs_real_same_speaker": 0.859,
+ "similarity_real_vs_real_other_speakers": 0.585,
+ "real_recording_closest_to_its_own_speaker": "19/20",
+ "clone_closest_to_its_source_speaker": "57/60",
+ "wer_of_cloned_speech": 0.0222,
+ "cer_of_cloned_speech": 0.0106,
+ "wer_of_real_speech": 0.0415,
+ "cer_of_real_speech": 0.0185,
+ "rtf": 0.581,
+ "ms_per_sentence": 2725,
+ "rows": [
+  {
+   "speaker": "6829",
+   "same": 0.786,
+   "others_mean": 0.493,
+   "nearest_is_source": true,
+   "seconds": 4.35,
+   "text": "Stuff it into you his belly counselled him.",
+   "heard": "Stuff it into you. His belly counseled him."
+  },
+  {
+   "speaker": "6829",
+   "same": 0.794,
+   "others_mean": 0.52,
+   "nearest_is_source": true,
+   "seconds": 1.95,
+   "text": "After early nightfall the yellow lamps would light up here and there the squalid quarter of the brothels.",
+   "heard": "After early nightfall, the yellow lamps would light up here and there the squalid quarter of the brothels."
+  },
+  {
+   "speaker": "6829",
+   "same": 0.835,
+   "others_mean": 0.526,
+   "nearest_is_source": true,
+   "seconds": 3.09,
+   "text": "They unite every quality and sometimes you will find me referring to them as colorists sometimes as chiaroscurists.",
+   "heard": "They unite every quality and sometimes you will find me referring to them as colorists, sometimes as chiaroscurists."
+  },
+  {
+   "speaker": "8230",
+   "same": 0.807,
+   "others_mean": 0.404,
+   "nearest_is_source": true,
+   "seconds": 4.42,
+   "text": "My friend's temper had not improved since he had been deprived of the congenial surroundings of baker street.",
+   "heard": "My friend's temper had not improved since he had been deprived of the congenial surroundings of Baker Street."
+  },
+  {
+   "speaker": "8230",
+   "same": 0.846,
+   "others_mean": 0.405,
+   "nearest_is_source": true,
+   "seconds": 1.84,
+   "text": "John taylor who had supported her through college was interested in cotton.",
+   "heard": "John Taylor, who had supported her through college, was interested in cotton."
+  },
+  {
+   "speaker": "8230",
+   "same": 0.852,
+   "others_mean": 0.421,
+   "nearest_is_source": true,
+   "seconds": 2.95,
+   "text": "The influence with the timaeus has exercised upon posterity is due partly to a misunderstanding.",
+   "heard": "The influence with the tameis has exercised upon posterity is due partly to a misunderstanding."
+  },
+  {
+   "speaker": "6930",
+   "same": 0.775,
+   "others_mean": 0.537,
+   "nearest_is_source": true,
+   "seconds": 3.19,
+   "text": "Why are we to be denied each other's society.",
+   "heard": "Why are we to be denied each other's society?"
+  },
+  {
+   "speaker": "6930",
+   "same": 0.725,
+   "others_mean": 0.494,
+   "nearest_is_source": true,
+   "seconds": 1.57,
+   "text": "Mainhall liked alexander because he was an engineer.",
+   "heard": "Maine Hall liked Alexander because he was an engineer."
+  },
+  {
+   "speaker": "6930",
+   "same": 0.818,
+   "others_mean": 0.582,
+   "nearest_is_source": true,
+   "seconds": 2.95,
+   "text": "But the more forgetfulness had then prevailed the more powerful was the force of remembrance when she awoke.",
+   "heard": "But the more forgiveness had then prevailed, the more powerful was the force of remembrance when she awoke."
+  },
+  {
+   "speaker": "908",
+   "same": 0.848,
+   "others_mean": 0.607,
+   "nearest_is_source": true,
+   "seconds": 4.06,
+   "text": "Length of service fourteen years three months and five days.",
+   "heard": "Length of service 14 years three months and five days"
+  },
+  {
+   "speaker": "908",
+   "same": 0.858,
+   "others_mean": 0.578,
+   "nearest_is_source": true,
+   "seconds": 2.48,
+   "text": "He seemed born to please without being conscious of the power he possessed.",
+   "heard": "He seemed born to please without being conscious of the power he possessed."
+  },
+  {
+   "speaker": "908",
+   "same": 0.882,
+   "others_mean": 0.595,
+   "nearest_is_source": true,
+   "seconds": 3.03,
+   "text": "What is your country olaf have you always been a thrall the thrall's eyes flashed.",
+   "heard": "What is your country Olaf have you always been a thrall? The thrall's eyes flashed."
+  },
+  {
+   "speaker": "7176",
+   "same": 0.847,
+   "others_mean": 0.552,
+   "nearest_is_source": true,
+   "seconds": 2.95,
+   "text": "Two hundred warriors feasted in his hall and followed him to battle.",
+   "heard": "200 warriors speasted in his hall and followed him to battle."
+  },
+  {
+   "speaker": "7176",
+   "same": 0.846,
+   "others_mean": 0.521,
+   "nearest_is_source": true,
+   "seconds": 2.05,
+   "text": "He began a confused complaint against the wizard who had vanished behind the curtain on the left.",
+   "heard": "He began a confused complaint against the wizard who had vanished behind the curtain on the left."
+  },
+  {
+   "speaker": "7176",
+   "same": 0.876,
+   "others_mean": 0.514,
+   "nearest_is_source": true,
+   "seconds": 1.63,
+   "text": "Give not so earnest a mind to these mummeries child.",
+   "heard": "Give not so earnest a mind to these memories, child."
+  },
+  {
+   "speaker": "2830",
+   "same": 0.804,
+   "others_mean": 0.565,
+   "nearest_is_source": true,
+   "seconds": 2.76,
+   "text": "Out in the woods stood a nice little fir tree.",
+   "heard": "Out in the woods stood a nice little fir tree."
+  },
+  {
+   "speaker": "2830",
+   "same": 0.738,
+   "others_mean": 0.493,
+   "nearest_is_source": true,
+   "seconds": 1.44,
+   "text": "This was at the march election eighteen fifty five.",
+   "heard": "This was at the March election 1855."
+  },
+  {
+   "speaker": "2830",
+   "same": 0.703,
+   "others_mean": 0.525,
+   "nearest_is_source": true,
+   "seconds": 1.85,
+   "text": "This was what did the mischief so far as the running away was concerned.",
+   "heard": "This was what did the mischief so far as the running away was concerned."
+  },
+  {
+   "speaker": "260",
+   "same": 0.679,
+   "others_mean": 0.518,
+   "nearest_is_source": true,
+   "seconds": 3.45,
+   "text": "It is hardly necessary to say more of them here.",
+   "heard": "It is hardly necessary to say more of them here."
+  },
+  {
+   "speaker": "260",
+   "same": 0.738,
+   "others_mean": 0.555,
+   "nearest_is_source": true,
+   "seconds": 1.46,
+   "text": "Stuff it into you his belly counselled him.",
+   "heard": "Stuff it into you. His belly counseled him."
+  },
+  {
+   "speaker": "260",
+   "same": 0.74,
+   "others_mean": 0.57,
+   "nearest_is_source": true,
+   "seconds": 2.75,
+   "text": "After early nightfall the yellow lamps would light up here and there the squalid quarter of the brothels.",
+   "heard": "After early nightfall, the yellow lambs would light up here and there the squalid quarter of the brothels."
+  },
+  {
+   "speaker": "8555",
+   "same": 0.701,
+   "others_mean": 0.54,
+   "nearest_is_source": false,
+   "seconds": 5.54,
+   "text": "They unite every quality and sometimes you will find me referring to them as colorists sometimes as chiaroscurists.",
+   "heard": "They unite every quality and sometimes you will find me referring to them as colorists, sometimes as chiaroscurists."
+  },
+  {
+   "speaker": "8555",
+   "same": 0.709,
+   "others_mean": 0.552,
+   "nearest_is_source": false,
+   "seconds": 3.09,
+   "text": "My friend's temper had not improved since he had been deprived of the congenial surroundings of baker street.",
+   "heard": "My friend's temper had not improved since he had been deprived of the congenial surroundings of Baker Street."
+  },
+  {
+   "speaker": "8555",
+   "same": 0.659,
+   "others_mean": 0.548,
+   "nearest_is_source": false,
+   "seconds": 2.52,
+   "text": "John taylor who had supported her through college was interested in cotton.",
+   "heard": "John Taylor, who had supported her through college, was interested in cotton."
+  },
+  {
+   "speaker": "7021",
+   "same": 0.84,
+   "others_mean": 0.612,
+   "nearest_is_source": true,
+   "seconds": 3.97,
+   "text": "The influence with the timaeus has exercised upon posterity is due partly to a misunderstanding.",
+   "heard": "The influence with the Timaeus has exercised upon posterity is due partly to a misunderstanding."
+  },
+  {
+   "speaker": "7021",
+   "same": 0.824,
+   "others_mean": 0.545,
+   "nearest_is_source": true,
+   "seconds": 1.47,
+   "text": "Why are we to be denied each other's society.",
+   "heard": "Why are we to be denied each other's society?"
+  },
+  {
+   "speaker": "7021",
+   "same": 0.78,
+   "others_mean": 0.548,
+   "nearest_is_source": true,
+   "seconds": 1.49,
+   "text": "Mainhall liked alexander because he was an engineer.",
+   "heard": "Mainhall liked Alexander because he was an engineer."
+  },
+  {
+   "speaker": "4970",
+   "same": 0.823,
+   "others_mean": 0.507,
+   "nearest_is_source": true,
+   "seconds": 3.87,
+   "text": "But the more forgetfulness had then prevailed the more powerful was the force of remembrance when she awoke.",
+   "heard": "But the more forgetfulness had then prevailed, the more powerful was the force of remembrance when she awoke."
+  },
+  {
+   "speaker": "4970",
+   "same": 0.8,
+   "others_mean": 0.508,
+   "nearest_is_source": true,
+   "seconds": 2.06,
+   "text": "Length of service fourteen years three months and five days.",
+   "heard": "Length of service, 14 years, 3 months and 5 days."
+  },
+  {
+   "speaker": "4970",
+   "same": 0.808,
+   "others_mean": 0.54,
+   "nearest_is_source": true,
+   "seconds": 1.95,
+   "text": "He seemed born to please without being conscious of the power he possessed.",
+   "heard": "He seemed born to please without being conscious of the power he possessed."
+  },
+  {
+   "speaker": "4507",
+   "same": 0.816,
+   "others_mean": 0.612,
+   "nearest_is_source": true,
+   "seconds": 5.21,
+   "text": "What is your country olaf have you always been a thrall the thrall's eyes flashed.",
+   "heard": "\"What is your country, Olaf? Have you always been a thrall? The thrall's eyes flashed.\""
+  },
+  {
+   "speaker": "4507",
+   "same": 0.814,
+   "others_mean": 0.597,
+   "nearest_is_source": true,
+   "seconds": 2.48,
+   "text": "Two hundred warriors feasted in his hall and followed him to battle.",
+   "heard": "200 warriors feasted in his hall and followed him to battle."
+  },
+  {
+   "speaker": "4507",
+   "same": 0.794,
+   "others_mean": 0.614,
+   "nearest_is_source": true,
+   "seconds": 3.47,
+   "text": "He began a confused complaint against the wizard who had vanished behind the curtain on the left.",
+   "heard": "He began a confused complaint against the wizard who had vanished behind the curtain on the left."
+  },
+  {
+   "speaker": "5683",
+   "same": 0.781,
+   "others_mean": 0.58,
+   "nearest_is_source": true,
+   "seconds": 3.03,
+   "text": "Give not so earnest a mind to these mummeries child.",
+   "heard": "Give not so earnest a mind to these memories. Child."
+  },
+  {
+   "speaker": "5683",
+   "same": 0.773,
+   "others_mean": 0.546,
+   "nearest_is_source": true,
+   "seconds": 1.27,
+   "text": "Out in the woods stood a nice little fir tree.",
+   "heard": "Out in the woods did a nice little fir tree."
+  },
+  {
+   "speaker": "5683",
+   "same": 0.783,
+   "others_mean": 0.565,
+   "nearest_is_source": true,
+   "seconds": 1.81,
+   "text": "This was at the march election eighteen fifty five.",
+   "heard": "This was at the March election, 1855."
+  },
+  {
+   "speaker": "1320",
+   "same": 0.799,
+   "others_mean": 0.507,
+   "nearest_is_source": true,
+   "seconds": 3.95,
+   "text": "This was what did the mischief so far as the running away was concerned.",
+   "heard": "This was what did the mischief so far, as the running away was concerned."
+  },
+  {
+   "speaker": "1320",
+   "same": 0.798,
+   "others_mean": 0.512,
+   "nearest_is_source": true,
+   "seconds": 1.74,
+   "text": "It is hardly necessary to say more of them here.",
+   "heard": "It is hardly necessary to say more of them here."
+  },
+  {
+   "speaker": "1320",
+   "same": 0.679,
+   "others_mean": 0.448,
+   "nearest_is_source": true,
+   "seconds": 1.57,
+   "text": "Stuff it into you his belly counselled him.",
+   "heard": "Stuff it into you. His belly counseled him."
+  },
+  {
+   "speaker": "1221",
+   "same": 0.817,
+   "others_mean": 0.49,
+   "nearest_is_source": true,
+   "seconds": 4.3,
+   "text": "After early nightfall the yellow lamps would light up here and there the squalid quarter of the brothels.",
+   "heard": "After early nightfall, the yellow lamps would light up here and there the squalid quarter of the brothels."
+  },
+  {
+   "speaker": "1221",
+   "same": 0.821,
+   "others_mean": 0.548,
+   "nearest_is_source": true,
+   "seconds": 3.36,
+   "text": "They unite every quality and sometimes you will find me referring to them as colorists sometimes as chiaroscurists.",
+   "heard": "They unite every quality and sometimes you will find me referring to them as colorists sometimes as \"Chiaroscurists\"."
+  },
+  {
+   "speaker": "1221",
+   "same": 0.861,
+   "others_mean": 0.489,
+   "nearest_is_source": true,
+   "seconds": 2.49,
+   "text": "My friend's temper had not improved since he had been deprived of the congenial surroundings of baker street.",
+   "heard": "My friend's temper had not improved since he had been deprived of the congenial surroundings of Baker Street."
+  },
+  {
+   "speaker": "3570",
+   "same": 0.805,
+   "others_mean": 0.496,
+   "nearest_is_source": true,
+   "seconds": 3.14,
+   "text": "John taylor who had supported her through college was interested in cotton.",
+   "heard": "John Taylor, who had supported her through college, was interested in cotton."
+  },
+  {
+   "speaker": "3570",
+   "same": 0.789,
+   "others_mean": 0.515,
+   "nearest_is_source": true,
+   "seconds": 2.34,
+   "text": "The influence with the timaeus has exercised upon posterity is due partly to a misunderstanding.",
+   "heard": "The influence with the tomatoes as exercised upon posterity is due partly to a misunderstanding."
+  },
+  {
+   "speaker": "3570",
+   "same": 0.777,
+   "others_mean": 0.519,
+   "nearest_is_source": true,
+   "seconds": 1.5,
+   "text": "Why are we to be denied each other's society.",
+   "heard": "Why are we to be denied each other's society?"
+  },
+  {
+   "speaker": "2300",
+   "same": 0.833,
+   "others_mean": 0.533,
+   "nearest_is_source": true,
+   "seconds": 3.43,
+   "text": "Mainhall liked alexander because he was an engineer.",
+   "heard": "Maine Hall liked Alexander because he was an engineer."
+  },
+  {
+   "speaker": "2300",
+   "same": 0.816,
+   "others_mean": 0.493,
+   "nearest_is_source": true,
+   "seconds": 2.84,
+   "text": "But the more forgetfulness had then prevailed the more powerful was the force of remembrance when she awoke.",
+   "heard": "But the more forgetfulness had then prevailed, the more powerful was the force of remembrance when she awoke."
+  },
+  {
+   "speaker": "2300",
+   "same": 0.849,
+   "others_mean": 0.498,
+   "nearest_is_source": true,
+   "seconds": 2.28,
+   "text": "Length of service fourteen years three months and five days.",
+   "heard": "Length of service. 14 years. 3 months and 5 days."
+  },
+  {
+   "speaker": "1284",
+   "same": 0.718,
+   "others_mean": 0.562,
+   "nearest_is_source": true,
+   "seconds": 3.14,
+   "text": "He seemed born to please without being conscious of the power he possessed.",
+   "heard": "He seemed born to please without being conscious of the power he possessed."
+  },
+  {
+   "speaker": "1284",
+   "same": 0.738,
+   "others_mean": 0.567,
+   "nearest_is_source": true,
+   "seconds": 2.5,
+   "text": "What is your country olaf have you always been a thrall the thrall's eyes flashed.",
+   "heard": "What is your country Olaf? Have you always been a thrall? The thrall's eyes flashed."
+  },
+  {
+   "speaker": "1284",
+   "same": 0.767,
+   "others_mean": 0.561,
+   "nearest_is_source": true,
+   "seconds": 2.24,
+   "text": "Two hundred warriors feasted in his hall and followed him to battle.",
+   "heard": "200 warriors feasted in his hall and followed him to battle."
+  },
+  {
+   "speaker": "121",
+   "same": 0.739,
+   "others_mean": 0.527,
+   "nearest_is_source": true,
+   "seconds": 3.53,
+   "text": "He began a confused complaint against the wizard who had vanished behind the curtain on the left.",
+   "heard": "He began a confused complaint against the wizard who had vanished behind the curtain on the left."
+  },
+  {
+   "speaker": "121",
+   "same": 0.705,
+   "others_mean": 0.53,
+   "nearest_is_source": true,
+   "seconds": 2.08,
+   "text": "Give not so earnest a mind to these mummeries child.",
+   "heard": "Give not so own as a mind to these mummaries, child."
+  },
+  {
+   "speaker": "121",
+   "same": 0.808,
+   "others_mean": 0.516,
+   "nearest_is_source": true,
+   "seconds": 1.46,
+   "text": "Out in the woods stood a nice little fir tree.",
+   "heard": "Out in the woods did a nice little fir tree."
+  },
+  {
+   "speaker": "4077",
+   "same": 0.775,
+   "others_mean": 0.498,
+   "nearest_is_source": true,
+   "seconds": 2.51,
+   "text": "This was at the march election eighteen fifty five.",
+   "heard": "This was at the March election, 1855."
+  },
+  {
+   "speaker": "4077",
+   "same": 0.74,
+   "others_mean": 0.457,
+   "nearest_is_source": true,
+   "seconds": 1.86,
+   "text": "This was what did the mischief so far as the running away was concerned.",
+   "heard": "This was what did the mischief so far as the running away was concerned."
+  },
+  {
+   "speaker": "4077",
+   "same": 0.786,
+   "others_mean": 0.492,
+   "nearest_is_source": true,
+   "seconds": 1.42,
+   "text": "It is hardly necessary to say more of them here.",
+   "heard": "It is hardly necessary to say more of them here."
+  },
+  {
+   "speaker": "7127",
+   "same": 0.807,
+   "others_mean": 0.519,
+   "nearest_is_source": true,
+   "seconds": 3.18,
+   "text": "Stuff it into you his belly counselled him.",
+   "heard": "Stuff it into you. His belly counseled him."
+  },
+  {
+   "speaker": "7127",
+   "same": 0.804,
+   "others_mean": 0.555,
+   "nearest_is_source": true,
+   "seconds": 2.81,
+   "text": "After early nightfall the yellow lamps would light up here and there the squalid quarter of the brothels.",
+   "heard": "After early nightfall, the yellow lamps would light up here and there the squalid quarter of the brothels."
+  },
+  {
+   "speaker": "7127",
+   "same": 0.834,
+   "others_mean": 0.558,
+   "nearest_is_source": true,
+   "seconds": 4.37,
+   "text": "They unite every quality and sometimes you will find me referring to them as colorists sometimes as chiaroscurists.",
+   "heard": "They unite every quality, and sometimes you will find me referring to them as colorists, sometimes as chiaroscurists."
+  }
+ ]
+}

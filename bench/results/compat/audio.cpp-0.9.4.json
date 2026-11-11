@@ -1,0 +1,126 @@
+{
+ "name": "audio.cpp",
+ "base_url": "http://127.0.0.1:18090/v1",
+ "sdk": "3.49.0",
+ "tts": "supertonic",
+ "stt": "qwen3-asr",
+ "passed": 7,
+ "total": 23,
+ "rows": [
+  {
+   "check": "models.list",
+   "ok": true,
+   "detail": "['kokoro', 'qwen3-asr', 'supertonic']"
+  },
+  {
+   "check": "models.retrieve",
+   "ok": false,
+   "detail": "NotFoundError: Error code: 404 - unknown endpoint: /v1/models/supertonic"
+  },
+  {
+   "check": "speech, SDK defaults (OpenAI answers mp3)",
+   "ok": false,
+   "detail": "274150 bytes, starts b'RIFF'"
+  },
+  {
+   "check": "speech wav",
+   "ok": true,
+   "detail": "274150 bytes"
+  },
+  {
+   "check": "speech pcm (24 kHz 16-bit)",
+   "ok": true,
+   "detail": "5.71 s if 24 kHz"
+  },
+  {
+   "check": "speech opus",
+   "ok": false,
+   "detail": "274150 bytes, starts b'RIFF'"
+  },
+  {
+   "check": "speech aac",
+   "ok": false,
+   "detail": "274150 bytes, starts b'RIFF'"
+  },
+  {
+   "check": "speech flac",
+   "ok": false,
+   "detail": "274150 bytes, starts b'RIFF'"
+  },
+  {
+   "check": "speech speed=1.5 is shorter",
+   "ok": true,
+   "detail": "274150 -> 191918 bytes"
+  },
+  {
+   "check": "speech, streamed response",
+   "ok": true,
+   "detail": "streamed to file"
+  },
+  {
+   "check": "transcription json, wav upload",
+   "ok": true,
+   "detail": "WER 0.00: The music came nearer, and he recalled the words, the words "
+  },
+  {
+   "check": "transcription json, mp3 upload",
+   "ok": false,
+   "detail": "BadRequestError: Error code: 400 - only WAV audio uploads are currently supported for transcription; MP3 support is planned"
+  },
+  {
+   "check": "transcription text",
+   "ok": true,
+   "detail": "'{\"text\":\"The music came nearer, and he recalled the words, "
+  },
+  {
+   "check": "transcription srt",
+   "ok": false,
+   "detail": "'{\"text\":\"The music came nearer, and he recalled the words, "
+  },
+  {
+   "check": "transcription vtt",
+   "ok": false,
+   "detail": "'{\"text\":\"The music came nearer, and he recalled the words, "
+  },
+  {
+   "check": "transcription verbose_json segments",
+   "ok": false,
+   "detail": "0 segments"
+  },
+  {
+   "check": "transcription word timestamps",
+   "ok": false,
+   "detail": "0 words"
+  },
+  {
+   "check": "transcription stream=True",
+   "ok": false,
+   "detail": "InternalServerError: Error code: 500 - transcription stream=true requires a model configured with mode=streaming"
+  },
+  {
+   "check": "translation endpoint answers",
+   "ok": false,
+   "detail": "NotFoundError: Error code: 404 - unknown endpoint: /v1/audio/translations"
+  },
+  {
+   "check": "transcription diarized_json",
+   "ok": false,
+   "detail": "no diarization model to try"
+  },
+  {
+   "check": "voices.create + speech in that voice",
+   "ok": false,
+   "detail": "NotFoundError: Error code: 404 - unknown endpoint: /v1/audio/voices"
+  },
+  {
+   "check": "unknown model -> NotFoundError",
+   "ok": false,
+   "detail": "InternalServerError (HTTP 500)"
+  },
+  {
+   "check": "unknown voice -> 400/422",
+   "ok": false,
+   "detail": "InternalServerError (HTTP 500)"
+  }
+ ]
+}

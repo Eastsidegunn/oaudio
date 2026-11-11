@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Format
+        run: test -z "$(gofmt -l cmd internal runner runners/whisper/main.go runners/sherpa runners/audiocpp)"
+      - name: Vet and test
+        run: |
+          go vet ./...
+          go test -race -count=1 ./...
+          cd runners/audiocpp && go vet . && go test -race -count=1 .
+      - name: Build
+        run: make all
+      # Speaks and transcribes with the engines built into macOS. The script
+      # skips itself on runners older than macOS 26.
+      - name: End to end
+        if: runner.os == 'macOS'
+        run: ./scripts/e2e.sh

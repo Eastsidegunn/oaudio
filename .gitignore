@@ -1,0 +1,8 @@
+/bin/
+/runners/*/third_party/
+/runners/whisper/go.sum
+go.work
+go.work.sum
+.DS_Store
+__pycache__/
+*.pyc

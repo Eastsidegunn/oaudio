@@ -1,0 +1,421 @@
+{
+ "schema": "oaudio.manifest.v1",
+ "name": "kokoro",
+ "tag": "v1.0",
+ "aliases": [
+  "latest"
+ ],
+ "task": "tts",
+ "engine": "sherpa-onnx",
+ "family": "kokoro",
+ "description": "Kokoro-82M v1.0: a small, fast, multi-voice text-to-speech model. No Korean. Words missing from its pronunciation dictionary are respelled from words it knows.",
+ "upstream": {
+  "model": "hexgrad/Kokoro-82M",
+  "authors": "hexgrad",
+  "url": "https://huggingface.co/hexgrad/Kokoro-82M"
+ },
+ "source": {
+  "type": "huggingface",
+  "repo": "csukuangfj/kokoro-multi-lang-v1_0",
+  "revision": "f7b96bb6bef5c5da4d3aa4f4e0498fbbf62dc78b",
+  "files": [
+   {
+    "path": "LICENSE",
+    "size": 11358,
+    "git_blob_sha1": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+   },
+   {
+    "path": "date-zh.fst",
+    "size": 59154,
+    "git_blob_sha1": "20ec7f4c077f9ec85ca9d01c4b4f4581f6e552ee"
+   },
+   {
+    "path": "dict/hmm_model.utf8",
+    "size": 519739,
+    "git_blob_sha1": "2e1f807a0f31eeee3abe4cd1e0a0419d143af96a"
+   },
+   {
+    "path": "dict/idf.utf8",
+    "size": 5998717,
+    "git_blob_sha1": "4ca9cecfc1d4108d639f06b83d42ab930a79fa92"
+   },
+   {
+    "path": "dict/jieba.dict.utf8",
+    "size": 5071204,
+    "git_blob_sha1": "0015948de30f38fa97dd20adef231c1909bd8efd"
+   },
+   {
+    "path": "dict/pos_dict/char_state_tab.utf8",
+    "size": 327139,
+    "git_blob_sha1": "e1e4d8d815b2938d199f14c922398714286eef95"
+   },
+   {
+    "path": "dict/pos_dict/prob_emit.utf8",
+    "size": 1687686,
+    "git_blob_sha1": "cc207d11dc958a46f8f91d142bdb330f2b5d28a0"
+   },
+   {
+    "path": "dict/pos_dict/prob_start.utf8",
+    "size": 4347,
+    "git_blob_sha1": "433750d56bed6affb5b1b2989044403bcef4448e"
+   },
+   {
+    "path": "dict/pos_dict/prob_trans.utf8",
+    "size": 124159,
+    "git_blob_sha1": "87e5ac5ca772a625f0a0f67352e9b31d6872461c"
+   },
+   {
+    "path": "dict/stop_words.utf8",
+    "size": 8974,
+    "git_blob_sha1": "32ac9e67dc44222534de99cc298dccd4b8de9907"
+   },
+   {
+    "path": "dict/user.dict.utf8",
+    "size": 829194,
+    "git_blob_sha1": "8e4c4361ff61bf27215937f43311d744e2f2e4e7"
+   },
+   {
+    "path": "lexicon-gb-en.txt",
+    "size": 6366635,
+    "sha256": "c4cbb37316f62210dff52718a7afcaae24f50c032cc75ab47ae67b831d1049e7"
+   },
+   {
+    "path": "lexicon-us-en.txt",
+    "size": 5956885,
+    "sha256": "7daaab53a181be9885b853a8582bf1838186317e5dadacbcef9c426d6fa0da14"
+   },
+   {
+    "path": "lexicon-zh.txt",
+    "size": 2365182,
+    "sha256": "902bc2d20ac7c449c5ecbbbb23c89d12119c03ed5b8ed27f114f0260c9e35229"
+   },
+   {
+    "path": "model.onnx",
+    "size": 325560556,
+    "sha256": "b40f62b166ac8164b0627ef48a0b358eda0985e272fb03ef5252e7206305da11"
+   },
+   {
+    "path": "number-zh.fst",
+    "size": 64482,
+    "git_blob_sha1": "66c0bd468903fc98d212cd6c3c5b2793ce8eb2c3"
+   },
+   {
+    "path": "phone-zh.fst",
+    "size": 88630,
+    "git_blob_sha1": "2eba908c27ec0767281cad25d322008b16869c5b"
+   },
+   {
+    "path": "tokens.txt",
+    "size": 687,
+    "git_blob_sha1": "4c5460434a54a6ce2b3fb6133d79dbc24f183e23"
+   },
+   {
+    "path": "voices.bin",
+    "size": 28200960,
+    "sha256": "1c5a5b983d3d50d8586d437a51f3faa2da7919ce76a013c081e65671a3447c29"
+   }
+  ]
+ },
+ "license": {
+  "spdx": "Apache-2.0",
+  "url": "https://huggingface.co/hexgrad/Kokoro-82M",
+  "commercial_use": true,
+  "notes": "Weights by hexgrad (Apache-2.0), exported to ONNX by the sherpa-onnx project."
+ },
+ "languages": [
+  "en",
+  "es",
+  "fr",
+  "hi",
+  "it",
+  "ja",
+  "pt",
+  "zh"
+ ],
+ "capabilities": [
+  "speed"
+ ],
+ "audio": {
+  "sample_rate": 24000
+ },
+ "voices": [
+  {
+   "id": "af_alloy",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_aoede",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_bella",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_heart",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_jessica",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_kore",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_nicole",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_nova",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_river",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_sarah",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "af_sky",
+   "language": "en-US",
+   "gender": "female"
+  },
+  {
+   "id": "am_adam",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "am_echo",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "am_eric",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "am_fenrir",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "am_liam",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "am_michael",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "am_onyx",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "am_puck",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "am_santa",
+   "language": "en-US",
+   "gender": "male"
+  },
+  {
+   "id": "bf_alice",
+   "language": "en-GB",
+   "gender": "female"
+  },
+  {
+   "id": "bf_emma",
+   "language": "en-GB",
+   "gender": "female"
+  },
+  {
+   "id": "bf_isabella",
+   "language": "en-GB",
+   "gender": "female"
+  },
+  {
+   "id": "bf_lily",
+   "language": "en-GB",
+   "gender": "female"
+  },
+  {
+   "id": "bm_daniel",
+   "language": "en-GB",
+   "gender": "male"
+  },
+  {
+   "id": "bm_fable",
+   "language": "en-GB",
+   "gender": "male"
+  },
+  {
+   "id": "bm_george",
+   "language": "en-GB",
+   "gender": "male"
+  },
+  {
+   "id": "bm_lewis",
+   "language": "en-GB",
+   "gender": "male"
+  },
+  {
+   "id": "ef_dora",
+   "language": "es",
+   "gender": "female"
+  },
+  {
+   "id": "em_alex",
+   "language": "es",
+   "gender": "male"
+  },
+  {
+   "id": "ff_siwis",
+   "language": "fr",
+   "gender": "female"
+  },
+  {
+   "id": "hf_alpha",
+   "language": "hi",
+   "gender": "female"
+  },
+  {
+   "id": "hf_beta",
+   "language": "hi",
+   "gender": "female"
+  },
+  {
+   "id": "hm_omega",
+   "language": "hi",
+   "gender": "male"
+  },
+  {
+   "id": "hm_psi",
+   "language": "hi",
+   "gender": "male"
+  },
+  {
+   "id": "if_sara",
+   "language": "it",
+   "gender": "female"
+  },
+  {
+   "id": "im_nicola",
+   "language": "it",
+   "gender": "male"
+  },
+  {
+   "id": "jf_alpha",
+   "language": "ja",
+   "gender": "female"
+  },
+  {
+   "id": "jf_gongitsune",
+   "language": "ja",
+   "gender": "female"
+  },
+  {
+   "id": "jf_nezumi",
+   "language": "ja",
+   "gender": "female"
+  },
+  {
+   "id": "jf_tebukuro",
+   "language": "ja",
+   "gender": "female"
+  },
+  {
+   "id": "jm_kumo",
+   "language": "ja",
+   "gender": "male"
+  },
+  {
+   "id": "pf_dora",
+   "language": "pt-BR",
+   "gender": "female"
+  },
+  {
+   "id": "pm_alex",
+   "language": "pt-BR",
+   "gender": "male"
+  },
+  {
+   "id": "pm_santa",
+   "language": "pt-BR",
+   "gender": "male"
+  },
+  {
+   "id": "zf_xiaobei",
+   "language": "zh",
+   "gender": "female"
+  },
+  {
+   "id": "zf_xiaoni",
+   "language": "zh",
+   "gender": "female"
+  },
+  {
+   "id": "zf_xiaoxiao",
+   "language": "zh",
+   "gender": "female"
+  },
+  {
+   "id": "zf_xiaoyi",
+   "language": "zh",
+   "gender": "female"
+  },
+  {
+   "id": "zm_yunjian",
+   "language": "zh",
+   "gender": "male"
+  },
+  {
+   "id": "zm_yunxi",
+   "language": "zh",
+   "gender": "male"
+  },
+  {
+   "id": "zm_yunxia",
+   "language": "zh",
+   "gender": "male"
+  },
+  {
+   "id": "zm_yunyang",
+   "language": "zh",
+   "gender": "male"
+  },
+  {
+   "id": "em_santa",
+   "language": "es",
+   "gender": "male"
+  }
+ ],
+ "default_voice": "af_heart",
+ "engine_config": {
+  "model": "model.onnx",
+  "voices": "voices.bin",
+  "tokens": "tokens.txt",
+  "lexicon": "lexicon-us-en.txt,lexicon-zh.txt",
+  "oov_lexicon": "lexicon-us-en.txt"
+ }
+}

@@ -1,0 +1,88 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "parakeet",
+  "tag": "tdt-0.6b-v3-int8",
+  "aliases": [
+    "latest"
+  ],
+  "task": "stt",
+  "engine": "sherpa-onnx",
+  "family": "transducer",
+  "description": "NVIDIA Parakeet TDT 0.6B v3 (8-bit): fast, accurate recognition for English and 24 other European languages, with punctuation and capitals. No Korean. It works out the language itself and cannot be told. Long recordings are cut at silences by the Silero speech detector shipped alongside.",
+  "upstream": {
+    "model": "nvidia/parakeet-tdt-0.6b-v3",
+    "authors": "NVIDIA",
+    "url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3"
+  },
+  "source": {
+    "type": "url",
+    "files": [
+      {
+        "path": "sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.tar.bz2",
+        "size": 487211443,
+        "sha256": "1495e91b59d7fc53ddca91f3431758ec99f8fa253fdb0e1e851be0f72b14b0f9",
+        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.tar.bz2",
+        "extract": "tar.bz2",
+        "strip_components": 1,
+        "exclude": [
+          "test_wavs/"
+        ]
+      },
+      {
+        "path": "silero_vad_v5.onnx",
+        "size": 2313101,
+        "sha256": "6b99cbfd39246b6706f98ec13c7c50c6b299181f2474fa05cbc8046acc274396",
+        "url": "https://huggingface.co/csukuangfj/vad/resolve/fba88cd2e921609e7675c3aaf51e0b9b295da4bc/silero_vad_v5.onnx"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "CC-BY-4.0",
+    "url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+    "commercial_use": true,
+    "notes": "Weights by NVIDIA under CC-BY-4.0: commercial use with credit. ONNX conversion by the sherpa-onnx project. The speech detector is Silero VAD (MIT)."
+  },
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "bg",
+    "hr",
+    "cs",
+    "da",
+    "nl",
+    "et",
+    "fi",
+    "el",
+    "hu",
+    "it",
+    "lv",
+    "lt",
+    "mt",
+    "pl",
+    "pt",
+    "ro",
+    "sk",
+    "sl",
+    "sv",
+    "ru",
+    "uk"
+  ],
+  "capabilities": [
+    "segment_timestamps",
+    "word_timestamps",
+    "language_detect"
+  ],
+  "audio": {
+    "sample_rate": 16000
+  },
+  "engine_config": {
+    "encoder": "encoder.int8.onnx",
+    "decoder": "decoder.int8.onnx",
+    "joiner": "joiner.int8.onnx",
+    "tokens": "tokens.txt",
+    "model_type": "nemo_transducer",
+    "vad": "silero_vad_v5.onnx"
+  }
+}

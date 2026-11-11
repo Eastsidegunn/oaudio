@@ -1,0 +1,238 @@
+{
+ "conversations": 30,
+ "audio_minutes": 18.8,
+ "vad": {
+  "model": "silero-vad",
+  "inserted_silences_detected": "174/174",
+  "rtf": 0.00306
+ },
+ "diarization": {
+  "model": "pyannote-diarize",
+  "der": 0.1284,
+  "missed_speech": 0.0683,
+  "false_alarm": 0.0,
+  "speaker_confusion": 0.06,
+  "speaker_count_correct": "20/30",
+  "rtf": 0.02312,
+  "identical_to_engine_direct": "30/30",
+  "ms_per_conversation": 869.2,
+  "direct_ms_per_conversation": 907.6
+ },
+ "diarized_transcript": {
+  "stt": "whisper:base.en-q5_1",
+  "wer": 0.0418,
+  "words_attributed_to_right_speaker": 0.9514
+ },
+ "rows": [
+  {
+   "mix": "mix00.wav",
+   "speakers": 2,
+   "found": 2,
+   "der": 0.1022,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix01.wav",
+   "speakers": 3,
+   "found": 3,
+   "der": 0.0622,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix02.wav",
+   "speakers": 4,
+   "found": 3,
+   "der": 0.094,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix03.wav",
+   "speakers": 2,
+   "found": 3,
+   "der": 0.2402,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix04.wav",
+   "speakers": 3,
+   "found": 3,
+   "der": 0.0676,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix05.wav",
+   "speakers": 4,
+   "found": 4,
+   "der": 0.1039,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix06.wav",
+   "speakers": 2,
+   "found": 2,
+   "der": 0.0843,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix07.wav",
+   "speakers": 3,
+   "found": 3,
+   "der": 0.0739,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix08.wav",
+   "speakers": 4,
+   "found": 4,
+   "der": 0.3112,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix09.wav",
+   "speakers": 2,
+   "found": 2,
+   "der": 0.0324,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix10.wav",
+   "speakers": 3,
+   "found": 3,
+   "der": 0.1699,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix11.wav",
+   "speakers": 4,
+   "found": 4,
+   "der": 0.0404,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix12.wav",
+   "speakers": 2,
+   "found": 2,
+   "der": 0.0115,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix13.wav",
+   "speakers": 3,
+   "found": 2,
+   "der": 0.1057,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix14.wav",
+   "speakers": 4,
+   "found": 4,
+   "der": 0.0919,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix15.wav",
+   "speakers": 2,
+   "found": 2,
+   "der": 0.022,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix16.wav",
+   "speakers": 3,
+   "found": 3,
+   "der": 0.1251,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix17.wav",
+   "speakers": 4,
+   "found": 2,
+   "der": 0.2904,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix18.wav",
+   "speakers": 2,
+   "found": 2,
+   "der": 0.1141,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix19.wav",
+   "speakers": 3,
+   "found": 2,
+   "der": 0.4156,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix20.wav",
+   "speakers": 4,
+   "found": 4,
+   "der": 0.1355,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix21.wav",
+   "speakers": 2,
+   "found": 3,
+   "der": 0.1382,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix22.wav",
+   "speakers": 3,
+   "found": 3,
+   "der": 0.056,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix23.wav",
+   "speakers": 4,
+   "found": 3,
+   "der": 0.1095,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix24.wav",
+   "speakers": 2,
+   "found": 2,
+   "der": 0.0621,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix25.wav",
+   "speakers": 3,
+   "found": 3,
+   "der": 0.1584,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix26.wav",
+   "speakers": 4,
+   "found": 3,
+   "der": 0.1445,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix27.wav",
+   "speakers": 2,
+   "found": 2,
+   "der": 0.2749,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix28.wav",
+   "speakers": 3,
+   "found": 4,
+   "der": 0.1698,
+   "identical_to_direct": true
+  },
+  {
+   "mix": "mix29.wav",
+   "speakers": 4,
+   "found": 3,
+   "der": 0.3518,
+   "identical_to_direct": true
+  }
+ ]
+}

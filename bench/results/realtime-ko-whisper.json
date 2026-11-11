@@ -1,0 +1,42 @@
+{
+ "turns": 4,
+ "event_types": [
+  "conversation.item.added",
+  "conversation.item.input_audio_transcription.completed",
+  "conversation.item.input_audio_transcription.delta",
+  "input_audio_buffer.cleared",
+  "input_audio_buffer.committed",
+  "input_audio_buffer.speech_started",
+  "input_audio_buffer.speech_stopped"
+ ],
+ "missing_event_types": [],
+ "median_lag_after_speech_end_s": 1.2,
+ "silence_ms": 500,
+ "speed": 1.0,
+ "results": [
+  {
+   "transcript": "\ub2e4\ub9ac \ubc0f \uc218\uc9c1 \uac04\uaca9\uc740 15m\uc774\uba70 \uacf5\uc0ac\ub294 2011\ub144 8\uc6d4\uc5d0 \ub9c8\ubb34\ub9ac\ub418\uc5c8\uc73c\uba70 \ud574\ub2f9 \ub2e4\ub9ac\uc758 \ud1b5\ud589\uae08\uc9c0\ub294 2017\ub144 3\uc6d4\uae4c\uc9c0\uc774\ub2e4.",
+   "end_ms": 10396,
+   "lag_s": 1.33,
+   "transcribe_s": 0.62
+  },
+  {
+   "transcript": "\ub378\ud3ec\ud2b8\ub85c\uac00 2\uc138\ud2b8\uc5d0\uc11c \uba3c\uc800 \uc5b4\ub4dc\ubca4\ud2f0\uc988\ub97c \uc5bb\uc5c8\uc9c0\ub9cc 6\ub3006\uc774 \ub41c \ud6c4 \ub2e4\uc2dc \ud0c0\uc774 \ube0c\ub808\uc774\ud06c\uac00 \ud544\uc694\ud588\ub2e4.",
+   "end_ms": 22564,
+   "lag_s": 1.09,
+   "transcribe_s": 0.37
+  },
+  {
+   "transcript": "\uc5fc\uc18c\uc0ac\uc721\uc740 \ub300\ub7b5 1\ub9cc \ub144 \uc804\uc5d0 \uc774\ub780\uc758 \uc790\uadf8\ub85c\uc2a4 \uc0b0\ub9e5\uc5d0\uc11c \uc2dc\uc791\ud55c \uac83\uc73c\ub85c \ubcf4\uc785\ub2c8\ub2e4.",
+   "end_ms": 32412,
+   "lag_s": 1.01,
+   "transcribe_s": 0.34
+  },
+  {
+   "transcript": "\uaca8\uc6b8\uc5d0 \ubd81\ubc1c \ud2b8\uc704\ub97c \uac74\ub110 \uacbd\uc6b0\uc5d0\ub294 \ube59\ud310\uc744 \ud1b5\uacfc\ud558\uba74\uc11c \uaf64 \ub054\ucc0d\ud55c \uc18c\uc74c\uc774 \ubc1c\uc0dd\ud558\uae30 \ub54c\ubb38\uc5d0 \uac1d\uc2e4\uc758 \uc704\uce58\ub97c \ud655\uc778\ud558\ub294 \uac83\uc774 \uc88b\ub2e4.",
+   "end_ms": 47083,
+   "lag_s": 1.2,
+   "transcribe_s": 0.38
+  }
+ ]
+}

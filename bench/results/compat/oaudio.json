@@ -1,0 +1,126 @@
+{
+ "name": "oaudio",
+ "base_url": "http://127.0.0.1:11598/v1",
+ "sdk": "3.49.0",
+ "tts": "kokoro",
+ "stt": "whisper",
+ "passed": 23,
+ "total": 23,
+ "rows": [
+  {
+   "check": "models.list",
+   "ok": true,
+   "detail": "['chatterbox:multilingual-q8', 'kokoro:v1.0', 'ming-tts:0.5b-q8', 'parakeet:tdt-0.6b-v3-int8', 'pocket-tts:fp32', 'pocket-tts:int8']"
+  },
+  {
+   "check": "models.retrieve",
+   "ok": true,
+   "detail": "kokoro:v1.0"
+  },
+  {
+   "check": "speech, SDK defaults (OpenAI answers mp3)",
+   "ok": true,
+   "detail": "44588 bytes, starts b'ID3\\x04'"
+  },
+  {
+   "check": "speech wav",
+   "ok": true,
+   "detail": "130518 bytes"
+  },
+  {
+   "check": "speech pcm (24 kHz 16-bit)",
+   "ok": true,
+   "detail": "2.72 s if 24 kHz"
+  },
+  {
+   "check": "speech opus",
+   "ok": true,
+   "detail": "16397 bytes, starts b'OggS'"
+  },
+  {
+   "check": "speech aac",
+   "ok": true,
+   "detail": "36549 bytes, starts b'\\xff\\xf1X@'"
+  },
+  {
+   "check": "speech flac",
+   "ok": true,
+   "detail": "76751 bytes, starts b'fLaC'"
+  },
+  {
+   "check": "speech speed=1.5 is shorter",
+   "ok": true,
+   "detail": "130474 -> 82066 bytes"
+  },
+  {
+   "check": "speech, streamed response",
+   "ok": true,
+   "detail": "streamed to file"
+  },
+  {
+   "check": "transcription json, wav upload",
+   "ok": true,
+   "detail": "WER 0.00: the music came nearer and he recalled the words the words of"
+  },
+  {
+   "check": "transcription json, mp3 upload",
+   "ok": true,
+   "detail": "WER 0.00"
+  },
+  {
+   "check": "transcription text",
+   "ok": true,
+   "detail": "\"the music came nearer and he recalled the words the words o"
+  },
+  {
+   "check": "transcription srt",
+   "ok": true,
+   "detail": "\"1\\n00:00:00,000 --> 00:00:09,640\\nthe music came nearer and"
+  },
+  {
+   "check": "transcription vtt",
+   "ok": true,
+   "detail": "\"WEBVTT\\n\\n00:00:00.000 --> 00:00:09.640\\nthe music came nea"
+  },
+  {
+   "check": "transcription verbose_json segments",
+   "ok": true,
+   "detail": "1 segments"
+  },
+  {
+   "check": "transcription word timestamps",
+   "ok": true,
+   "detail": "22 words"
+  },
+  {
+   "check": "transcription stream=True",
+   "ok": true,
+   "detail": "2 events"
+  },
+  {
+   "check": "translation endpoint answers",
+   "ok": true,
+   "detail": "The music came nearer, and he recalled the words, "
+  },
+  {
+   "check": "transcription diarized_json",
+   "ok": true,
+   "detail": "1 segments"
+  },
+  {
+   "check": "voices.create + speech in that voice",
+   "ok": true,
+   "detail": "voice_f2d73fa2632488a8, 149804 bytes"
+  },
+  {
+   "check": "unknown model -> NotFoundError",
+   "ok": true,
+   "detail": "NotFoundError"
+  },
+  {
+   "check": "unknown voice -> 400/422",
+   "ok": true,
+   "detail": "BadRequestError"
+  }
+ ]
+}

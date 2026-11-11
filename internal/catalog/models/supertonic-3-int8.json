@@ -1,0 +1,130 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "supertonic",
+  "tag": "3-int8",
+  "aliases": [
+    "latest"
+  ],
+  "task": "tts",
+  "engine": "sherpa-onnx",
+  "family": "supertonic",
+  "description": "Supertonic 3 (8-bit): fast multilingual text-to-speech with ten preset voices, including Korean. Pass a language, or it is guessed from the script of the text. Voice names follow upstream's F1 to F5 and M1 to M5; which is which was inferred from measured pitch.",
+  "upstream": {
+    "model": "Supertone/supertonic-3",
+    "authors": "Supertone Inc.",
+    "url": "https://huggingface.co/Supertone/supertonic-3"
+  },
+  "source": {
+    "type": "url",
+    "files": [
+      {
+        "path": "sherpa-onnx-supertonic-3-tts-int8-2026-05-11.tar.bz2",
+        "size": 128774318,
+        "sha256": "82fa96f91c4ef8abaae3a14a3f4153facf88bed821d1f7331cec2700f432c427",
+        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/sherpa-onnx-supertonic-3-tts-int8-2026-05-11.tar.bz2",
+        "extract": "tar.bz2",
+        "strip_components": 1
+      }
+    ]
+  },
+  "license": {
+    "spdx": "OpenRAIL-M",
+    "url": "https://huggingface.co/Supertone/supertonic-3/blob/main/LICENSE",
+    "commercial_use": true,
+    "notes": "Weights under the BigScience OpenRAIL-M licence: commercial use is allowed, but the licence carries use restrictions that you must also pass on to your own users, among them no impersonating a person without consent and no presenting generated speech as human without disclosure. Read it before shipping. The LICENSE file inside the download is the MIT licence of Supertone's sample code, not of the model."
+  },
+  "languages": [
+    "en",
+    "ko",
+    "ja",
+    "ar",
+    "bg",
+    "cs",
+    "da",
+    "de",
+    "el",
+    "es",
+    "et",
+    "fi",
+    "fr",
+    "hi",
+    "hr",
+    "hu",
+    "id",
+    "it",
+    "lt",
+    "lv",
+    "nl",
+    "pl",
+    "pt",
+    "ro",
+    "ru",
+    "sk",
+    "sl",
+    "sv",
+    "tr",
+    "uk",
+    "vi"
+  ],
+  "capabilities": [
+    "speed"
+  ],
+  "audio": {
+    "sample_rate": 24000
+  },
+  "voices": [
+    {
+      "id": "F1",
+      "gender": "female"
+    },
+    {
+      "id": "F2",
+      "gender": "female"
+    },
+    {
+      "id": "F3",
+      "gender": "female"
+    },
+    {
+      "id": "F4",
+      "gender": "female"
+    },
+    {
+      "id": "F5",
+      "gender": "female"
+    },
+    {
+      "id": "M1",
+      "gender": "male"
+    },
+    {
+      "id": "M2",
+      "gender": "male"
+    },
+    {
+      "id": "M3",
+      "gender": "male"
+    },
+    {
+      "id": "M4",
+      "gender": "male"
+    },
+    {
+      "id": "M5",
+      "gender": "male"
+    }
+  ],
+  "default_voice": "F1",
+  "engine_config": {
+    "duration_predictor": "duration_predictor.int8.onnx",
+    "text_encoder": "text_encoder.int8.onnx",
+    "vector_estimator": "vector_estimator.int8.onnx",
+    "vocoder": "vocoder.int8.onnx",
+    "tts_json": "tts.json",
+    "unicode_indexer": "unicode_indexer.bin",
+    "voice_style": "voice.bin",
+    "languages": "en,ko,ja,ar,bg,cs,da,de,el,es,et,fi,fr,hi,hr,hu,id,it,lt,lv,nl,pl,pt,ro,ru,sk,sl,sv,tr,uk,vi",
+    "default_language": "en",
+    "num_steps": "8"
+  }
+}

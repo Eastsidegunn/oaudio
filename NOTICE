@@ -1,0 +1,51 @@
+Oaudio
+Copyright 2026 Eastsidegunn
+
+Oaudio is a runtime. The speech recognition, synthesis, detection and
+diarization are the work of the projects below; Oaudio downloads, schedules
+and serves them.
+
+Engines
+  whisper.cpp       https://github.com/ggml-org/whisper.cpp      MIT
+  sherpa-onnx       https://github.com/k2-fsa/sherpa-onnx        Apache-2.0
+  ONNX Runtime      https://github.com/microsoft/onnxruntime     MIT
+  audio.cpp         https://github.com/0xShug0/audio.cpp         Apache-2.0
+  ggml              https://github.com/ggml-org/ggml             MIT
+  Apple Speech and AVFoundation frameworks, and /usr/bin/say (part of macOS)
+
+Models in the built-in catalog
+  Whisper                  OpenAI                                 MIT
+                           GGML conversions by the whisper.cpp project
+  SenseVoice-Small         FunAudioLLM, Alibaba Group             FunASR Model License 1.1
+                           ONNX conversion by the sherpa-onnx project
+  Qwen3-ASR 0.6B           Alibaba Cloud, Qwen team               Apache-2.0
+                           ONNX export by Wasser1462, redistributed by sherpa-onnx
+  Parakeet TDT 0.6B v3     NVIDIA                                 CC-BY-4.0
+                           ONNX conversion by the sherpa-onnx project
+  Moonshine (English)      Moonshine AI (Useful Sensors)          MIT
+                           ONNX packaging by the sherpa-onnx project
+  Kokoro-82M               hexgrad                                Apache-2.0
+                           ONNX export by the sherpa-onnx project
+  Supertonic 3             Supertone Inc.                         OpenRAIL-M
+                           ONNX packaging by the sherpa-onnx project
+  Qwen3-TTS 0.6B Base      Alibaba Cloud, Qwen team               Apache-2.0
+                           GGUF conversion by the audio.cpp project
+  Chatterbox Multilingual  Resemble AI                            MIT
+                           GGUF conversion by the audio.cpp project
+  Pocket TTS               Kyutai                                 CC-BY-4.0
+                           ONNX export by KevinAHM, redistributed by sherpa-onnx
+                           (the redistributed archive also calls itself
+                           non-commercial; see the manifest)
+  Silero VAD               Silero Team                            MIT
+  pyannote segmentation    Hervé Bredin, CNRS                     MIT
+                           ONNX export by the sherpa-onnx project
+  CAM++ speaker embedding  Alibaba 3D-Speaker                     Apache-2.0
+
+Design
+  The model lifecycle (load on demand, keep-alive, runner subprocesses) follows
+  the design of Ollama (https://github.com/ollama/ollama, MIT). The HTTP API
+  follows OpenAI's audio and realtime APIs. No code from either is included.
+
+Each model's own license is recorded in its manifest and shown by
+`oaudio show <model>`. Model files are downloaded from their publishers at run
+time and are not part of this repository.

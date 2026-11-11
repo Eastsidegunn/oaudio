@@ -1,0 +1,27 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "apple-speech",
+  "tag": "system",
+  "aliases": ["latest"],
+  "task": "stt",
+  "engine": "apple",
+  "family": "apple-speechanalyzer",
+  "description": "On-device speech recognition built into macOS 26 and later (SpeechAnalyzer). Audio never leaves the machine. Pass a language; it does not detect one.",
+  "upstream": {
+    "model": "Apple SpeechTranscriber",
+    "authors": "Apple",
+    "url": "https://developer.apple.com/documentation/speech/speechtranscriber"
+  },
+  "source": { "type": "system" },
+  "license": {
+    "spdx": "LicenseRef-Apple-macOS-SLA",
+    "url": "https://www.apple.com/legal/sla/",
+    "commercial_use": true,
+    "notes": "A system framework available to any macOS app. macOS downloads the recognition model for a language the first time it is used."
+  },
+  "languages": ["multi"],
+  "capabilities": ["segment_timestamps", "word_timestamps"],
+  "audio": { "sample_rate": 16000 },
+  "platforms": ["darwin/arm64"],
+  "engine_config": { "default_locale": "en-US" }
+}

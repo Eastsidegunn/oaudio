@@ -1,0 +1,66 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "sensevoice",
+  "tag": "small-int8",
+  "aliases": [
+    "latest"
+  ],
+  "task": "stt",
+  "engine": "sherpa-onnx",
+  "family": "sense-voice",
+  "description": "SenseVoice-Small (8-bit): small, fast recognition for Korean, English, Japanese, Mandarin and Cantonese, with punctuation. Detects the language unless told. Long recordings are cut at silences by the Silero speech detector shipped alongside.",
+  "upstream": {
+    "model": "FunAudioLLM/SenseVoiceSmall",
+    "authors": "FunAudioLLM, Alibaba Group",
+    "url": "https://huggingface.co/FunAudioLLM/SenseVoiceSmall"
+  },
+  "source": {
+    "type": "url",
+    "files": [
+      {
+        "path": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17.tar.bz2",
+        "size": 163002883,
+        "sha256": "7d1efa2138a65b0b488df37f8b89e3d91a60676e416f515b952358d83dfd347e",
+        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17.tar.bz2",
+        "extract": "tar.bz2",
+        "strip_components": 1,
+        "exclude": [
+          "test_wavs/"
+        ]
+      },
+      {
+        "path": "silero_vad_v5.onnx",
+        "size": 2313101,
+        "sha256": "6b99cbfd39246b6706f98ec13c7c50c6b299181f2474fa05cbc8046acc274396",
+        "url": "https://huggingface.co/csukuangfj/vad/resolve/fba88cd2e921609e7675c3aaf51e0b9b295da4bc/silero_vad_v5.onnx"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "LicenseRef-FunASR-Model-1.1",
+    "url": "https://github.com/modelscope/FunASR/blob/main/MODEL_LICENSE",
+    "commercial_use": true,
+    "notes": "Weights under the FunASR Model Open Source License Agreement 1.1, not the MIT licence of the SenseVoice code. It lets you use, copy, modify and share the model provided you credit the source and authors and keep the model's name; the licence ends for anyone who, in its words, maliciously smears the model. The upstream README states that commercial use of the official weights is permitted under these terms. This is an ONNX conversion by the sherpa-onnx project; the upstream statement covers the official weights. The speech detector is Silero VAD (MIT)."
+  },
+  "languages": [
+    "ko",
+    "en",
+    "ja",
+    "zh",
+    "yue"
+  ],
+  "capabilities": [
+    "segment_timestamps",
+    "word_timestamps",
+    "language_detect"
+  ],
+  "audio": {
+    "sample_rate": 16000
+  },
+  "engine_config": {
+    "model": "model.int8.onnx",
+    "tokens": "tokens.txt",
+    "language_hints": "ko,en,ja,zh,yue",
+    "vad": "silero_vad_v5.onnx"
+  }
+}

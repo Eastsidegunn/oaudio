@@ -1,0 +1,58 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "moonshine",
+  "tag": "tiny-en",
+  "aliases": [],
+  "task": "stt",
+  "engine": "sherpa-onnx",
+  "family": "moonshine",
+  "description": "Moonshine tiny (quantized): very small English recognition, built for short utterances on small machines.",
+  "upstream": {
+    "model": "UsefulSensors/moonshine",
+    "authors": "Moonshine AI (Useful Sensors)",
+    "url": "https://huggingface.co/UsefulSensors/moonshine"
+  },
+  "source": {
+    "type": "url",
+    "files": [
+      {
+        "path": "sherpa-onnx-moonshine-tiny-en-quantized-2026-02-27.tar.bz2",
+        "size": 29858559,
+        "sha256": "9ec31b342d8fa3240c3b81b8f82e1cf7e3ac467c93ca5a999b741d5887164f8d",
+        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-moonshine-tiny-en-quantized-2026-02-27.tar.bz2",
+        "extract": "tar.bz2",
+        "strip_components": 1,
+        "exclude": [
+          "test_wavs/"
+        ]
+      },
+      {
+        "path": "silero_vad_v5.onnx",
+        "size": 2313101,
+        "sha256": "6b99cbfd39246b6706f98ec13c7c50c6b299181f2474fa05cbc8046acc274396",
+        "url": "https://huggingface.co/csukuangfj/vad/resolve/fba88cd2e921609e7675c3aaf51e0b9b295da4bc/silero_vad_v5.onnx"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "url": "https://huggingface.co/UsefulSensors/moonshine",
+    "commercial_use": true,
+    "notes": "The English Moonshine models are MIT. Moonshine's models for other languages, Korean included, are under a separate community licence with a revenue cap and are not in this catalog. The speech detector is Silero VAD (MIT)."
+  },
+  "languages": [
+    "en"
+  ],
+  "capabilities": [
+    "segment_timestamps"
+  ],
+  "audio": {
+    "sample_rate": 16000
+  },
+  "engine_config": {
+    "encoder": "encoder_model.ort",
+    "merged_decoder": "decoder_model_merged.ort",
+    "tokens": "tokens.txt",
+    "vad": "silero_vad_v5.onnx"
+  }
+}

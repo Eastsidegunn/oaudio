@@ -1,0 +1,70 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "chatterbox",
+  "tag": "multilingual-q8",
+  "aliases": [
+    "latest"
+  ],
+  "task": "tts",
+  "engine": "audio.cpp",
+  "family": "chatterbox",
+  "description": "Chatterbox Multilingual (8-bit): speaks 19 languages, Korean included, in a voice copied from reference audio. It has no built-in voices; create one with `oaudio voice create`.",
+  "upstream": {
+    "model": "ResembleAI/chatterbox",
+    "authors": "Resemble AI",
+    "url": "https://huggingface.co/ResembleAI/chatterbox"
+  },
+  "source": {
+    "type": "huggingface",
+    "repo": "audio-cpp/audio.cpp-gguf",
+    "revision": "73ce4162f6cce370dd533c6782b772135c1b2a8e",
+    "files": [
+      {
+        "path": "Chatterbox-GGUF/chatterbox-q8_0.gguf",
+        "size": 2088399204,
+        "sha256": "45d71d8d248ba831014813bbbbba74c7d786dd9447c02090fe05c44344f69453"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "url": "https://huggingface.co/ResembleAI/chatterbox",
+    "commercial_use": true,
+    "notes": "Weights by Resemble AI under MIT. GGUF conversion by the audio.cpp project. Resemble AI's own code adds an inaudible watermark to what it generates; whether this port does was not checked. Clone a voice only with the speaker's consent."
+  },
+  "languages": [
+    "ko",
+    "en",
+    "ar",
+    "da",
+    "de",
+    "el",
+    "es",
+    "fi",
+    "fr",
+    "hi",
+    "it",
+    "ms",
+    "nl",
+    "no",
+    "pl",
+    "pt",
+    "sv",
+    "sw",
+    "tr"
+  ],
+  "capabilities": [
+    "voice_clone"
+  ],
+  "audio": {
+    "sample_rate": 24000
+  },
+  "engine_config": {
+    "family": "chatterbox",
+    "model": "Chatterbox-GGUF/chatterbox-q8_0.gguf",
+    "mode": "offline",
+    "languages": "ko,en,ar,da,de,el,es,fi,fr,hi,it,ms,nl,no,pl,pt,sv,sw,tr",
+    "reference_text": "never",
+    "session_options": "{\"chatterbox.multilingual_t3\":\"v3\"}"
+  }
+}

@@ -1,0 +1,376 @@
+{
+ "tts": "kokoro",
+ "stt": "whisper:base.en-q5_1",
+ "voice": "af_heart",
+ "language": "en",
+ "sentences": 60,
+ "audio_seconds": 264.5,
+ "round_trip_wer": 0.093,
+ "round_trip_cer": 0.0163,
+ "exact_sentences": "29/60",
+ "rtf": 0.1368,
+ "first_audio_ms_median": 572,
+ "ms_per_sentence": 603.2,
+ "rows": [
+  {
+   "text": "Stuff it into you his belly counselled him.",
+   "heard": "Stuff it into you, his belly counseled him.",
+   "audio_s": 2.33,
+   "ms": 327
+  },
+  {
+   "text": "Pride after satisfaction uplifted him like long slow waves.",
+   "heard": "Pride after satisfaction uplifted him like long, slow waves.",
+   "audio_s": 3.57,
+   "ms": 474
+  },
+  {
+   "text": "The crampness and the poverty are all intended.",
+   "heard": "The cramp nests and the poverty are all intended.",
+   "audio_s": 2.57,
+   "ms": 359
+  },
+  {
+   "text": "The awkward thing was that they had practically no other relations and that his own affairs took up all his time.",
+   "heard": "The awkward thing was that they had practically no other relation S, and that his own affairs took up all. His time...",
+   "audio_s": 6.32,
+   "ms": 859
+  },
+  {
+   "text": "Then they started on again and two hours later came in sight of the house of doctor pipt.",
+   "heard": "Then they started on again, and two hours later came inside of the house of Dr. Pip T.",
+   "audio_s": 4.59,
+   "ms": 588
+  },
+  {
+   "text": "He selected a small gold bottle with a pepper box top so that the powder might be sprinkled on any object through the small holes.",
+   "heard": "He select ED a small gold bottle with a pepper box top so that the powder might be spring. Let on any object through the small holes.",
+   "audio_s": 7.34,
+   "ms": 954
+  },
+  {
+   "text": "The delawares are children of the tortoise and they outstrip the deer.",
+   "heard": "The de la areas are children of the tortoise, and they outstrip the deer.",
+   "audio_s": 3.51,
+   "ms": 479
+  },
+  {
+   "text": "One could hardly hope for any upon so dry a day.",
+   "heard": "One could hardly hope for any upon so dry day.",
+   "audio_s": 2.63,
+   "ms": 371
+  },
+  {
+   "text": "You haven't seen any of them no sir.",
+   "heard": "You haven't seen any of them, no sir.",
+   "audio_s": 1.69,
+   "ms": 266
+  },
+  {
+   "text": "No one less than that would have a chance.",
+   "heard": "no one less than that would have a chance.",
+   "audio_s": 2.02,
+   "ms": 297
+  },
+  {
+   "text": "Why should he not be as other men.",
+   "heard": "Why should he not be as other men?",
+   "audio_s": 1.63,
+   "ms": 258
+  },
+  {
+   "text": "She had been born within its borders within its borders she had lived and grown and within its borders she had met her love.",
+   "heard": "She had been born within its borders within its borders. She had lived D and grown and within its borders. She had met her love.",
+   "audio_s": 6.56,
+   "ms": 898
+  },
+  {
+   "text": "No thank you i'll just look at the whelps and leave a message about them with your shepherd.",
+   "heard": "No thank you. I'll just look at the whelps and leave a message about them with your shepherd.",
+   "audio_s": 4.35,
+   "ms": 556
+  },
+  {
+   "text": "We had meters in which there were two bottles of liquid.",
+   "heard": "we had meters in which there were two bottle S of liquid.",
+   "audio_s": 2.97,
+   "ms": 397
+  },
+  {
+   "text": "That's not much of a job for an athlete here i've been to town and back.",
+   "heard": "Tea hats not much of a job, for an athlete here I've been to town and back.",
+   "audio_s": 4.07,
+   "ms": 530
+  },
+  {
+   "text": "I don't want to stand around and look on.",
+   "heard": "I don't want to stand around and look on.",
+   "audio_s": 1.92,
+   "ms": 292
+  },
+  {
+   "text": "I can distinguish the eye of the ichthyosaurus glowing like a red hot coal and as large as a man's head.",
+   "heard": "I can distinguish the eye of the ichthyosaur us glowing like a red hot coal and as large as man's head.",
+   "audio_s": 6.04,
+   "ms": 840
+  },
+  {
+   "text": "No i've made up my mind about it if i'm mabel i'll stay down here.",
+   "heard": "No, I've made up my mind about it if I'm able I'll stay down here.",
+   "audio_s": 3.28,
+   "ms": 458
+  },
+  {
+   "text": "Paul declares that the false apostles were called or sent neither by men nor by man.",
+   "heard": "P-U-L declare S that the false apostles were called, or sent neither by men nor by man.",
+   "audio_s": 5.38,
+   "ms": 787
+  },
+  {
+   "text": "Embrace him and forget about the nature of god.",
+   "heard": "Embrace him and forget about the nature of God.",
+   "audio_s": 2.35,
+   "ms": 350
+  },
+  {
+   "text": "In the present day we are well aware that an ancient philosopher is to be interpreted from himself and by the contemporary history of thought.",
+   "heard": "In the present day, we are well aware that an ancient philosopher is to be interpreted from himself and by the contemporary history of thought.",
+   "audio_s": 7.76,
+   "ms": 1063
+  },
+  {
+   "text": "This is the explanation of the shallows which are found in that part of the atlantic ocean.",
+   "heard": "This is the explanation of the shallows, which are found in that part of the Atlantic Ocean.",
+   "audio_s": 4.64,
+   "ms": 596
+  },
+  {
+   "text": "Her feeble health gave her her yielding manner for she could never oppose any one without gathering up all her strength for the struggle.",
+   "heard": "Her feeble health gave her her yielding manner for she could never oppose anyone without gathering up all her strength for the struggle.",
+   "audio_s": 6.82,
+   "ms": 943
+  },
+  {
+   "text": "I doubt whether branwell was maintaining himself at this time.",
+   "heard": "I doubt whether Branwell was maintaining himself at this time.",
+   "audio_s": 3.41,
+   "ms": 444
+  },
+  {
+   "text": "Moreover had the people been inclined to rebellion what greater opportunity could they have wished.",
+   "heard": "Moreover, had the people been inclined to rebellion what greater opportunity could they have wished?",
+   "audio_s": 5.07,
+   "ms": 646
+  },
+  {
+   "text": "I haven't had a chance yet to tell you what a jolly little place i think this is.",
+   "heard": "I haven't had a chance yet to tell you what a jolly little place I think this is.",
+   "audio_s": 4.31,
+   "ms": 563
+  },
+  {
+   "text": "Alexander unclenched the two hands at his sides.",
+   "heard": "Alexander Yu-en clinched the two hands at his sides.",
+   "audio_s": 2.86,
+   "ms": 385
+  },
+  {
+   "text": "The sight of you bartley to see you living and happy and successful can i never make you understand what that means to me.",
+   "heard": "The site of UB-A-R-T-L-E-Y to see you living and happy and successful can. I never make you understand what that means to me.",
+   "audio_s": 7.25,
+   "ms": 963
+  },
+  {
+   "text": "And you belong to that small class who are happy.",
+   "heard": "And you belong to that small class who are happy.",
+   "audio_s": 2.42,
+   "ms": 346
+  },
+  {
+   "text": "Margaret bolton almost lost for a moment her habitual placidity.",
+   "heard": "Margaret Bolton almost lost for a moment her habitual placidity.",
+   "audio_s": 3.81,
+   "ms": 513
+  },
+  {
+   "text": "To relieve her from both he laid his hand with force upon his heart and said do you believe me.",
+   "heard": "To relieve her from both, he laid his hand with force upon his heart and said, \"Do you believe?\" May.",
+   "audio_s": 5.01,
+   "ms": 775
+  },
+  {
+   "text": "Approaching the dining table he carefully placed the article in the centre and removed the cloth.",
+   "heard": "Approaching the dining table, he carefully placed the article in the center and removed the cloth.",
+   "audio_s": 4.78,
+   "ms": 639
+  },
+  {
+   "text": "And what demonstration do you offer asked servadac eagerly that it will not happen.",
+   "heard": "And what demonstration do you offer asked serve A to C eagerly that it will not happen?",
+   "audio_s": 4.66,
+   "ms": 610
+  },
+  {
+   "text": "I stood with my back to the wall for i wanted no sword reaching out of the dark for me.",
+   "heard": "I stood with my back to the wall for I want head no sword reaching out of the dark for may",
+   "audio_s": 5.23,
+   "ms": 783
+  },
+  {
+   "text": "That time it pointed us into your father's ships.",
+   "heard": "That time it pointed us into your father's ships.",
+   "audio_s": 2.52,
+   "ms": 358
+  },
+  {
+   "text": "A more dreary and more disunited family party i never sat at the table with.",
+   "heard": "A more dreary and more disunited family party I never sat at the table with.",
+   "audio_s": 4.17,
+   "ms": 580
+  },
+  {
+   "text": "All the time he was talking to me his angry little eyes were following lake.",
+   "heard": "All the time he was talking to me, his angry little eyes were following Lake.",
+   "audio_s": 3.85,
+   "ms": 511
+  },
+  {
+   "text": "This transient spring and lighting up are beautiful a glamour beguiling our senses.",
+   "heard": "This transient spring and lighting up are beautiful, glamour beguiling our senses.",
+   "audio_s": 4.24,
+   "ms": 573
+  },
+  {
+   "text": "I could not see my boy injured excellence for but doing his duty as one of cumberland's sons.",
+   "heard": "I could not see my boy injured excellence for but doing his duty as one of Cumberland's sons.",
+   "audio_s": 5.03,
+   "ms": 647
+  },
+  {
+   "text": "And henry might return to england at any moment.",
+   "heard": "and Henry might return to England at any moment.",
+   "audio_s": 2.66,
+   "ms": 367
+  },
+  {
+   "text": "At last all was quiet and black in the courtyard of gamewell.",
+   "heard": "At last all was quiet and black in the courtyard of game well.",
+   "audio_s": 3.11,
+   "ms": 448
+  },
+  {
+   "text": "I would fain know if i am destined for so glorious a career cried the tree rejoicing.",
+   "heard": "I would feign know if I am destined for so glorious a career cried the tree rejoicing.",
+   "audio_s": 4.76,
+   "ms": 621
+  },
+  {
+   "text": "And then he told all about his youth and the little mice had never heard the like before and they listened and said.",
+   "heard": "And then he told all about his youth and the little mice had never heard the like before and they listened E.D. and said",
+   "audio_s": 6.2,
+   "ms": 870
+  },
+  {
+   "text": "Worse tom worse n ever replied the jailer gloomily.",
+   "heard": "Worse Tom worse and ever replied the jailer gloomily.",
+   "audio_s": 2.92,
+   "ms": 414
+  },
+  {
+   "text": "He detested the grasping disposition that would endeavor to take advantage of his evident desire to help young gates.",
+   "heard": "He, D.E., tested the grasping disposition that would endeavor to take advantage of his evident desire to help young. Gates",
+   "audio_s": 7.16,
+   "ms": 992
+  },
+  {
+   "text": "Her manner was neither independent nor assertive but rather one of well bred composure and calm reliance.",
+   "heard": "Her manner was neither independent nor assertive, but rather one of well-bred composure and calm reliance.",
+   "audio_s": 6.09,
+   "ms": 791
+  },
+  {
+   "text": "We'll come in here this afternoon with old clothes on and have a regular house cleaning.",
+   "heard": "We'll come in here this afternoon with old clothes on and have a regular house cleaning.",
+   "audio_s": 4.52,
+   "ms": 597
+  },
+  {
+   "text": "Perchance too kaffar's death might serve him in good stead.",
+   "heard": "Perchance to K, F-F-A-R-S death might serve him in good stead.",
+   "audio_s": 3.88,
+   "ms": 516
+  },
+  {
+   "text": "With one jump anders got out of his chair.",
+   "heard": "with one jump and Urz got out of his chair.",
+   "audio_s": 2.34,
+   "ms": 337
+  },
+  {
+   "text": "She then rose humming the air to which she was presently going to dance.",
+   "heard": "She then rose humming the air to which she was presently going to dance.",
+   "audio_s": 3.49,
+   "ms": 475
+  },
+  {
+   "text": "It might have seemed that a trout of this size was a fairly substantial meal.",
+   "heard": "It might have seemed that a trout of this size was a fairly substantial meal.",
+   "audio_s": 3.79,
+   "ms": 509
+  },
+  {
+   "text": "I say i've been wondering about this business.",
+   "heard": "I say, I've been wondering about this business.",
+   "audio_s": 2.52,
+   "ms": 356
+  },
+  {
+   "text": "Their distinctive characters however display one broad and unfailing difference.",
+   "heard": "their distinctive char act, or is however display one broad and unfailing difference.",
+   "audio_s": 4.6,
+   "ms": 618
+  },
+  {
+   "text": "The analysis of knowledge will occupy us until the end of the thirteenth lecture and is the most difficult part of our whole enterprise.",
+   "heard": "The analysis of knowledge will occupy us until the end of the 13th lecture and is the most difficult part of our whole enterprise.",
+   "audio_s": 7.03,
+   "ms": 986
+  },
+  {
+   "text": "Jack had been standing in the far corner of the room talking to eva and was now reduced to silence by his praises.",
+   "heard": "Jack had been standing in the far corner of the room talking to Evie and was now reduced, due to silence by his praises.",
+   "audio_s": 6.56,
+   "ms": 898
+  },
+  {
+   "text": "Were i to comply with your orders without expressing my own opinion i should seem to have done so willingly hereafter.",
+   "heard": "\"Where I to comply with your orders, without expressing my own opinion, I should seem to have done so willingly. Hereafter.\"",
+   "audio_s": 6.57,
+   "ms": 933
+  },
+  {
+   "text": "Nemo builds a fabulous futuristic submarine the nautilus then conducts an underwater campaign of vengeance against his imperialist oppressor.",
+   "heard": "An emo builds a fabulous futuristic submarine, the Nautilus, then conducts an underwater campaign of vengeance against his imperialist, oppressor.",
+   "audio_s": 9.14,
+   "ms": 1236
+  },
+  {
+   "text": "We have a commander who's game for anything.",
+   "heard": "We have a commander who's game for anything.",
+   "audio_s": 2.15,
+   "ms": 317
+  },
+  {
+   "text": "As a private citizen i shall be a model of deportment because it would be dangerous to be otherwise.",
+   "heard": "As a private citizen, I shall be a model of deportment because it would be dangerous to be otherwise.",
+   "audio_s": 5.32,
+   "ms": 716
+  },
+  {
+   "text": "The helpless worm arose and sat upon the lillys leaf and the bright cloud saild on to find his partner in the vale.",
+   "heard": "The helpless worm arose and sat upon the lily esleaf and the bright cloud sailed de-on to find, his partner in the veil.",
+   "audio_s": 6.69,
+   "ms": 919
+  }
+ ]
+}

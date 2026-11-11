@@ -1,0 +1,43 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "whisper",
+  "tag": "base.en-q5_1",
+  "task": "stt",
+  "engine": "whisper.cpp",
+  "family": "whisper",
+  "description": "Whisper base, English only, 5-bit quantized. Small and fast; a good first download.",
+  "upstream": {
+    "model": "openai/whisper-base.en",
+    "authors": "OpenAI",
+    "url": "https://huggingface.co/openai/whisper-base.en"
+  },
+  "source": {
+    "type": "huggingface",
+    "repo": "ggerganov/whisper.cpp",
+    "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+    "files": [
+      {
+        "path": "ggml-base.en-q5_1.bin",
+        "size": 59721011,
+        "sha256": "4baf70dd0d7c4247ba2b81fafd9c01005ac77c2f9ef064e00dcf195d0e2fdd2f"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "url": "https://github.com/openai/whisper/blob/main/LICENSE",
+    "commercial_use": true,
+    "notes": "Weights by OpenAI (MIT), converted to GGML by the whisper.cpp project (MIT)."
+  },
+  "languages": [
+    "en"
+  ],
+  "capabilities": [
+    "segment_timestamps",
+    "word_timestamps",
+    "prompt"
+  ],
+  "audio": {
+    "sample_rate": 16000
+  }
+}

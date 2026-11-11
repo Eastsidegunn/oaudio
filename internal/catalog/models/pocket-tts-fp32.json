@@ -1,0 +1,55 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "pocket-tts",
+  "tag": "fp32",
+  "aliases": [],
+  "task": "tts",
+  "engine": "sherpa-onnx",
+  "family": "pocket",
+  "description": "Pocket TTS (full precision): speaks English in a voice copied from a few seconds of reference audio, on a CPU. Larger than the 8-bit build. It has no built-in voices; create one with `oaudio voice create`.",
+  "upstream": {
+    "model": "kyutai/pocket-tts",
+    "authors": "Kyutai",
+    "url": "https://huggingface.co/kyutai/pocket-tts"
+  },
+  "source": {
+    "type": "url",
+    "files": [
+      {
+        "path": "sherpa-onnx-pocket-tts-2026-01-26.tar.bz2",
+        "size": 168148625,
+        "sha256": "61422a478ef09d9b2c067261fb822e11786e0c86842c76d8633b7069968be7b5",
+        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/sherpa-onnx-pocket-tts-2026-01-26.tar.bz2",
+        "extract": "tar.bz2",
+        "strip_components": 1,
+        "exclude": [
+          "test_wavs/"
+        ]
+      }
+    ]
+  },
+  "license": {
+    "spdx": "CC-BY-4.0",
+    "url": "https://huggingface.co/kyutai/pocket-tts",
+    "commercial_use": false,
+    "notes": "Kyutai publishes the weights under CC-BY-4.0, which allows commercial use with credit, and the archive carries that license file. But the README inside the same archive, written by the ONNX exporter, says \"It is for non-commercial.\" The two disagree, so this is marked non-commercial until the authors settle it. The original repository asks users to accept its terms before download. Clone a voice only with the speaker's consent."
+  },
+  "languages": [
+    "en"
+  ],
+  "capabilities": [
+    "voice_clone"
+  ],
+  "audio": {
+    "sample_rate": 24000
+  },
+  "engine_config": {
+    "lm_flow": "lm_flow.onnx",
+    "lm_main": "lm_main.onnx",
+    "encoder": "encoder.onnx",
+    "decoder": "decoder.onnx",
+    "text_conditioner": "text_conditioner.onnx",
+    "vocab": "vocab.json",
+    "token_scores": "token_scores.json"
+  }
+}

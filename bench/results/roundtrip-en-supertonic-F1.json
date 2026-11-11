@@ -1,0 +1,376 @@
+{
+ "tts": "supertonic",
+ "stt": "whisper:large-v3-turbo-q5_0",
+ "voice": "F1",
+ "language": "en",
+ "sentences": 60,
+ "audio_seconds": 610.4,
+ "round_trip_wer": 0.0424,
+ "round_trip_cer": 0.0233,
+ "exact_sentences": "35/60",
+ "rtf": 0.1784,
+ "first_audio_ms_median": 1509,
+ "ms_per_sentence": 1815.4,
+ "rows": [
+  {
+   "text": "Unfortunately, studying traffic flow is difficult because driver behavior cannot be predicted with one-hundred percent certainty.",
+   "heard": "Unfortunately, studying traffic flow is difficult because driver behavior cannot be predicted with 100% certainty.",
+   "audio_s": 8.95,
+   "ms": 1628
+  },
+  {
+   "text": "Popular sports include football, basketball, volleyball, water-polo, fencing, rugby, cycling, ice hockey, roller hockey and F1 motor racing.",
+   "heard": "Popular sports include football, basketball, volleyball, water polo, fencing, rugby, cycling, ice hockey, roller hockey, and F1 motor racing.",
+   "audio_s": 10.66,
+   "ms": 1871
+  },
+  {
+   "text": "However, that is not true. Although there is something written on the back of the document, it is not a treasure map.",
+   "heard": "However, that is not true. Although there is something written on the back of the document, it is not a treasure map.",
+   "audio_s": 8.21,
+   "ms": 1554
+  },
+  {
+   "text": "Apia is the capital of Samoa. The town is on the island of Upolu and has a population of just under 40,000.",
+   "heard": "Upia is the capital of Samoa. The town is on the island of Apolu and has a population of just under 40,000.",
+   "audio_s": 8.57,
+   "ms": 1684
+  },
+  {
+   "text": "Researchers from Princeton University in the United States and Uppsala University in Sweden reported the new species evolved in just two generations, though this process had been believed to take much longer, due to breeding between an endemic Darwin finch, Geospiza fortes, and the immigrant cactus finch, Geospiza conirostris.",
+   "heard": "Researchers from Princeton University in the United States and Uppsala University in Sweden reported the new species evolved in just two generations, though this process had been believed to take much longer due to breeding between an endemic Darwin finch, Geospiza fortis, and the immigrant cactus. Finch Geospiza conorostris,",
+   "audio_s": 22.35,
+   "ms": 3859
+  },
+  {
+   "text": "Vatican City's population is around 800. It is the smallest independent country in the world and the country with the lowest population.",
+   "heard": "Vatican City's population is around 800. It is the smallest independent country in the world and the country with the lowest population.",
+   "audio_s": 10.13,
+   "ms": 1905
+  },
+  {
+   "text": "Although AI has a strong connotation of science fiction, AI forms a very important branch of computer science, dealing with behavior, learning and intelligent adaptation in a machine.",
+   "heard": "Although AI has a strong connotation of science fiction, AI forms a very important branch of computer science dealing with behavior, learning, and intelligent adaptation in a machine.",
+   "audio_s": 12.59,
+   "ms": 2181
+  },
+  {
+   "text": "Swirl the two dry powders together and then, with clean wet hands, squeeze them into a ball.",
+   "heard": "Swirl the two dry powders together and then, with clean wet hands, squeeze them into a ball.",
+   "audio_s": 6.27,
+   "ms": 1163
+  },
+  {
+   "text": "During the struggle for independence organised by the Mau movement, a peaceful gathering in the town resulted in the killing of the paramount chief Tupua Tamasese Lealofi III.",
+   "heard": "During the struggle for independence organized by the Mao movement, a peaceful gathering in the town resulted in the killing of the paramount chief Tupua Tamasiz Lielofaifriyin.",
+   "audio_s": 11.83,
+   "ms": 2055
+  },
+  {
+   "text": "While this is often only an inaccurate stereotype, the best way to get along in Paris still is to be on your best behavior, acting like someone who is \"bien élevé\" (well brought up). It will make getting about considerably easier.",
+   "heard": "While this is often only an inaccurate stereotype, the best way to get along in Paris still is to be on your best behavior, acting like someone who is being elevated, well brought up. It will make getting about considerably easier.",
+   "audio_s": 15.68,
+   "ms": 2823
+  },
+  {
+   "text": "We agree with the USOC's statement that the interests of our athletes and clubs, and their sport, may be better served by moving forward with meaningful change within our organization, rather than decertification.",
+   "heard": "We agree with the USOC's statement that the interests of our athletes and clubs and their sport may be better served by moving forward with meaningful change within our organization rather than decertification.",
+   "audio_s": 14.7,
+   "ms": 2516
+  },
+  {
+   "text": "The composition of these crystals matches those found in the urine of affected pets when compared by infrared spectroscopy (FTIR).",
+   "heard": "The composition of these crystals matches those found in the urine of affected pets when compared by infrared spectroscopy, FTIR.",
+   "audio_s": 9.48,
+   "ms": 1687
+  },
+  {
+   "text": "People may not anticipate that patience and understanding are also necessary for travellers returning home.",
+   "heard": "People may not anticipate that patience and understanding are also necessary for travelers returning home.",
+   "audio_s": 7.67,
+   "ms": 1337
+  },
+  {
+   "text": "As knowledge of Greek declined, the West found itself cut off from its Greek philosophical and scientific roots.",
+   "heard": "As knowledge of Greek declined, the West found itself cut off from its Greek philosophical and scientific roots.",
+   "audio_s": 7.86,
+   "ms": 1464
+  },
+  {
+   "text": "Their thermal behavior is not as steady as large caves on Earth that often maintain a fairly constant temperature, but it is consistent with these being deep holes in the ground,\" said Glen Cushing of the United States Geological Survey (USGS) Astrogeology Team and of Northern Arizona University located in Flagstaff, Arizona.",
+   "heard": "Their thermal behavior is not as steady as large caves on Earth that often maintain a fairly constant temperature, but it is consistent with these being deep holes in the ground, said Glenn Cushing of the United States Geological Survey, USGS, Astrogeology Team and of Northern Arizona University, located in Flagstaff, Arizona.",
+   "audio_s": 22.89,
+   "ms": 4039
+  },
+  {
+   "text": "Some atoms have unstable nuclei which means that they tend to break apart with little or no nudging.",
+   "heard": "Some atoms have unstable nuclei, which means that they tend to break apart with little or no nudging,",
+   "audio_s": 6.68,
+   "ms": 1170
+  },
+  {
+   "text": "Blogging is a tool that inspires collaboration, and encourages students to extend learning well beyond the traditional school day.",
+   "heard": "Blogging is a tool that inspires collaboration and encourages students to extend learning well beyond the traditional school day.",
+   "audio_s": 9.16,
+   "ms": 1631
+  },
+  {
+   "text": "He was initially hospitalised in the James Paget Hospital in Great Yarmouth.",
+   "heard": "He was initially hospitalized in the James Paget Hospital in Great Yarmouth.",
+   "audio_s": 5.53,
+   "ms": 1080
+  },
+  {
+   "text": "Thus, the pencil was a good friend to many people when it came out.",
+   "heard": "Thus, the pencil was a good friend to many people when it came out.",
+   "audio_s": 4.73,
+   "ms": 1006
+  },
+  {
+   "text": "Barcelona's official languages are Catalan and Spanish. About a half prefer to speak Catalan, a vast majority understands it, and virtually everyone knows Spanish.",
+   "heard": "Barcelona's official languages are Catalan and Spanish. About a half prefer to speak Catalan, a vast majority understands it, and virtually everyone knows Spanish.",
+   "audio_s": 11.77,
+   "ms": 2195
+  },
+  {
+   "text": "The Schengen zone, however, works somewhat like one country in this respect.",
+   "heard": "The Schengen Zone, however, works somewhat like one country in this respect.",
+   "audio_s": 5.36,
+   "ms": 986
+  },
+  {
+   "text": "Lakkha Singh presented the chhappan bhog bhajan as well. Singer, Raju Khandelwal was accompanying him.",
+   "heard": "Laka Singh presented the Chapin bog bhajan as well. Singer Raju Kandawal was accompanying him.",
+   "audio_s": 7.38,
+   "ms": 1581
+  },
+  {
+   "text": "Through the night between 150 and 200 copies were made, now known as \"Dunlap broadsides\".",
+   "heard": "Through the night between 150 and 200 copies were made, now known as Dunlap Broadsides.",
+   "audio_s": 7.25,
+   "ms": 1330
+  },
+  {
+   "text": "The debate was sparked by controversy over spending on relief and reconstruction in the wake Hurricane Katrina; which some fiscal conservatives have humorously labeled \"Bush's New Orleans Deal.\"",
+   "heard": "The debate was sparked by controversy over spending on relief and reconstruction in the wake Hurricane Katrina, which some fiscal conservatives have humorously labeled Bush's New Orleans deal.",
+   "audio_s": 14.03,
+   "ms": 2400
+  },
+  {
+   "text": "The term safari in popular use refers to overland travel to view the stunning African wildlife, particularly on savanna.",
+   "heard": "The term \"safari\" in popular use refers to overland travel to view the stunning African wildlife, particularly on savannah.",
+   "audio_s": 8.6,
+   "ms": 1498
+  },
+  {
+   "text": "These are sometimes-crowded family beaches with a good range of shops lining the shore. Swimming is safe.",
+   "heard": "These are sometimes crowded family beaches with a good range of shops lining the shore. Swimming is safe.",
+   "audio_s": 7.73,
+   "ms": 1549
+  },
+  {
+   "text": "In 1990, it was added to the list of world heritage sites in danger, due to the threat of desert sands.",
+   "heard": "In 1990, it was added to the list of World Heritage Sites in danger due to the threat of desert sands.",
+   "audio_s": 8.12,
+   "ms": 1464
+  },
+  {
+   "text": "In a carriage, they traveled back to Paris surrounded by a mob of people screaming and shouting threats against the King and Queen.",
+   "heard": "In a carriage, they traveled back to Paris, surrounded by a mob of people screaming and shouting threats against the king and queen.",
+   "audio_s": 9.04,
+   "ms": 1629
+  },
+  {
+   "text": "Appropriate use of blogs \"can empower students to become more analytical and critical; through actively responding to Internet materials, students can define their positions in the context of others' writings as well as outline their own perspectives on particular issues (Oravec, 2002).",
+   "heard": "appropriate use of blogs can empower students to become more analytical and critical through actively responding to internet materials students can define their positions in the context of others writings as well as outline their own perspectives on particular issues or of ec 2002",
+   "audio_s": 20.0,
+   "ms": 3310
+  },
+  {
+   "text": "The Sundarbans has been declared a UNESCO World Heritage Site. The part of the forest within Indian territory is called Sundarbans National Park.",
+   "heard": "The Sundarbans has been declared a UNESCO World Heritage Site. The part of the forest within Indian Territory is called Sundarbans National Park.",
+   "audio_s": 11.25,
+   "ms": 2082
+  },
+  {
+   "text": "Six hostages, including the children and elderly, were released early, as were the Filipino photographers.",
+   "heard": "Six hostages, including the children and elderly, were released early, as were the Filipino photographers.",
+   "audio_s": 7.77,
+   "ms": 1333
+  },
+  {
+   "text": "Most of the smaller islands are independent nations, or associated with France, and known as luxury beach resorts.",
+   "heard": "Most of the smaller islands are independent nations, or associated with France, and known as luxury beach resorts.",
+   "audio_s": 8.42,
+   "ms": 1511
+  },
+  {
+   "text": "The vertical clearance under the bridge is 15 meters. Construction was completed in August 2011, it didn't open to traffic until March 2017.",
+   "heard": "the vertical clearance under the bridge is 15 meters construction was completed in August 12 11 it didn't open to traffic until March 2017",
+   "audio_s": 11.46,
+   "ms": 2123
+  },
+  {
+   "text": "Ottawa is Canada's charming, bilingual capital and features an array of art galleries and museums that showcase Canada's past and present.",
+   "heard": "Ottawa is Canada's charming, bilingual capital and features an array of art galleries and museums that showcase Canada's past and present.",
+   "audio_s": 9.74,
+   "ms": 1685
+  },
+  {
+   "text": "The bridge is scheduled to be fully operational in September 2017, when the Brazilian customs checkpoints are expected to be finished.",
+   "heard": "The bridge is scheduled to be fully operational in September 2017 when the Brazilian customs checkpoints are expected to be finished.",
+   "audio_s": 9.98,
+   "ms": 1717
+  },
+  {
+   "text": "Re-entry shock comes on sooner than culture shock (there's less of a honeymoon phase), lasts longer, and can be more severe.",
+   "heard": "Re-entry shock comes on sooner than culture shock, there's less of a honeymoon phase, lasts longer, and can be more severe.",
+   "audio_s": 8.37,
+   "ms": 1509
+  },
+  {
+   "text": "Sleep interruption is the process of purposefully awakening during your normal sleep period and falling asleep a short time later (10–60 minutes).",
+   "heard": "Sleep interruption is the process of purposefully awakening during your normal sleep period and falling asleep a short time later, 1060 minutes.",
+   "audio_s": 11.12,
+   "ms": 1864
+  },
+  {
+   "text": "Elements like calcium and potassium are considered metals. Of course, there are also metals like silver and gold.",
+   "heard": "Elements like calcium and potassium are considered metals. Of course, there are also metals like silver and gold.",
+   "audio_s": 8.61,
+   "ms": 1735
+  },
+  {
+   "text": "Ancient cultures and tribes began to keep them for easy access to milk, hair, meat, and skins.",
+   "heard": "Ancient cultures and tribes began to keep them for easy access to milk, hair, meat, and skins.",
+   "audio_s": 6.67,
+   "ms": 1151
+  },
+  {
+   "text": "NextGen is a system the FAA claims would allow aircraft to fly shorter routes and save millions of gallons of fuel each year and cut carbon emissions.",
+   "heard": "NextGen is a system the FAA claims would allow aircraft to fly shorter routes and save millions of gallons of fuel each year and cut carbon emissions.",
+   "audio_s": 11.1,
+   "ms": 1868
+  },
+  {
+   "text": "The official Falklands currency is the Falkland pound (FKP) whose value is set equivalent to that of one British pound (GBP).",
+   "heard": "The official Falklands currency is the Falkland pound, FKP, whose value is set equivalent to that of one British pound, GBP.",
+   "audio_s": 9.19,
+   "ms": 1629
+  },
+  {
+   "text": "The correlation between brain pathology and behaviour supports scientists in their research.",
+   "heard": "The correlation between brain pathology and behavior supports scientists in their research.",
+   "audio_s": 6.49,
+   "ms": 1149
+  },
+  {
+   "text": "In 2002 Goma was destroyed by lava from the Nyiragongo volcano which buried most of the town’s streets, particularly the town centre.",
+   "heard": "In 2002, Goma was destroyed by lava from the Neiragongo volcano, which buried most of the town's streets, particularly the town center.",
+   "audio_s": 9.74,
+   "ms": 1687
+  },
+  {
+   "text": "Some cruises feature Berlin, Germany in the brochures. As you can see from the map above Berlin is no where near the sea and a visit to the city is not included in the price of the cruise.",
+   "heard": "some cruises feature Berlin Germany in the brochures as you can see from the map above Berlin is nowhere near the sea and a visit to the city is not included in the price of the cruise",
+   "audio_s": 13.08,
+   "ms": 2308
+  },
+  {
+   "text": "For the Springboks, it ended a five-match losing streak.",
+   "heard": "For the spring box, it ended a five-match losing streak.",
+   "audio_s": 4.24,
+   "ms": 810
+  },
+  {
+   "text": "Giancarlo Fisichella lost control of his car and ended the race very soon after the start.",
+   "heard": "Giancarlo Fisicella lost control of his car and ended the race very soon after the start.",
+   "audio_s": 6.41,
+   "ms": 1153
+  },
+  {
+   "text": "The pH level is indicated by the amount of Hydrogen (the H in pH) ions in the tested chemical.",
+   "heard": "The pH level is indicated by the amount of hydrogen, the HBH, ions in the tested chemical,",
+   "audio_s": 6.47,
+   "ms": 1162
+  },
+  {
+   "text": "The vehicle itself was taken away from the scene of the accident at approximately 1200 GMT on the same day.",
+   "heard": "The vehicle itself was taken away from the scene of the accident at approximately 200 GMT on the same day.",
+   "audio_s": 8.54,
+   "ms": 1514
+  },
+  {
+   "text": "Because the dinosaur feathers do not have a well-developed shaft, called a rachis, but do have other features of feathers — barbs and barbules — the researchers inferred the rachis was likely a later evolutionary development that these other features.",
+   "heard": "Because the dinosaur feathers do not have a well-developed shaft, called a ratchus, but do have other features of feathers, barbs and barbules, the researchers inferred the ratchus was likely a later evolutionary development that these other features.",
+   "audio_s": 16.71,
+   "ms": 2765
+  },
+  {
+   "text": "Cuomo, 53, began his governorship earlier this year and signed a bill last month legalizing same-sex marriage.",
+   "heard": "Cuomo, 53, began his governorship earlier this year and signed a bill last month legalizing same-sex marriage.",
+   "audio_s": 8.65,
+   "ms": 1525
+  },
+  {
+   "text": "All things considered, we should not be surprised if our own ancestors solved their \"protein problem\" in somewhat the same way that chimps on the savanna do today.",
+   "heard": "All things considered, we should not be surprised if our own ancestors solved their protein problem in somewhat the same way that chimps on the savannah do today.",
+   "audio_s": 11.05,
+   "ms": 1892
+  },
+  {
+   "text": "In fact, it is not easy to find at all even if one knew it existed. Once inside the cave, it is a total isolation.",
+   "heard": "In fact, it is not easy to find at all even if one knew it existed. Once inside the cave, it is a total isolation,",
+   "audio_s": 8.46,
+   "ms": 1708
+  },
+  {
+   "text": "Just like the moon exerts a pull on the earth, causing tides, so does the Milky Way exert a force on the Sagittarius galaxy.",
+   "heard": "Just like the Moon exerts a pull on the Earth, causing tides, so does the Milky Way exert a force on the Sagittarius galaxy.",
+   "audio_s": 8.8,
+   "ms": 1510
+  },
+  {
+   "text": "Finland is a great boating destination. The \"Land of a thousand lakes\" has thousands of islands too, in the lakes and in the coastal archipelagos.",
+   "heard": "Finland is a great boating destination. The land of a thousand lakes has thousands of islands too, in the lakes and in the coastal archipelagos.",
+   "audio_s": 10.77,
+   "ms": 1949
+  },
+  {
+   "text": "Entertainment news website TMZ understands the photographer stopped his vehicle on the other side of Sepulveda Boulevard and attempted to take pictures of the police stop before crossing the road and continuing, prompting the California Highway Patrol police officer conducting the traffic stop to order him back across, twice.",
+   "heard": "Entertainment news website TMZ understands the photographer stopped his vehicle on the other side of Sepulveda Boulevard and attempted to take pictures of the police stop before crossing the road and continuing, prompting the California Highway Patrol police officer conducting the traffic stop to order him back across twice.",
+   "audio_s": 22.52,
+   "ms": 3983
+  },
+  {
+   "text": "Scientists hope to understand how planets form, especially how the Earth formed, since comets collided with the Earth long ago.",
+   "heard": "Scientists hope to understand how planets form, especially how the Earth formed, since comets collided with the Earth long ago.",
+   "audio_s": 8.57,
+   "ms": 1510
+  },
+  {
+   "text": "Danielle Lantagne, a UN expert on the disease, stated the outbreak was likely caused by the peacekeepers.",
+   "heard": "Danielle Lantan, a UN expert on the disease, stated the outbreak was likely caused by the peacekeepers.",
+   "audio_s": 7.89,
+   "ms": 1451
+  },
+  {
+   "text": "He was also engaged in engraving banknotes for many countries, recent examples of his work including the Prime Ministerial portraits on the front of the new Canadian $5 and $100 bills.",
+   "heard": "He was also engaged in engraving banknotes for many countries, recent examples of his work, including the prime ministerial portraits on the front of the new Canadian followers and $100 bills.",
+   "audio_s": 13.85,
+   "ms": 2354
+  },
+  {
+   "text": "Needless to say, if you know a Romance language, it will be easier for you to learn Portuguese.",
+   "heard": "Needless to say, if you know a Romance language, will be easier for you to learn Portuguese.",
+   "audio_s": 6.59,
+   "ms": 1162
+  },
+  {
+   "text": "Buses depart the inter-district bus station (across the river) throughout the day, though most, especially those heading to the east and Jakar/Bumthang leave between 06:30 and 07:30.",
+   "heard": "Buses depart the inter-district bus station, across the river, throughout the day, though most, especially those heading to the east and Jakar Bumthang leave between Eur 6:30 and the 7:30.",
+   "audio_s": 14.65,
+   "ms": 2527
+  }
+ ]
+}
