@@ -10,7 +10,9 @@ SRC := third_party/audio.cpp
 BUILD := $(SRC)/build/oaudio
 OUT ?= ../../bin
 UNAME := $(shell uname -s)
-CMAKE_FLAGS := -DCMAKE_BUILD_TYPE=Release -DENGINE_ENABLE_CUDA=OFF -DENGINE_ENABLE_VULKAN=OFF \
+# GGML_NATIVE is off so that a build runs on any CPU of its architecture, not
+# only the one that compiled it (a release built on a new Mac must run on an M1).
+CMAKE_FLAGS := -DCMAKE_BUILD_TYPE=Release -DENGINE_ENABLE_NATIVE_CPU=OFF -DGGML_NATIVE=OFF -DENGINE_ENABLE_CUDA=OFF -DENGINE_ENABLE_VULKAN=OFF \
 	-DENGINE_BUILD_TESTS=OFF -DENGINE_BUILD_EXAMPLES=OFF -DENGINE_BUILD_WARMBENCH=OFF \
 	-DAUDIOCPP_DEPLOYMENT_BUILD=ON -DAUDIOCPP_BUILD_NATIVE_MODEL_MANAGER=OFF \
 	-DAUDIOCPP_MODEL_SET=custom "-DAUDIOCPP_MODELS=$(AUDIOCPP_MODELS)" \
@@ -39,7 +41,7 @@ $(BUILD)/bin/audiocpp_server: $(SRC)/CMakeLists.txt
 $(OUT)/audiocpp_server: $(BUILD)/bin/audiocpp_server
 	cp $< $@
 
-$(OUT)/oaudio-runner-audio.cpp: main.go
+$(OUT)/oaudio-runner-audio.cpp: main.go go.mod $(wildcard ../../runner/*.go)
 	CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.engineVersion=$(AUDIOCPP_TAG)" -o $@ .
 
 clean:

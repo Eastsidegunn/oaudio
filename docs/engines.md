@@ -10,6 +10,7 @@ engine as a separate runner process (`runner-protocol.md`).
 | `whisper.cpp` | `whisper:*` (recognition) | built and run on macOS arm64 with Metal | Working and measured. `runners/whisper`. |
 | `sherpa-onnx` | `sensevoice`, `qwen3-asr`, `parakeet` and `moonshine` (recognition), `kokoro` and `supertonic` (synthesis), `pocket-tts` (voice cloning), `silero-vad` (speech detection), `pyannote-diarize` (diarization) | built and run on macOS arm64, CPU | Working and measured. `runners/sherpa`. |
 | `audio.cpp` | `qwen3-tts` and `chatterbox` (voice cloning, Korean included) | built and run on macOS arm64 with Metal | Working and measured. `runners/audiocpp`. |
+| `speech.cpp` | `haas-ja` (Japanese recognition) | built and run on macOS arm64 with Metal | Working and measured. `runners/speechcpp`. |
 | `apple` | `apple-say` (synthesis), `apple-speech` (recognition) | macOS; recognition needs macOS 26+ on Apple Silicon | Working and measured. Built into the `oaudio` binary. |
 | `reference` | none | any | Test engine. Tones, not speech. |
 
@@ -17,7 +18,7 @@ None of the external runners has been built or run on Linux or Windows by hand; 
 
 ```sh
 make            # oaudio and the macOS helper
-make runners    # the whisper.cpp, sherpa-onnx and audio.cpp runners; needs git, cmake, a C++ compiler
+make runners    # the whisper.cpp, sherpa-onnx, audio.cpp and speech.cpp runners; needs git, cmake, a C++ compiler
 ```
 
 `oaudio catalog` shows which models have an engine installed.
@@ -108,7 +109,7 @@ Two things found while measuring:
 looking each word up in a dictionary and skips words that are not there,
 with only a log line. The runner loads the same dictionary and rewrites
 unknown words before synthesis: as the fewest dictionary words that spell
-them ("Oaudio" becomes "o voice"), or letter by letter if no reasonable split
+them (this project's former name, "Ovoice", became "o voice"), or letter by letter if no reasonable split
 exists ("LibriSpeech" is spelled out). Nothing is dropped, but names will not
 sound right. Proper pronunciation needs a grapheme-to-phoneme model, which
 the engine can accept through an interface the runner does not use yet.
@@ -164,6 +165,36 @@ The manifest's `engine_config` describes the model to audio.cpp:
   optimized one. On an M5 Pro both models ran faster than real time
   (`evidence.md`); slower Macs may not manage that.
 
+## `speech.cpp`
+
+`runners/speechcpp/Makefile` clones speech.cpp at a pinned tag (`v0.10.1`)
+and builds its command, `speech`, installed as `speechcpp`; on macOS with
+Metal, and with `GGML_NATIVE=OFF` so the binary runs on any CPU of its
+architecture. The runner is a pure-Go program that starts `speechcpp worker`
+for one model and speaks the worker's JSON Lines protocol
+([ADR 0007](adr/0007-speech-cpp.md)). Set `OAUDIO_SPEECHCPP` to use a
+`speech` binary from somewhere else.
+
+| Key | Meaning |
+|---|---|
+| `model` | The GGUF file. |
+| `languages` | Languages the model accepts, to refuse the others with 400 before the engine does. |
+| `vad` | A Silero GGUF file. Recordings longer than `whole_seconds` are cut into regions of speech with it, by `speechcpp vad` with the settings of `speech asr --vad`, and each region is recognized on its own. Without it, every recording is recognized whole. |
+| `whole_seconds` | The longest recording recognized in one request; default 30. |
+| `options` | Extra flags for `speechcpp worker`, which become the defaults of every request (for example `--decoding greedy` for ReazonSpeech). |
+
+- **`haas-ja`** is Third Intelligence's Haas-ja v1.0, a FastConformer with a
+  TDT decoder trained for Japanese. It writes punctuation, and its segments
+  are speech.cpp's sentence-level times. It neither translates nor detects
+  the language; the language is Japanese.
+- speech.cpp's documentation warns that its FastConformer recognizers drop
+  whole sentences from a stretch holding several; that is why recordings
+  over 30 s are recognized by region. A two-and-a-half-minute recording gave
+  the same text through Oaudio as through `speech asr --vad silero-vad`;
+  recognized whole, it lost its punctuation (`evidence.md`).
+- The runner serves recognition only, so far. The worker also synthesizes and
+  enhances speech.
+
 ## `apple`
 
 Uses what ships with macOS, so there is nothing to download through Oaudio.
@@ -188,9 +219,11 @@ without a download.
 
 ## Adding an engine
 
-1. Write a runner (`runner-protocol.md`). In Go, implement whichever of
-   `runner.Synthesizer`, `runner.Transcriber`, `runner.Detector` and
-   `runner.Diarizer` apply, and call `runner.Main`.
+1. Write a runner to [`runner-protocol.md`](runner-protocol.md), in any
+   language; `examples/runner.py` is a complete one in Python. In Go,
+   implement whichever of `runner.Synthesizer`, `runner.Transcriber`,
+   `runner.Detector` and `runner.Diarizer` apply, and call `runner.Main`.
+   Check it with `go run ./tools/runner-check`.
 2. Name the executable `oaudio-runner-<engine>` and put it next to `oaudio`,
    in `~/.oaudio/runners/`, in a directory listed in `OAUDIO_RUNNERS`, or on
    `PATH`.

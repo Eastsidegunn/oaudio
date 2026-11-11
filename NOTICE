@@ -10,6 +10,7 @@ Engines
   sherpa-onnx       https://github.com/k2-fsa/sherpa-onnx        Apache-2.0
   ONNX Runtime      https://github.com/microsoft/onnxruntime     MIT
   audio.cpp         https://github.com/0xShug0/audio.cpp         Apache-2.0
+  speech.cpp        https://github.com/nyosegawa/speech.cpp      MIT
   ggml              https://github.com/ggml-org/ggml             MIT
   Apple Speech and AVFoundation frameworks, and /usr/bin/say (part of macOS)
 
@@ -37,6 +38,10 @@ Models in the built-in catalog
                            (the redistributed archive also calls itself
                            non-commercial; see the manifest)
   Silero VAD               Silero Team                            MIT
+  Haas-ja v1.0             Third Intelligence                     Apache-2.0
+                           GGUF conversion for speech.cpp by its author
+  Silero VAD (GGUF)        Silero Team                            MIT
+                           GGUF conversion for speech.cpp by its author
   pyannote segmentation    Hervé Bredin, CNRS                     MIT
                            ONNX export by the sherpa-onnx project
   CAM++ speaker embedding  Alibaba 3D-Speaker                     Apache-2.0

@@ -4,7 +4,7 @@
 
 ```sh
 make            # bin/oaudio, and on macOS bin/oaudio-apple-stt
-make runners    # the whisper.cpp, sherpa-onnx and audio.cpp runners (needs cmake and a C++ compiler)
+make runners    # the whisper.cpp, sherpa-onnx, audio.cpp and speech.cpp runners (needs cmake and a C++ compiler)
 make test       # format check, go vet and unit tests
 make e2e        # the real binary against the macOS engines (macOS 26+)
 ```
@@ -50,8 +50,10 @@ is a bug.
 
 ## Adding an engine
 
-See `docs/runner-protocol.md` and `docs/engines.md`. The reference engine in
-`internal/engines/ref/ref.go` is the smallest complete example.
+See `docs/runner-protocol.md` and `docs/engines.md`. The smallest complete
+examples are `docs/examples/runner.py` (any language) and
+`internal/engines/ref/ref.go` (Go). A new runner must pass
+`go run ./tools/runner-check` with no `FAIL` before it is merged.
 
 ## Claims need evidence
 

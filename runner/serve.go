@@ -97,6 +97,15 @@ func Serve(ctx context.Context, engine Engine, parent io.Reader, handshake io.Wr
 func Handler(engine Engine) http.Handler {
 	var mu sync.Mutex
 	mux := http.NewServeMux()
+	// fail answers a request that failed before its response started.
+	fail := func(w http.ResponseWriter, err error) {
+		status := http.StatusInternalServerError
+		var bad *BadRequestError
+		if errors.As(err, &bad) {
+			status = http.StatusBadRequest
+		}
+		httpError(w, status, err.Error())
+	}
 
 	mux.HandleFunc("GET /v1/info", func(w http.ResponseWriter, r *http.Request) {
 		info := engine.Info()
@@ -200,11 +209,18 @@ func Handler(engine Engine) http.Handler {
 		}
 		mu.Lock()
 		defer mu.Unlock()
-		w.Header().Set("Content-Type", "application/x-ndjson")
-		w.WriteHeader(http.StatusOK)
+		// The status is sent with the first event, so that an engine that
+		// refuses the request before recognizing anything can still answer
+		// with 400 or 500 instead of an error event under a 200.
+		started := false
 		enc := json.NewEncoder(w)
 		flusher, _ := w.(http.Flusher)
 		send := func(ev Event) error {
+			if !started {
+				w.Header().Set("Content-Type", "application/x-ndjson")
+				w.WriteHeader(http.StatusOK)
+				started = true
+			}
 			if err := enc.Encode(ev); err != nil {
 				return err
 			}
@@ -216,11 +232,14 @@ func Handler(engine Engine) http.Handler {
 		lang, err := t.Transcribe(r.Context(), samples, opts, func(s Segment) error {
 			return send(Event{Type: EventSegment, Segment: &s})
 		})
-		if err != nil {
+		switch {
+		case err != nil && !started:
+			fail(w, err)
+		case err != nil:
 			send(Event{Type: EventError, Message: err.Error()})
-			return
+		default:
+			send(Event{Type: EventDone, Language: lang})
 		}
-		send(Event{Type: EventDone, Language: lang})
 	})
 	// readPCM decodes the s16le request body shared by the audio-in endpoints.
 	readPCM := func(w http.ResponseWriter, r *http.Request) (samples []float32, rate int, ok bool) {
@@ -239,14 +258,6 @@ func Handler(engine Engine) http.Handler {
 			samples[i] = float32(int16(binary.LittleEndian.Uint16(raw[i*2:]))) / 32768
 		}
 		return samples, rate, true
-	}
-	fail := func(w http.ResponseWriter, err error) {
-		status := http.StatusInternalServerError
-		var bad *BadRequestError
-		if errors.As(err, &bad) {
-			status = http.StatusBadRequest
-		}
-		httpError(w, status, err.Error())
 	}
 
 	mux.HandleFunc("POST /v1/vad", func(w http.ResponseWriter, r *http.Request) {

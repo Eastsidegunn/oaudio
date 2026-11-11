@@ -23,19 +23,21 @@ ifeq ($(UNAME),Darwin)
 endif
 
 # Engine runners. These compile third-party engines (whisper.cpp and
-# audio.cpp from source, sherpa-onnx from its prebuilt libraries), so they
+# audio.cpp and speech.cpp from source, sherpa-onnx from its prebuilt libraries), so they
 # need a C/C++ toolchain and cmake, and are kept out of the default target.
 # Each can be built alone: `make -C runners/<name> OUT=$(abspath $(BIN))`.
 runners:
 	$(MAKE) -C runners/whisper OUT=$(abspath $(BIN))
 	$(MAKE) -C runners/sherpa OUT=$(abspath $(BIN))
 	$(MAKE) -C runners/audiocpp OUT=$(abspath $(BIN))
+	$(MAKE) -C runners/speechcpp OUT=$(abspath $(BIN))
 
 test:
-	test -z "$$(gofmt -l cmd internal runner runners/whisper/main.go runners/sherpa runners/audiocpp)"
+	test -z "$$(gofmt -l cmd internal runner tools runners/whisper/main.go runners/sherpa runners/audiocpp runners/speechcpp)"
 	go vet ./...
 	go test ./...
 	cd runners/audiocpp && go vet . && go test .
+	cd runners/speechcpp && go vet . && go test .
 
 # End-to-end check against the real binary and the real system engines.
 e2e: all

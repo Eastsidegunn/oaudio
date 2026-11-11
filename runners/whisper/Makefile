@@ -4,7 +4,9 @@ WHISPER_TAG ?= v1.9.5
 SRC := third_party/whisper.cpp
 OUT ?= ../../bin
 UNAME := $(shell uname -s)
-CMAKE_FLAGS := -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_EXAMPLES=OFF
+# GGML_NATIVE is off so that a build runs on any CPU of its architecture, not
+# only the one that compiled it (a release built on a new Mac must run on an M1).
+CMAKE_FLAGS := -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_EXAMPLES=OFF
 LIBDIRS = $(SRC)/build/src $(SRC)/build/ggml/src $(SRC)/build/ggml/src/ggml-metal $(SRC)/build/ggml/src/ggml-blas
 ifeq ($(UNAME),Darwin)
 CMAKE_FLAGS += -DGGML_METAL=ON -DGGML_METAL_EMBED_LIBRARY=ON
@@ -26,7 +28,7 @@ $(SRC)/build/src/libwhisper.a: $(SRC)/CMakeLists.txt
 	cmake -S $(SRC) -B $(SRC)/build $(CMAKE_FLAGS)
 	cmake --build $(SRC)/build --config Release -j
 
-$(OUT)/oaudio-runner-whisper.cpp: main.go $(SRC)/build/src/libwhisper.a
+$(OUT)/oaudio-runner-whisper.cpp: main.go $(wildcard ../../runner/*.go) $(SRC)/build/src/libwhisper.a
 	CGO_ENABLED=1 \
 	C_INCLUDE_PATH="$(abspath $(SRC)/include):$(abspath $(SRC)/ggml/include)" \
 	LIBRARY_PATH="$(subst $(eval) ,:,$(abspath $(LIBDIRS)))" \

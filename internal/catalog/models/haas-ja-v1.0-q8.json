@@ -1,0 +1,62 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "haas-ja",
+  "tag": "v1.0-q8",
+  "aliases": [
+    "latest"
+  ],
+  "task": "stt",
+  "engine": "speech.cpp",
+  "family": "fastconformer",
+  "description": "Haas-ja v1.0 (8-bit): Japanese recognition with punctuation, a FastConformer with a TDT decoder, run by speech.cpp. Recordings over 30 s are cut into regions of speech by the Silero detector shipped alongside, as speech.cpp's own `speech asr --vad` does.",
+  "upstream": {
+    "model": "third-intelligence/Haas-ja-v1.0",
+    "authors": "Third Intelligence",
+    "url": "https://huggingface.co/third-intelligence/Haas-ja-v1.0"
+  },
+  "source": {
+    "type": "huggingface",
+    "repo": "sakasegawa/Haas-ja-v1.0-GGUF",
+    "revision": "6b965d5007ba780585de51549d57a8c1c0d67c7e",
+    "files": [
+      {
+        "path": "Haas-616M-ja-v1.0-Q8_0.gguf",
+        "size": 656381472,
+        "sha256": "cd5f60b2f1c411404b83fca4a65e3ce30a26d9e951b6a346529e65f22758afeb"
+      },
+      {
+        "path": "LICENSE",
+        "size": 11358,
+        "git_blob_sha1": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+      },
+      {
+        "path": "silero-vad-309K-v6.2-F32.gguf",
+        "size": 1238624,
+        "sha256": "2fc312514e5fc4fa4ffd02b25c76a4853fa4130e8fb9777d01502183b01238cb",
+        "repo": "sakasegawa/silero-vad-GGUF",
+        "revision": "7fcb7aa2a70c312f8579fc987b3e1cdecf9321ca"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "url": "https://huggingface.co/third-intelligence/Haas-ja-v1.0",
+    "commercial_use": true,
+    "notes": "Weights by Third Intelligence under Apache-2.0. GGUF conversion for speech.cpp by its author. The speech detector is Silero VAD (MIT), also converted for speech.cpp."
+  },
+  "languages": [
+    "ja"
+  ],
+  "capabilities": [
+    "segment_timestamps"
+  ],
+  "audio": {
+    "sample_rate": 16000
+  },
+  "engine_config": {
+    "model": "Haas-616M-ja-v1.0-Q8_0.gguf",
+    "languages": "ja",
+    "vad": "silero-vad-309K-v6.2-F32.gguf",
+    "whole_seconds": "30"
+  }
+}

@@ -75,7 +75,7 @@ To build from source instead, with Go 1.24 or later:
 ```sh
 git clone https://github.com/Eastsidegunn/oaudio && cd oaudio
 make                # the server and CLI (pure Go, no dependencies)
-make runners        # the whisper.cpp, sherpa-onnx and audio.cpp engines; needs git, cmake, a C++ compiler
+make runners        # the whisper.cpp, sherpa-onnx, audio.cpp and speech.cpp engines; needs git, cmake, a C++ compiler
 ./bin/oaudio run whisper recording.wav
 ```
 
@@ -100,6 +100,7 @@ to accept uploads other than WAV.
 | `sensevoice` | recognition, small and very fast | sherpa-onnx | ko, en, ja, zh, yue | FunASR model license (commercial use allowed, with attribution) |
 | `parakeet` | recognition, fast | sherpa-onnx | en and 24 other European languages | CC-BY-4.0 |
 | `moonshine` (two sizes) | recognition, tiny | sherpa-onnx | en | MIT |
+| `haas-ja` | recognition, Japanese | speech.cpp | ja | Apache-2.0 |
 | `kokoro` | synthesis, 54 voices | sherpa-onnx | en, es, fr, hi, it, ja, pt, zh | Apache-2.0 |
 | `supertonic` | synthesis, 10 voices | sherpa-onnx | 31 languages, incl. Korean | OpenRAIL-M (commercial use allowed, with use restrictions) |
 | `qwen3-tts` | synthesis in a cloned voice | audio.cpp | 10 languages, incl. Korean | Apache-2.0 |
@@ -177,7 +178,7 @@ speaker verifier.
 
 ```
 client ──HTTP / WebSocket──▶ oaudio serve ──loopback HTTP──▶ runner process (one per loaded model)
-                             │  OpenAI-compatible API          │  whisper.cpp / sherpa-onnx / audio.cpp / macOS
+                             │  OpenAI-compatible API          │  whisper.cpp / sherpa-onnx / audio.cpp / speech.cpp / macOS
                              │  decode, resample, encode       │  text ⇄ 16-bit PCM, spans, speaker turns
                              │  load on demand, keep-alive     │
                              └─ ~/.oaudio/models/<name>/<tag>/  upstream files, verified
@@ -218,8 +219,9 @@ library, including the WebSocket implementation.
 Oaudio is plumbing. The models and the engines that run them are the work of
 [whisper.cpp](https://github.com/ggml-org/whisper.cpp),
 [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx),
-[audio.cpp](https://github.com/0xShug0/audio.cpp), OpenAI, Alibaba's Qwen,
-FunAudioLLM and 3D-Speaker teams, NVIDIA, Moonshine AI, hexgrad, Supertone,
+[audio.cpp](https://github.com/0xShug0/audio.cpp),
+[speech.cpp](https://github.com/nyosegawa/speech.cpp), OpenAI, Alibaba's Qwen,
+FunAudioLLM and 3D-Speaker teams, NVIDIA, Moonshine AI, Third Intelligence, hexgrad, Supertone,
 Resemble AI, Kyutai, Silero, pyannote, and Apple. The lifecycle
 design follows [Ollama](https://github.com/ollama/ollama). See
 [NOTICE](NOTICE).
