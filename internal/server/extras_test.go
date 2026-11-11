@@ -194,6 +194,19 @@ func TestVoices(t *testing.T) {
 	// A model without the capability refuses a custom voice instead of
 	// quietly using some other one.
 	wantError(t, speech(t, ts, map[string]any{"model": "ref-tts", "voice": "anna", "input": "x"}), 400, "cannot clone voices")
+	wantError(t, speech(t, ts, map[string]any{"model": "ref-tts", "voice": map[string]string{"id": v.ID}, "input": "x"}), 400, "cannot clone voices")
+
+	// A custom voice does not hide a built-in voice of the same name from a
+	// model that cannot clone: "High" is still the reference engine's own.
+	resp = postForm(t, ts, path, "audio_sample", ref, "name", "High", "consent", "ok")
+	var high struct{ ID string }
+	json.Unmarshal(body(t, resp), &high)
+	if resp := speech(t, ts, map[string]any{"model": "ref-tts", "voice": "high", "input": "x", "response_format": "wav"}); resp.StatusCode != 200 {
+		t.Errorf("built-in voice hidden by a custom one: %s", body(t, resp))
+	}
+	req, _ := http.NewRequest(http.MethodDelete, ts.URL+path+"/"+high.ID, nil)
+	resp, _ = http.DefaultClient.Do(req)
+	resp.Body.Close()
 
 	resp, _ = http.Get(ts.URL + path)
 	var list struct{ Data []struct{ ID string } }
@@ -202,7 +215,7 @@ func TestVoices(t *testing.T) {
 	if len(list.Data) != 1 || list.Data[0].ID != v.ID {
 		t.Errorf("list: %+v", list)
 	}
-	req, _ := http.NewRequest(http.MethodDelete, ts.URL+path+"/anna", nil)
+	req, _ = http.NewRequest(http.MethodDelete, ts.URL+path+"/anna", nil)
 	resp, _ = http.DefaultClient.Do(req)
 	resp.Body.Close()
 	if resp.StatusCode != 200 {

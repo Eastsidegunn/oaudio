@@ -115,7 +115,7 @@ client.audio.speech.create(model="pocket-tts", voice={"id": voice.id}, input="He
 
 | Field | Values |
 |---|---|
-| `name` | required; unique |
+| `name` | required; unique. On a speech request a name means this voice only for a model that can clone; for any other model it means the model's own voice of that name, so a custom voice cannot hide one. `{"id": …}` always means the custom voice |
 | `audio_sample` | required; 1 to 30 seconds of one person speaking, in any format the server can read |
 | `consent` | required; a statement of who agreed to have their voice copied. It is stored and shown, not verified |
 | `transcript` | extension: what is said in the recording; some models need it |

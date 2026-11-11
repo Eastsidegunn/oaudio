@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
+	"math"
 	"net/http"
 	"strconv"
 	"strings"
@@ -118,21 +120,29 @@ func (s *Server) handleSpeech(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// A voice may be a custom one made from a recording, by id or by name.
+	// A name alone means a custom voice only for a model that can clone:
+	// for any other model it is one of the model's own voices, so a custom
+	// voice called "kyoko" does not hide apple-say's Kyoko.
 	voice := rawString(req.Voice)
 	var reference *runner.Reference
+	var shadowed string // a custom voice of this name exists, unused here
 	if voice != "" {
 		custom, err := s.voices.Get(voice)
 		if err != nil {
 			writeError(w, err)
 			return
 		}
-		if custom != nil {
-			if !m.Has(manifest.CapVoiceClone) {
-				writeError(w, errf(http.StatusBadRequest, "%q is a custom voice, and model %q cannot clone voices; use a model with the voice_clone capability", custom.Name, m.Ref()))
-				return
-			}
+		explicit := custom != nil && (custom.ID == voice || strings.HasPrefix(strings.TrimSpace(string(req.Voice)), "{"))
+		switch {
+		case custom == nil:
+		case m.Has(manifest.CapVoiceClone):
 			reference = &runner.Reference{AudioPath: s.voices.ReferencePath(custom), Text: custom.Transcript}
 			voice = ""
+		case explicit:
+			writeError(w, errf(http.StatusBadRequest, "%q is a custom voice, and model %q cannot clone voices; use a model with the voice_clone capability", custom.Name, m.Ref()))
+			return
+		default:
+			shadowed = custom.Name
 		}
 	}
 
@@ -158,6 +168,12 @@ func (s *Server) handleSpeech(w http.ResponseWriter, r *http.Request) {
 		stream, rate, err := lease.Conn.Synthesize(r.Context(), runner.SynthesisRequest{
 			Text: text, Voice: voice, Language: req.Language, Speed: speed, Reference: reference,
 		})
+		if err != nil && i == 0 && shadowed != "" {
+			var re *runner.Error
+			if errors.As(err, &re) && re.Status == http.StatusBadRequest {
+				err = errf(http.StatusBadRequest, "%v (%q is also a custom voice, but model %q cannot clone voices)", err, shadowed, m.Ref())
+			}
+		}
 		if err != nil {
 			if i == 0 {
 				writeError(w, err)
@@ -231,35 +247,53 @@ func (s *Server) handleSpeech(w http.ResponseWriter, r *http.Request) {
 // the chunk is resampled as a whole, which is fine because the daemon already
 // feeds runners one sentence at a time.
 func copyPCM(dst io.Writer, src io.Reader, inRate, outRate int, onFirst func()) (int64, error) {
-	if inRate != outRate {
-		raw, err := io.ReadAll(src)
-		if err != nil {
-			return 0, err
-		}
-		raw = raw[:len(raw)&^1]
-		out := audio.FloatToS16(audio.Resample(audio.S16ToFloat(raw), inRate, outRate))
-		if len(out) > 0 {
-			onFirst()
-		}
-		n, err := dst.Write(out)
-		return int64(n), err
-	}
 	var total int64
 	buf := make([]byte, 16*1024)
 	var carry []byte // keep samples whole across reads
+	// With resampling, each output sample is sent as soon as the input it
+	// depends on has arrived, so a stream stays a stream; the result is the
+	// same, sample for sample, as resampling the whole response at once.
+	var in []float32
+	sent := 0
+	emit := func(b []byte) error {
+		if len(b) == 0 {
+			return nil
+		}
+		onFirst()
+		n, err := dst.Write(b)
+		total += int64(n)
+		return err
+	}
 	for {
 		n, rerr := src.Read(buf)
 		if n > 0 {
-			onFirst()
 			data := append(carry, buf[:n]...)
 			even := len(data) &^ 1
-			if _, werr := dst.Write(data[:even]); werr != nil {
-				return total, werr
-			}
-			total += int64(even)
 			carry = append([]byte(nil), data[even:]...)
+			if inRate == outRate {
+				if err := emit(data[:even]); err != nil {
+					return total, err
+				}
+			} else {
+				in = append(in, audio.S16ToFloat(data[:even])...)
+				stable := audio.ResampleStable(len(in), inRate, outRate)
+				if stable > sent {
+					if err := emit(audio.FloatToS16(audio.ResampleRange(in, inRate, outRate, sent, stable))); err != nil {
+						return total, err
+					}
+					sent = stable
+				}
+			}
 		}
 		if rerr == io.EOF {
+			if inRate != outRate && len(in) > 0 {
+				end := int(math.Floor(float64(len(in)) * float64(outRate) / float64(inRate)))
+				if end > sent {
+					if err := emit(audio.FloatToS16(audio.ResampleRange(in, inRate, outRate, sent, end))); err != nil {
+						return total, err
+					}
+				}
+			}
 			return total, nil
 		}
 		if rerr != nil {
