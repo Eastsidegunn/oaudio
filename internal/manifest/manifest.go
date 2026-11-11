@@ -38,6 +38,7 @@ const (
 	CapPrompt            = "prompt"
 	CapSpeed             = "speed"
 	CapVoiceClone        = "voice_clone" // speaks in a voice taken from a reference recording
+	CapStream            = "stream"      // recognizes an utterance while it is spoken (POST /v1/stream)
 )
 
 // Source types.

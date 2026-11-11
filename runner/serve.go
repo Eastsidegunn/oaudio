@@ -314,6 +314,7 @@ func Handler(engine Engine) http.Handler {
 		}
 		writeJSON(w, http.StatusOK, map[string]any{"turns": turns})
 	})
+	streamHandlers(mux, engine, &mu)
 	return mux
 }
 

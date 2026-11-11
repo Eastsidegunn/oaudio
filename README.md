@@ -48,7 +48,7 @@ read from Ollama's source, registry or docs; locations are in
 | Who said what | no | `diarized_json` |
 | Voice activity detection | no | yes |
 | Custom voices | no | `/v1/audio/voices` |
-| Realtime | no | `/v1/realtime` transcription sessions |
+| Realtime | no | `/v1/realtime` transcription sessions, with words while the speaker is still talking |
 | Model files on disk | repacked, one registry layer per tensor | the publisher's files, verified against the publisher's hashes, usable by other tools |
 | Adding an engine | in-tree | a separate program speaking a [documented protocol](docs/runner-protocol.md) |
 
@@ -101,6 +101,7 @@ to accept uploads other than WAV.
 | `parakeet` | recognition, fast | sherpa-onnx | en and 24 other European languages | CC-BY-4.0 |
 | `moonshine` (two sizes) | recognition, tiny | sherpa-onnx | en | MIT |
 | `haas-ja` | recognition, Japanese | speech.cpp | ja | Apache-2.0 |
+| `nemotron-asr` | recognition while someone is speaking (realtime) | sherpa-onnx | 35 languages, incl. Korean | OpenMDW-1.1 (commercial use allowed) |
 | `kokoro` | synthesis, 54 voices | sherpa-onnx | en, es, fr, hi, it, ja, pt, zh | Apache-2.0 |
 | `supertonic` | synthesis, 10 voices | sherpa-onnx | 31 languages, incl. Korean | OpenRAIL-M (commercial use allowed, with use restrictions) |
 | `qwen3-tts` | synthesis in a cloned voice | audio.cpp | 10 languages, incl. Korean | Apache-2.0 |
@@ -154,15 +155,17 @@ method, raw results and limits are in [docs/evidence.md](docs/evidence.md).
 | Whisper base.en on all 2,620 LibriSpeech test-clean recordings: transcript through Oaudio vs. whisper.cpp's own server | identical for 2,619 (WER 3.93% both ways) |
 | Whisper large-v3-turbo on all 382 FLEURS Korean test recordings: same comparison | identical for 379 (CER 3.25% both ways) |
 | Parakeet, Moonshine and SenseVoice on the same LibriSpeech recordings, vs. sherpa-onnx's own package | identical for every recording up to 30 s; longer ones are cut at silences first |
+| `nemotron-asr` (streaming) on FLEURS Korean and Japanese and 500 LibriSpeech recordings, fed in pieces, vs. sherpa-onnx's own package fed whole | identical for all 1,532 |
 | Diarization turns, Oaudio vs. the engine called directly, 30 conversations | identical for 30 |
 | Time Oaudio adds to a request | 3 to 20 ms |
-| English word error rate on LibriSpeech test-clean | Whisper turbo 1.8% (on a 500-recording sample), Parakeet 2.3%, Moonshine base 3.2%, SenseVoice 3.4% |
-| Korean character error rate on FLEURS | Whisper turbo 3.3%, Qwen3-ASR 4.6%, SenseVoice 6.4% |
+| English word error rate on LibriSpeech test-clean | Whisper turbo 1.8% (on a 500-recording sample), Parakeet 2.3%, Moonshine base 3.2%, SenseVoice 3.4%, Nemotron streaming 3.5% (500) |
+| Korean character error rate on FLEURS | Whisper turbo 3.3%, Qwen3-ASR 4.6%, SenseVoice 6.4%, Nemotron streaming 7.8% |
 | Recognition speed, times faster than real time | SenseVoice 110 to 135 (CPU), Moonshine 80 to 120 (CPU), Parakeet 45 (CPU), Whisper turbo 25 to 40 (GPU) |
 | Silences between speakers found by speech detection | 174 / 174 |
 | Diarization error rate, 30 two-to-four-speaker conversations without overlap | 12.8%, threshold tuned on the same data |
 | Transcript words attributed to the right speaker | 95% |
 | Realtime: transcript after the speaker stops | 0.8 s median, 0.5 s of it the silence threshold |
+| Realtime with `nemotron-asr`: first words after the speaker starts | 1.1 s (English) and 1.4 s (Korean) median; about 88% of the text arrives before they stop |
 | Korean text spoken by `supertonic` and transcribed back, 60 sentences | CER 3.1 to 3.3%, the recognizer's own error level on real speech |
 | Korean voice clones identified as their source speaker by a verifier, of 30 | `qwen3-tts` 28, `chatterbox` 26 (real recordings: 10 of 10) |
 | English voice clones identified as their source speaker, of 60 | `chatterbox` 57, `qwen3-tts` 53, `pocket-tts` 11 to 19 |
@@ -202,9 +205,9 @@ library, including the WebSocket implementation.
 ## Known gaps
 
 - macOS on Apple Silicon only, so far.
-- Realtime transcription waits for a pause before it transcribes. No
-  streaming recognizer is in the catalog yet
-  ([docs/model-queue.md](docs/model-queue.md)).
+- Only one model, `nemotron-asr`, shows words while someone is speaking,
+  and it is less accurate than the models that wait for a pause (Korean CER
+  7.8% against SenseVoice's 6.4% and Whisper turbo's 3.3%).
 - The cloning models need about 2 GB each and a GPU or Apple Silicon to keep
   up with speech. `pocket-tts` runs on a CPU but copies a voice poorly.
 - Kokoro mispronounces words missing from its dictionary: they are respelled

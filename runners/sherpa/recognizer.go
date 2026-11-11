@@ -219,7 +219,7 @@ func (r *recognizer) Transcribe(ctx context.Context, samples []float32, opts run
 		}
 		seg := runner.Segment{Start: piece.Start, End: piece.End, Text: text}
 		if opts.WordTimestamps {
-			seg.Words = tokenWords(res, piece.Start, piece.End)
+			seg.Words = tokenWords(res.Tokens, res.Timestamps, piece.Start, piece.End)
 		}
 		if err := emit(seg); err != nil {
 			return "", err
@@ -249,13 +249,13 @@ func joinSpans(spans []runner.Span, gap, limit float64) []runner.Span {
 // tokenWords builds word times from the engine's token times. A token that
 // starts with a space or with the SentencePiece word mark begins a new word.
 // It returns nil when the model reports no token times.
-func tokenWords(res *sherpa.OfflineRecognizerResult, offset, end float64) []runner.Word {
-	if len(res.Tokens) == 0 || len(res.Timestamps) != len(res.Tokens) {
+func tokenWords(tokens []string, times []float32, offset, end float64) []runner.Word {
+	if len(tokens) == 0 || len(times) != len(tokens) {
 		return nil
 	}
 	var words []runner.Word
-	for i, tok := range res.Tokens {
-		start := math.Round((offset+float64(res.Timestamps[i]))*1000) / 1000
+	for i, tok := range tokens {
+		start := math.Round((offset+float64(times[i]))*1000) / 1000
 		fresh := strings.HasPrefix(tok, "▁") || strings.HasPrefix(tok, " ")
 		piece := strings.TrimLeft(tok, "▁ ")
 		if piece == "" {

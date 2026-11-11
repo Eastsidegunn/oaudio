@@ -23,6 +23,8 @@ Models in the built-in catalog
                            ONNX export by Wasser1462, redistributed by sherpa-onnx
   Parakeet TDT 0.6B v3     NVIDIA                                 CC-BY-4.0
                            ONNX conversion by the sherpa-onnx project
+  Nemotron 3.5 ASR         NVIDIA                                 OpenMDW-1.1
+  Streaming 0.6B           ONNX conversion by the sherpa-onnx project
   Moonshine (English)      Moonshine AI (Useful Sensors)          MIT
                            ONNX packaging by the sherpa-onnx project
   Kokoro-82M               hexgrad                                Apache-2.0

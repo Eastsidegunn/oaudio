@@ -45,12 +45,13 @@ func newTestServer(t *testing.T) *httptest.Server {
 	st := store.New(home)
 	os.MkdirAll(st.ManifestsDir(), 0o755)
 	for name, body := range map[string]string{
-		"ref-tts":   refManifest("ref-tts", "tts", "speed"),
-		"ref-stt":   refManifest("ref-stt", "stt", "segment_timestamps", "word_timestamps"),
-		"ref-plain": refManifest("ref-plain", "stt"),
-		"ref-vad":   refManifest("ref-vad", "vad"),
-		"ref-diar":  refManifest("ref-diar", "diarize"),
-		"ref-clone": refManifest("ref-clone", "tts", "voice_clone"),
+		"ref-tts":    refManifest("ref-tts", "tts", "speed"),
+		"ref-stt":    refManifest("ref-stt", "stt", "segment_timestamps", "word_timestamps"),
+		"ref-plain":  refManifest("ref-plain", "stt"),
+		"ref-stream": refManifest("ref-stream", "stt", "stream"),
+		"ref-vad":    refManifest("ref-vad", "vad"),
+		"ref-diar":   refManifest("ref-diar", "diarize"),
+		"ref-clone":  refManifest("ref-clone", "tts", "voice_clone"),
 	} {
 		os.WriteFile(filepath.Join(st.ManifestsDir(), name+".json"), []byte(body), 0o644)
 	}
