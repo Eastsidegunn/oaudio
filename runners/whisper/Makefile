@@ -26,7 +26,7 @@ $(SRC)/build/src/libwhisper.a: $(SRC)/CMakeLists.txt
 	cmake -S $(SRC) -B $(SRC)/build $(CMAKE_FLAGS)
 	cmake --build $(SRC)/build --config Release -j
 
-$(OUT)/oaudio-runner-whisper.cpp: main.go $(SRC)/build/src/libwhisper.a
+$(OUT)/oaudio-runner-whisper.cpp: main.go $(wildcard ../../runner/*.go) $(SRC)/build/src/libwhisper.a
 	CGO_ENABLED=1 \
 	C_INCLUDE_PATH="$(abspath $(SRC)/include):$(abspath $(SRC)/ggml/include)" \
 	LIBRARY_PATH="$(subst $(eval) ,:,$(abspath $(LIBDIRS)))" \

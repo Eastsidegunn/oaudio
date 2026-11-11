@@ -1,0 +1,13 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "example",
+  "tag": "loudness",
+  "task": "stt",
+  "engine": "example",
+  "description": "The example runner of docs/runner-protocol.md: reports how loud each second is.",
+  "upstream": {"model": "none"},
+  "source": {"type": "system"},
+  "license": {"spdx": "Apache-2.0", "commercial_use": true},
+  "capabilities": ["segment_timestamps"],
+  "audio": {"sample_rate": 16000}
+}

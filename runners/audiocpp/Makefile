@@ -39,7 +39,7 @@ $(BUILD)/bin/audiocpp_server: $(SRC)/CMakeLists.txt
 $(OUT)/audiocpp_server: $(BUILD)/bin/audiocpp_server
 	cp $< $@
 
-$(OUT)/oaudio-runner-audio.cpp: main.go
+$(OUT)/oaudio-runner-audio.cpp: main.go go.mod $(wildcard ../../runner/*.go)
 	CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.engineVersion=$(AUDIOCPP_TAG)" -o $@ .
 
 clean:
