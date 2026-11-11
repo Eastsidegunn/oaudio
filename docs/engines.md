@@ -10,7 +10,7 @@ engine as a separate runner process (`runner-protocol.md`).
 | `whisper.cpp` | `whisper:*` (recognition) | built and run on macOS arm64 with Metal | Working and measured. `runners/whisper`. |
 | `sherpa-onnx` | `sensevoice`, `qwen3-asr`, `parakeet` and `moonshine` (recognition), `kokoro` and `supertonic` (synthesis), `pocket-tts` (voice cloning), `silero-vad` (speech detection), `pyannote-diarize` (diarization) | built and run on macOS arm64, CPU | Working and measured. `runners/sherpa`. |
 | `audio.cpp` | `qwen3-tts` and `chatterbox` (voice cloning, Korean included) | built and run on macOS arm64 with Metal | Working and measured. `runners/audiocpp`. |
-| `speech.cpp` | `haas-ja` (Japanese recognition) | built and run on macOS arm64 with Metal | Working and measured. `runners/speechcpp`. |
+| `speech.cpp` | `haas-ja` (Japanese recognition), `qwen3-tts:0.6b-customvoice-q8` (synthesis with nine built-in speakers), `irodori-tts` (Japanese synthesis and cloning) | built and run on macOS arm64 with Metal | Working and measured. `runners/speechcpp`. |
 | `apple` | `apple-say` (synthesis), `apple-speech` (recognition) | macOS; recognition needs macOS 26+ on Apple Silicon | Working and measured. Built into the `oaudio` binary. |
 | `reference` | none | any | Test engine. Tones, not speech. |
 
@@ -181,7 +181,15 @@ for one model and speaks the worker's JSON Lines protocol
 | `languages` | Languages the model accepts, to refuse the others with 400 before the engine does. |
 | `vad` | A Silero GGUF file. Recordings longer than `whole_seconds` are cut into regions of speech with it, by `speechcpp vad` with the settings of `speech asr --vad`, and each region is recognized on its own. Without it, every recording is recognized whole. |
 | `whole_seconds` | The longest recording recognized in one request; default 30. |
-| `options` | Extra flags for `speechcpp worker`, which become the defaults of every request (for example `--decoding greedy` for ReazonSpeech). |
+| `options` | Extra flags for `speechcpp worker`, which become the defaults of every request (for example `--decoding greedy` for ReazonSpeech, or `--seed 42` for repeatable synthesis). |
+| `speed` | `true` for a synthesis model that takes speech.cpp's `speed` option; with the manifest's `speed` capability, OpenAI's `speed` is passed to it. |
+
+A synthesis manifest lists the model's built-in voices; the runner checks
+them, and the sample rate, against what the worker reports when it loads,
+and refuses to load a manifest that does not match its file. A custom voice
+(`oaudio voice create`) reaches a model whose worker takes WAVE files as
+voices (Irodori-TTS) as an `add_voice` of the stored reference recording, once
+per recording; the worker keeps it for the following requests.
 
 - **`haas-ja`** is Third Intelligence's Haas-ja v1.0, a FastConformer with a
   TDT decoder trained for Japanese. It writes punctuation, and its segments
@@ -192,8 +200,19 @@ for one model and speaks the worker's JSON Lines protocol
   over 30 s are recognized by region. A two-and-a-half-minute recording gave
   the same text through Oaudio as through `speech asr --vad silero-vad`;
   recognized whole, it lost its punctuation (`evidence.md`).
-- The runner serves recognition only, so far. The worker also synthesizes and
-  enhances speech.
+- **`qwen3-tts:0.6b-customvoice-q8`** is Qwen's CustomVoice model: the same
+  family as the cloning `qwen3-tts` that audio.cpp runs, with nine built-in
+  speakers instead of cloning. `sohee` is Korean, `ono_anna` Japanese,
+  `aiden` and `ryan` English, the other five Chinese; each speaks the other
+  languages too. It streams its audio as it makes it and has no control of
+  its speed. The default voice is `sohee`.
+- **`irodori-tts`** is Aratako's Irodori-TTS v4.1 Small MF, Japanese only. It
+  speaks in the voice of a reference recording and needs no transcript of it;
+  with the voice `none` the model chooses a voice. It makes a sentence's
+  speech whole before any audio, which suits the daemon's splitting of input
+  into sentences. Its model card forbids cloning a voice without the
+  speaker's explicit consent.
+- The worker also enhances speech; the runner does not serve that.
 
 ## `apple`
 

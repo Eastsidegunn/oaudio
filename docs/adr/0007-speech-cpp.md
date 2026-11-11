@@ -70,10 +70,34 @@ the runner buildable with `CGO_ENABLED=0` and upgradable by changing one tag.
   Both are under 1% of the audio's length.
 - Cancelling a request is passed to the worker, which stops at its next
   stopping point.
-- The runner serves recognition only. The worker also synthesizes (Qwen3-TTS
-  CustomVoice with named speakers, Irodori-TTS with cloning) and enhances
-  speech; adding synthesis is the obvious next step.
+- The runner serves recognition and synthesis; see the addendum below. The
+  worker's enhancement is not served.
 - speech.cpp is built with `GGML_NATIVE=OFF`, so a release runs on any CPU of
   its architecture. Its own build defaults to tuning for the build machine.
 - speech.cpp is young and has one main author, like audio.cpp. Nothing above
   the runner depends on it.
+
+## Addendum, 2026-11-12: synthesis
+
+The same runner serves the worker's synthesis models, with the same
+process shape. What it adds:
+
+- A `synthesize` request per call; the worker's `chunk` lines of PCM are
+  passed to the daemon as they arrive, so Qwen3-TTS streams from its first
+  frame. A cancel from the daemon becomes the worker's `cancel`.
+- A custom voice reaches the worker as `add_voice` with the path of the
+  reference recording the daemon already stores, once per recording, and is
+  reused by name while the file is unchanged. Only models whose worker
+  reports `voice_recordings` (Irodori-TTS) take one; the transcript is not
+  needed.
+- At load, the runner compares the manifest with the worker's `ready`: the
+  task, the sample rate and every listed voice must match the model file, or
+  the model does not load. A manifest error shows up at `oaudio run`, not as
+  wrong audio.
+- The daemon's splitting of input into sentences is kept, since Irodori-TTS
+  makes a sentence whole before any audio and speech.cpp itself advises one
+  sentence per request.
+
+Two models were added: Qwen3-TTS 0.6B CustomVoice, the built-in-speaker
+sibling of the cloning Qwen3-TTS that audio.cpp runs, and Irodori-TTS v4.1
+Small MF, the first Japanese cloning model in the catalog.

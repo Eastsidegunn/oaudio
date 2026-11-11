@@ -31,6 +31,13 @@ Models in the built-in catalog
                            ONNX packaging by the sherpa-onnx project
   Qwen3-TTS 0.6B Base      Alibaba Cloud, Qwen team               Apache-2.0
                            GGUF conversion by the audio.cpp project
+  Qwen3-TTS 0.6B           Alibaba Cloud, Qwen team               Apache-2.0
+    CustomVoice            GGUF conversion for speech.cpp by its author
+  Irodori-TTS v4.1         Aratako                                MIT
+    Small MF               codec fine-tuned from Meta's dacvae-watermarked
+                           (Apache-2.0); GGUF conversion for speech.cpp by
+                           its author. No cloning without the speaker's
+                           explicit consent (the model card's restriction)
   Chatterbox Multilingual  Resemble AI                            MIT
                            GGUF conversion by the audio.cpp project
   Pocket TTS               Kyutai                                 CC-BY-4.0

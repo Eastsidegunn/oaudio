@@ -10,8 +10,14 @@ audio is the same length.
   uv run --with jiwer --with whisper-normalizer python bench/tts_eval.py \
       --sentences sentences.txt --language ko --voice Yuna \
       --tts apple-say --stt apple-speech --direct apple
+
+With --direct speechcpp the sentence is also spoken by `speech tts` run
+directly on the model file (--model-file), with the seed given by --seed.
+The model's manifest must give its worker the same seed
+(engine_config.options "--seed N"), so that the two can be compared sample
+for sample.
 """
-import argparse, json, os, subprocess, sys, tempfile, time, uuid, urllib.request
+import argparse, io, json, os, subprocess, sys, tempfile, time, uuid, urllib.request, wave
 
 import jiwer
 from whisper_normalizer.basic import BasicTextNormalizer
@@ -28,13 +34,16 @@ def speak(base, model, voice, language, text):
                                  headers={"Content-Type": "application/json"})
     t0 = time.time()
     with urllib.request.urlopen(req, timeout=600) as r:
+        # The 44-byte WAVE header can arrive before any audio is made, so
+        # the clock stops at the first byte after it.
         first = None
-        chunks = []
+        chunks, got = [], 0
         while True:
-            b = r.read(8192)
+            b = r.read1(8192)
             if not b:
                 break
-            if first is None:
+            got += len(b)
+            if first is None and got > 44:
                 first = time.time() - t0
             chunks.append(b)
         rate = int(r.headers["X-Oaudio-Sample-Rate"])
@@ -63,6 +72,24 @@ def say_direct(voice, text, tmp):
     return (os.path.getsize(wav) - 4096) / 2 / 22050, took  # say pads its header to 4096 bytes
 
 
+def pcm_of(wav):
+    """The 16-bit samples of a WAVE file's bytes."""
+    with wave.open(io.BytesIO(wav)) as w:
+        return w.readframes(w.getnframes()), w.getframerate()
+
+
+def speechcpp_direct(binary, model_file, voice, seed, text, tmp):
+    out = os.path.join(tmp, "direct.wav")
+    args = [binary, "tts", model_file, "-o", out, "--seed", str(seed)]
+    if voice:
+        args += ["--voice", voice]
+    t0 = time.time()
+    subprocess.run(args + ["--", text], check=True, capture_output=True)
+    took = time.time() - t0
+    pcm, rate = pcm_of(open(out, "rb").read())
+    return pcm, rate, took
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sentences", required=True, help="text file, one sentence per line")
@@ -71,7 +98,10 @@ def main():
     ap.add_argument("--tts", required=True)
     ap.add_argument("--stt", required=True)
     ap.add_argument("--base-url", default="http://127.0.0.1:11535/v1")
-    ap.add_argument("--direct", choices=["apple"])
+    ap.add_argument("--direct", choices=["apple", "speechcpp"])
+    ap.add_argument("--speechcpp", default="bin/speechcpp", help="with --direct speechcpp: the speech.cpp executable")
+    ap.add_argument("--model-file", help="with --direct speechcpp: the model's GGUF file")
+    ap.add_argument("--seed", type=int, default=42, help="with --direct speechcpp: the seed the manifest gives the worker")
     ap.add_argument("--out")
     args = ap.parse_args()
 
@@ -92,6 +122,17 @@ def main():
             direct_s += dtook
             direct_audio += dsecs
             row["direct_ms"] = round(dtook * 1000)
+        elif args.direct == "speechcpp":
+            dpcm, drate, dtook = speechcpp_direct(args.speechcpp, args.model_file, args.voice, args.seed, text, tmp)
+            # Oaudio streams its WAVE with a 44-byte header written before the
+            # length is known, so its samples are taken by position.
+            opcm = wav[44:]
+            direct_s += dtook
+            direct_audio += len(dpcm) / 2 / drate
+            row["direct_ms"] = round(dtook * 1000)
+            row["identical"] = opcm == dpcm
+            if not row["identical"]:
+                row["direct_audio_s"] = round(len(dpcm) / 2 / drate, 2)
         rows.append(row)
 
     refs, hyps = [norm(r["text"]) for r in rows], [norm(r["heard"]) for r in rows]
@@ -110,6 +151,8 @@ def main():
         report["direct_ms_per_sentence"] = round(1000 * direct_s / len(rows), 1)
         report["overhead_ms_per_sentence"] = round(1000 * (total_s - direct_s) / len(rows), 1)
         report["audio_seconds_direct"] = round(direct_audio, 1)
+    if args.direct == "speechcpp":
+        report["identical_to_direct"] = f"{sum(r['identical'] for r in rows)}/{len(rows)}"
     print(json.dumps(report, indent=2, ensure_ascii=False))
     if args.out:
         report["rows"] = rows

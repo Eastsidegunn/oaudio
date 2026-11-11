@@ -1,0 +1,63 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "qwen3-tts",
+  "tag": "0.6b-customvoice-q8",
+  "task": "tts",
+  "engine": "speech.cpp",
+  "family": "qwen3-tts",
+  "description": "Qwen3-TTS 0.6B CustomVoice (8-bit): speaks ten languages, Korean included, with nine built-in speakers, streaming as it generates, run by speech.cpp. It cannot clone; for a cloned voice use qwen3-tts:0.6b-base-q8.",
+  "upstream": {
+    "model": "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+    "authors": "Alibaba Cloud, Qwen team",
+    "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice"
+  },
+  "source": {
+    "type": "huggingface",
+    "repo": "sakasegawa/Qwen3-TTS-12Hz-0.6B-CustomVoice-GGUF",
+    "revision": "fd9df9364613a92a86b4137074bc281204823033",
+    "files": [
+      {
+        "path": "Qwen3-TTS-12Hz-0.6B-CustomVoice-Q8_0.gguf",
+        "size": 1213534464,
+        "sha256": "f606ea3981aa42762b16db9a94826d2d560eb60f0b102001618f40d5a2f78cc6"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+    "commercial_use": true,
+    "notes": "Weights by the Qwen team under Apache-2.0. GGUF conversion for speech.cpp by its author."
+  },
+  "languages": [
+    "ko",
+    "en",
+    "zh",
+    "ja",
+    "de",
+    "fr",
+    "ru",
+    "pt",
+    "es",
+    "it"
+  ],
+  "audio": {
+    "sample_rate": 24000
+  },
+  "voices": [
+    {"id": "sohee", "name": "Warm Korean female voice", "language": "ko", "gender": "female"},
+    {"id": "aiden", "name": "Sunny American male voice", "language": "en", "gender": "male"},
+    {"id": "ryan", "name": "Dynamic male voice with rhythm", "language": "en", "gender": "male"},
+    {"id": "ono_anna", "name": "Playful Japanese female voice", "language": "ja", "gender": "female"},
+    {"id": "serena", "name": "Warm, gentle young female voice", "language": "zh", "gender": "female"},
+    {"id": "vivian", "name": "Bright young female voice", "language": "zh", "gender": "female"},
+    {"id": "uncle_fu", "name": "Seasoned male voice, mellow timbre", "language": "zh", "gender": "male"},
+    {"id": "dylan", "name": "Youthful Beijing male voice", "language": "zh", "gender": "male"},
+    {"id": "eric", "name": "Lively Chengdu male voice", "language": "zh", "gender": "male"}
+  ],
+  "default_voice": "sohee",
+  "engine_config": {
+    "model": "Qwen3-TTS-12Hz-0.6B-CustomVoice-Q8_0.gguf",
+    "languages": "ko,en,zh,ja,de,fr,ru,pt,es,it"
+  }
+}

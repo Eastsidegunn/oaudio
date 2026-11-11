@@ -53,6 +53,13 @@ recording rather than the server's own speech. Oaudio passes 23 of 23;
 audio.cpp's own server, release v0.9.4 with Supertonic and Whisper, passes 7
 (`bench/results/compat/`). Other servers were not run.
 
+The same check with speech.cpp's models alone behind Oaudio
+(`qwen3-tts:0.6b-customvoice-q8`, `haas-ja` on a Japanese Common Voice
+recording, and `irodori-tts` for the custom voice) passes 19 of 23. The four
+misses are what those models cannot do: Qwen3-TTS has no speed control,
+`haas-ja` neither times words nor translates, and no diarization model was
+named.
+
 ## 2. Going through Oaudio returns what the engine returns
 
 **Check:** send every recording of a public test set through the HTTP API
@@ -257,6 +264,21 @@ transcribed by Whisper base.en.
 | `pocket-tts:fp32` | 19 / 60 | 0.676 / 0.537 | 5.0% | 0.19 |
 | `pocket-tts:int8` | 11 / 60 | 0.661 / 0.541 | 5.7% | 0.23 |
 
+**Japanese**: 10 speakers of Common Voice's Japanese test split (those with
+the most recordings of 5 to 12 s), 30 clones, transcribed by `haas-ja`.
+The voices were made without transcripts, which Irodori-TTS does not use.
+
+| Model | Clone matched to its source speaker | Similarity to source / to others | CER of cloned speech | Real-time factor |
+|---|---|---|---|---|
+| Real recordings, for scale | 10 / 10 | 0.891 / 0.622 | 0.0% | |
+| `irodori-tts` | 25 / 30 | 0.814 / 0.622 | 8.4% | 0.08 |
+
+Most of the 8.4% is spelling, not speech: the corpus sentences write words
+in kana that the recognizer writes in kanji (すこし and 少し, ようす and
+様子). The rest are rare kanji read wrong (転輾 heard as 展望, 呻吟 as ウムギ
+ン) and one inserted "あの、遅い". The worker was seeded (`--seed 42`) as in
+section 6.
+
 Time to the first audio byte for a three-sentence Korean request, with the
 model loaded and the voice used once before: `qwen3-tts` 0.21 to 0.23 s (it
 streams), `chatterbox` 3.9 to 4.4 s (it returns the whole utterance).
@@ -319,6 +341,46 @@ out of the audio.
 
 Median time to the first audio byte: Kokoro 0.57 s, macOS voices 0.44 s,
 Supertonic 1.5 s (real-time factor 0.18).
+
+**speech.cpp's synthesis models**, the same way, with FLEURS sentences (the
+60 Korean ones above, and the first 60 distinct ones of the Japanese test
+set). The worker was given `--seed 42` through the manifest's
+`engine_config.options` for these runs only, so that each sentence could
+also be spoken by `speech tts --seed 42` on the same file and compared sample
+for sample (`--direct speechcpp`).
+
+| Synthesis | Recognizer | CER | Real-time factor | Identical to `speech tts` |
+|---|---|---|---|---|
+| `qwen3-tts:0.6b-customvoice-q8`, voice `sohee`, Korean | `whisper:large-v3-turbo-q5_0` | 4.3% | 0.17 | 46 / 60 |
+| `qwen3-tts:0.6b-customvoice-q8`, voice `ono_anna`, Japanese | `haas-ja` | 4.7% | 0.24 | 45 / 60 |
+| `irodori-tts`, voice `none`, Japanese | `haas-ja` | 3.9% | 0.06 | 45 / 60 |
+
+- Every row that holds one sentence was identical to speech.cpp's own
+  output, bit for bit: 46 of 46 and 45 of 45. Every row that differs holds
+  two or more sentences, which the daemon speaks one request at a time while
+  `speech tts` speaks Qwen3-TTS's text in one request, and so with other
+  random draws.
+- For scale: `haas-ja` scores 4.21% CER on the real FLEURS Japanese
+  recordings (section 2), so both models' Japanese is about as intelligible
+  to it as a person's. Korean `sohee` is a point behind Supertonic (3.3%) on
+  the same sentences and recognizer. Japanese WER is not given: the text has
+  no spaces to count words by.
+- The cloning `qwen3-tts` that audio.cpp runs (section 5) and this
+  CustomVoice model are the same family. The first copies any voice from a
+  recording; the second has nine fixed speakers, and generates two and a
+  half to three times as fast (real-time factor 0.17 against 0.43 to 0.52
+  for the Korean clones, on other sentences and another engine).
+- Time to the first audio, with the model loaded: `qwen3-tts:0.6b-customvoice-q8`
+  30 ms in the median over ten one-sentence requests (37 ms at most); it
+  streams from its first frame. `irodori-tts` makes a sentence before any
+  audio, and still answers in about 0.1 s (108 ms in the median over the 60
+  Japanese rows), since its four sampling steps are fast and the codec's
+  output is streamed.
+- Asked for `pcm`, a model that does not speak at 24 kHz (Irodori-TTS at 48
+  kHz) gives its first audio only when the sentence is done: the daemon
+  resamples a whole piece at once (`copyPCM`). With `wav` and the other
+  formats it streams.
+- Nobody listened to the results.
 
 ## 7. Downloads are the publisher's bytes
 
@@ -389,10 +451,20 @@ Linux archives, which only the release workflow builds and installs.
   not run through Oaudio, and neither was a Mac slower than an M5 Pro, where
   the cloning models may fall behind real time.
 - **Whether Chatterbox's watermark survives** in audio.cpp's port.
-- **speech.cpp beyond one model on Metal.** Only `haas-ja` was run, on an M5
-  Pro. Its CPU and Vulkan backends, its other recognizers (ReazonSpeech,
-  Parakeet ja) and its synthesis models were not run through Oaudio. The
-  `GGML_NATIVE=OFF` build was not run on a different CPU.
+- **speech.cpp beyond Metal and three models.** `haas-ja`,
+  `qwen3-tts:0.6b-customvoice-q8` and `irodori-tts` were run, on an M5 Pro.
+  Its CPU and Vulkan backends, its other recognizers (ReazonSpeech, Parakeet
+  ja), Qwen3-TTS 1.7B, the other Irodori-TTS models and Drama 3 were not run
+  through Oaudio. The `GGML_NATIVE=OFF` build was not run on a different CPU.
+- **speech.cpp's synthesis unseeded.** Every synthesis measurement gave the
+  worker `--seed 42`; the catalog's manifests give none, so each request
+  draws its own. One seed per model is one draw of the sampling.
+- **Qwen3-TTS CustomVoice's eight other speakers.** Only `sohee` (Korean) and
+  `ono_anna` (Japanese) were measured; none in English or Chinese.
+- **Irodori-TTS with long sentences.** speech.cpp's documentation says the
+  MF model can slur words past about 18 s of speech; the daemon cuts input
+  at sentence ends only, so a single long sentence is spoken whole. Not
+  measured.
 - **Japanese beyond FLEURS**: conversational, noisy or long-form speech, and
   any listener's judgement of the punctuation.
 - **Cloning across languages** (a Korean voice speaking English, or the
@@ -408,6 +480,10 @@ Linux archives, which only the release workflow builds and installs.
 - Zeroth-Korean test set: Jo and Lee, CC BY 4.0, openslr.org/40, read from
   huggingface.co/datasets/kresnik/zeroth_korean at revision `1fe93789`
   (457 recordings, 10 speakers).
+- Common Voice 17.0, Japanese test split: Mozilla, CC0, read from
+  huggingface.co/datasets/fsicoli/common_voice_17_0 at revision `8262c16b`
+  (archive SHA-256 `8fdaa419d510d4a9224a26de309e7b3dc2715eb06dde7e6879b06d937c8c33bd`).
+  Benchmark only; no audio was kept.
 
 The result files in `bench/results/` contain reference transcripts from these
 sets under those licenses.

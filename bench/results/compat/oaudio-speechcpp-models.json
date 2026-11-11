@@ -1,0 +1,126 @@
+{
+ "name": "oaudio, speech.cpp models only",
+ "base_url": "http://127.0.0.1:11657/v1",
+ "sdk": "3.49.0",
+ "tts": "qwen3-tts:0.6b-customvoice-q8",
+ "stt": "haas-ja",
+ "passed": 19,
+ "total": 23,
+ "rows": [
+  {
+   "check": "models.list",
+   "ok": true,
+   "detail": "['haas-ja:v1.0-q8', 'irodori-tts:v4.1-small-mf-f16', 'qwen3-tts:0.6b-customvoice-q8', 'whisper:large-v3-turbo-q5_0', 'apple-say:system', 'apple-speech:system']"
+  },
+  {
+   "check": "models.retrieve",
+   "ok": true,
+   "detail": "qwen3-tts:0.6b-customvoice-q8"
+  },
+  {
+   "check": "speech, SDK defaults (OpenAI answers mp3)",
+   "ok": true,
+   "detail": "59948 bytes, starts b'ID3\\x04'"
+  },
+  {
+   "check": "speech wav",
+   "ok": true,
+   "detail": "176684 bytes"
+  },
+  {
+   "check": "speech pcm (24 kHz 16-bit)",
+   "ok": true,
+   "detail": "3.68 s if 24 kHz"
+  },
+  {
+   "check": "speech opus",
+   "ok": true,
+   "detail": "18786 bytes, starts b'OggS'"
+  },
+  {
+   "check": "speech aac",
+   "ok": true,
+   "detail": "45505 bytes, starts b'\\xff\\xf1X@'"
+  },
+  {
+   "check": "speech flac",
+   "ok": true,
+   "detail": "84218 bytes, starts b'fLaC'"
+  },
+  {
+   "check": "speech speed=1.5 is shorter",
+   "ok": false,
+   "detail": "BadRequestError: Error code: 400 - model \"qwen3-tts:0.6b-customvoice-q8\" does not support speed"
+  },
+  {
+   "check": "speech, streamed response",
+   "ok": true,
+   "detail": "streamed to file"
+  },
+  {
+   "check": "transcription json, wav upload",
+   "ok": true,
+   "detail": "WER 0.00: \u677e\u4e95\u3055\u3093\u306f\u30b5\u30c3\u30ab\u30fc\u3088\u308a\u91ce\u7403\u306e\u307b\u3046\u304c\u4e0a\u624b\u3067\u3059\u3002"
+  },
+  {
+   "check": "transcription json, mp3 upload",
+   "ok": true,
+   "detail": "WER 0.00"
+  },
+  {
+   "check": "transcription text",
+   "ok": true,
+   "detail": "'\u677e\u4e95\u3055\u3093\u306f\u30b5\u30c3\u30ab\u30fc\u3088\u308a\u91ce\u7403\u306e\u307b\u3046\u304c\u4e0a\u624b\u3067\u3059\u3002\\n'"
+  },
+  {
+   "check": "transcription srt",
+   "ok": true,
+   "detail": "'1\\n00:00:00,000 --> 00:00:03,600\\n\u677e\u4e95\u3055\u3093\u306f\u30b5\u30c3\u30ab\u30fc\u3088\u308a\u91ce\u7403\u306e\u307b\u3046\u304c\u4e0a\u624b\u3067\u3059\u3002\\n\\"
+  },
+  {
+   "check": "transcription vtt",
+   "ok": true,
+   "detail": "'WEBVTT\\n\\n00:00:00.000 --> 00:00:03.600\\n\u677e\u4e95\u3055\u3093\u306f\u30b5\u30c3\u30ab\u30fc\u3088\u308a\u91ce\u7403\u306e\u307b\u3046\u304c\u4e0a"
+  },
+  {
+   "check": "transcription verbose_json segments",
+   "ok": true,
+   "detail": "1 segments"
+  },
+  {
+   "check": "transcription word timestamps",
+   "ok": false,
+   "detail": "BadRequestError: Error code: 400 - model \"haas-ja:v1.0-q8\" does not produce word timestamps"
+  },
+  {
+   "check": "transcription stream=True",
+   "ok": true,
+   "detail": "2 events"
+  },
+  {
+   "check": "translation endpoint answers",
+   "ok": false,
+   "detail": "BadRequestError: Error code: 400 - model \"haas-ja:v1.0-q8\" does not translate"
+  },
+  {
+   "check": "transcription diarized_json",
+   "ok": false,
+   "detail": "no diarization model to try"
+  },
+  {
+   "check": "voices.create + speech in that voice",
+   "ok": true,
+   "detail": "voice_88c95aa1bdf2cd3e, 487724 bytes"
+  },
+  {
+   "check": "unknown model -> NotFoundError",
+   "ok": true,
+   "detail": "NotFoundError"
+  },
+  {
+   "check": "unknown voice -> 400/422",
+   "ok": true,
+   "detail": "BadRequestError"
+  }
+ ]
+}

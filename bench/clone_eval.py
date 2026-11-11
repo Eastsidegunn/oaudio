@@ -97,8 +97,15 @@ def main():
     # When every speaker is in the cast, each one gets a sentence spoken only
     # by somebody else.
     others = [s for s in sorted(by_speaker) if s not in speakers] or speakers
-    shape = (lambda t: t[0].upper() + t[1:].lower() + ".") if english else (lambda t: t.strip() + ".")
-    pool = [(s, t) for s in others for _, t in by_speaker[s][:3] if 8 <= len(t.split()) <= 18]
+    # Japanese and Chinese are written without spaces: their sentences are
+    # measured in characters, and keep their own full stop.
+    unspaced = args.language in ("ja", "zh")
+    if english:
+        shape = lambda t: t[0].upper() + t[1:].lower() + "."
+    else:
+        shape = lambda t: t.strip() if t.strip()[-1:] in "。．.!?！？" else t.strip() + ("。" if unspaced else ".")
+    fits = (lambda t: 15 <= len(t.strip()) <= 50) if unspaced else (lambda t: 8 <= len(t.split()) <= 18)
+    pool = [(s, t) for s in others for _, t in by_speaker[s][:3] if fits(t)]
     def sentence_for(i, spk):
         own = {t for _, t in by_speaker[spk]}
         usable = [t for s, t in pool if s != spk and t not in own]
