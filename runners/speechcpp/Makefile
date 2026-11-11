@@ -31,7 +31,7 @@ $(BUILD)/speech: $(SRC)/CMakeLists.txt
 $(OUT)/speechcpp: $(BUILD)/speech
 	cp $< $@
 
-$(OUT)/oaudio-runner-speech.cpp: main.go go.mod $(wildcard ../../runner/*.go)
+$(OUT)/oaudio-runner-speech.cpp: $(filter-out %_test.go,$(wildcard *.go)) go.mod $(wildcard ../../runner/*.go)
 	CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.engineVersion=$(SPEECHCPP_TAG)" -o $@ .
 
 clean:

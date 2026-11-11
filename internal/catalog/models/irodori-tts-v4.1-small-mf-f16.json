@@ -1,0 +1,64 @@
+{
+  "schema": "oaudio.manifest.v1",
+  "name": "irodori-tts",
+  "tag": "v4.1-small-mf-f16",
+  "aliases": [
+    "latest"
+  ],
+  "task": "tts",
+  "engine": "speech.cpp",
+  "family": "irodori-tts",
+  "description": "Irodori-TTS v4.1 Small MF (16-bit): speaks Japanese in a voice copied from a reference recording, a sentence at a time, run by speech.cpp. It needs no transcript of the reference. Without a custom voice it chooses a voice itself.",
+  "upstream": {
+    "model": "Aratako/Irodori-TTS-v4.1-Small-MF",
+    "authors": "Aratako",
+    "url": "https://huggingface.co/Aratako/Irodori-TTS-v4.1-Small-MF"
+  },
+  "source": {
+    "type": "huggingface",
+    "repo": "sakasegawa/Irodori-TTS-v4.1-Small-MF-GGUF",
+    "revision": "9db7da1bec3d1069ef8e29732e0497be60c7b047",
+    "files": [
+      {
+        "path": "Irodori-TTS-866M-MF-v4.1-F16.gguf",
+        "size": 1920321792,
+        "sha256": "e237dc3eefe469b8bba87872beacf12fb7fe00dbdf85767edca8ec04ab910d13"
+      },
+      {
+        "path": "LICENSE-MIT",
+        "size": 1064,
+        "git_blob_sha1": "9224ba992ec5d21d4c0985e2b511df18cce56600"
+      },
+      {
+        "path": "LICENSE-APACHE-2.0",
+        "size": 11358,
+        "git_blob_sha1": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "MIT AND Apache-2.0",
+    "url": "https://huggingface.co/Aratako/Irodori-TTS-v4.1-Small-MF",
+    "commercial_use": true,
+    "notes": "Model and codec by Aratako under MIT; the codec is fine-tuned from Meta's dacvae-watermarked, which is Apache-2.0. GGUF conversion for speech.cpp by its author. The model card adds ethical restrictions: no cloning or impersonation without the speaker's explicit consent, and no speech meant to mislead."
+  },
+  "languages": [
+    "ja"
+  ],
+  "capabilities": [
+    "voice_clone",
+    "speed"
+  ],
+  "audio": {
+    "sample_rate": 48000
+  },
+  "voices": [
+    {"id": "none", "name": "No reference: the model chooses a voice", "language": "ja"}
+  ],
+  "default_voice": "none",
+  "engine_config": {
+    "model": "Irodori-TTS-866M-MF-v4.1-F16.gguf",
+    "languages": "ja",
+    "speed": "true"
+  }
+}

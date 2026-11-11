@@ -104,6 +104,8 @@ to accept uploads other than WAV.
 | `kokoro` | synthesis, 54 voices | sherpa-onnx | en, es, fr, hi, it, ja, pt, zh | Apache-2.0 |
 | `supertonic` | synthesis, 10 voices | sherpa-onnx | 31 languages, incl. Korean | OpenRAIL-M (commercial use allowed, with use restrictions) |
 | `qwen3-tts` | synthesis in a cloned voice | audio.cpp | 10 languages, incl. Korean | Apache-2.0 |
+| `qwen3-tts:0.6b-customvoice-q8` | synthesis, 9 built-in voices incl. Korean `sohee` | speech.cpp | 10 languages, incl. Korean | Apache-2.0 |
+| `irodori-tts` | synthesis in a cloned voice, Japanese | speech.cpp | ja | MIT (no cloning without consent, per its model card) |
 | `chatterbox` | synthesis in a cloned voice | audio.cpp | 19 languages, incl. Korean | MIT |
 | `pocket-tts` (two sizes) | synthesis in a cloned voice, small, CPU only | sherpa-onnx | en | CC-BY-4.0, with a conflicting non-commercial note; see `oaudio show` |
 | `silero-vad` | speech detection | sherpa-onnx | any | MIT |
@@ -166,6 +168,8 @@ method, raw results and limits are in [docs/evidence.md](docs/evidence.md).
 | Korean text spoken by `supertonic` and transcribed back, 60 sentences | CER 3.1 to 3.3%, the recognizer's own error level on real speech |
 | Korean voice clones identified as their source speaker by a verifier, of 30 | `qwen3-tts` 28, `chatterbox` 26 (real recordings: 10 of 10) |
 | English voice clones identified as their source speaker, of 60 | `chatterbox` 57, `qwen3-tts` 53, `pocket-tts` 11 to 19 |
+| Japanese voice clones identified as their source speaker, of 30 | `irodori-tts` 25 (real recordings: 10 of 10) |
+| Text spoken by speech.cpp's models and transcribed back, 60 sentences each | CER 4.3% Korean (`qwen3-tts:0.6b-customvoice-q8`, `sohee`), 3.9% Japanese (`irodori-tts`); every one-sentence request bit-identical to `speech tts` |
 
 The first rows say that Oaudio returns what its engines return and adds
 little. The rest is what the models manage, including where they are weak:

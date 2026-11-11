@@ -1,0 +1,293 @@
+{
+ "tts": "irodori-tts",
+ "stt": "haas-ja",
+ "language": "ja",
+ "speakers": 10,
+ "clones": 30,
+ "reference_transcript": false,
+ "verifier": "wespeaker_en_voxceleb_resnet34.onnx",
+ "similarity_clone_vs_same_speaker": 0.814,
+ "similarity_clone_vs_other_speakers": 0.622,
+ "similarity_real_vs_real_same_speaker": 0.891,
+ "similarity_real_vs_real_other_speakers": 0.622,
+ "real_recording_closest_to_its_own_speaker": "10/10",
+ "clone_closest_to_its_source_speaker": "25/30",
+ "wer_of_cloned_speech": 0.5333,
+ "cer_of_cloned_speech": 0.0836,
+ "wer_of_real_speech": 0.0,
+ "cer_of_real_speech": 0.0,
+ "rtf": 0.083,
+ "ms_per_sentence": 462,
+ "rows": [
+  {
+   "speaker": "cv07",
+   "same": 0.854,
+   "others_mean": 0.586,
+   "nearest_is_source": true,
+   "seconds": 1.53,
+   "text": "アストゥリアス県の県都はオビエドである。",
+   "heard": "アストゥリアス県の県都はコビエドである"
+  },
+  {
+   "speaker": "cv07",
+   "same": 0.917,
+   "others_mean": 0.66,
+   "nearest_is_source": true,
+   "seconds": 0.52,
+   "text": "それから、すこしまたあるくうち、だんだんだんだん、森が、おなじみのけしきになって来ました。",
+   "heard": "それから少しまた歩くうちだんだんだんだん森がお馴染みの景色になってきました"
+  },
+  {
+   "speaker": "cv07",
+   "same": 0.872,
+   "others_mean": 0.598,
+   "nearest_is_source": true,
+   "seconds": 0.57,
+   "text": "まだへこたれたようすは見えません。顔いっぱいにみょうなにが笑いをうかべて、何かいいだしました。",
+   "heard": "まだへこたれた様子は見えません。顔いっぱいに世何が笑いを浮かべて何か言い出しました。"
+  },
+  {
+   "speaker": "cv08",
+   "same": 0.874,
+   "others_mean": 0.663,
+   "nearest_is_source": true,
+   "seconds": 0.76,
+   "text": "それから、すこしまたあるくうち、だんだんだんだん、森が、おなじみのけしきになって来ました。",
+   "heard": "それから、すこしまたあるくうち、だんだんだんだん、森が、おなじみのけしきになって来ました。"
+  },
+  {
+   "speaker": "cv08",
+   "same": 0.909,
+   "others_mean": 0.64,
+   "nearest_is_source": true,
+   "seconds": 0.72,
+   "text": "まだへこたれたようすは見えません。顔いっぱいにみょうなにが笑いをうかべて、何かいいだしました。",
+   "heard": "まだへこたれた様子は見えません。あの、遅い顔いっぱいに妙な苦笑いを浮かべて何か言い出しました。"
+  },
+  {
+   "speaker": "cv08",
+   "same": 0.908,
+   "others_mean": 0.639,
+   "nearest_is_source": true,
+   "seconds": 0.48,
+   "text": "物の概念とは、もと社会的制作によって把握せられたものでなければならない。",
+   "heard": "物の概念とは、もと社会的制作によって把握せられたものでなければならない。"
+  },
+  {
+   "speaker": "cv09",
+   "same": 0.871,
+   "others_mean": 0.594,
+   "nearest_is_source": true,
+   "seconds": 0.39,
+   "text": "ワシントン州の最大都市はシアトルである。",
+   "heard": "ワシントン州の最大都市はシアトルである"
+  },
+  {
+   "speaker": "cv09",
+   "same": 0.92,
+   "others_mean": 0.641,
+   "nearest_is_source": true,
+   "seconds": 0.21,
+   "text": "ワイオミング州の州都はシャイアンである。",
+   "heard": "ワイオミング州の州都はシャイアンである"
+  },
+  {
+   "speaker": "cv09",
+   "same": 0.878,
+   "others_mean": 0.62,
+   "nearest_is_source": true,
+   "seconds": 0.3,
+   "text": "科学と哲学との区別は、普通に次の如く理解されている。",
+   "heard": "科学と哲学との区別は普通に次の如く理解されている"
+  },
+  {
+   "speaker": "cv03",
+   "same": 0.593,
+   "others_mean": 0.638,
+   "nearest_is_source": false,
+   "seconds": 0.5,
+   "text": "与えられるものは、歴史的個人的に与えられるのである。",
+   "heard": "与えられるものは、歴史的個人的に与えられるのである。"
+  },
+  {
+   "speaker": "cv03",
+   "same": 0.645,
+   "others_mean": 0.638,
+   "nearest_is_source": false,
+   "seconds": 0.31,
+   "text": "そこに科学的知識というものが成立するのである。",
+   "heard": "そこに科学的知識というものが成立するので"
+  },
+  {
+   "speaker": "cv03",
+   "same": 0.658,
+   "others_mean": 0.616,
+   "nearest_is_source": false,
+   "seconds": 0.25,
+   "text": "外国の影響をほとんど受けません。",
+   "heard": "外国の影響をほとんど受けません"
+  },
+  {
+   "speaker": "cv04",
+   "same": 0.825,
+   "others_mean": 0.65,
+   "nearest_is_source": true,
+   "seconds": 0.53,
+   "text": "教会の西には、廃墟のモットアンドベイリーと土塁があります。",
+   "heard": "教会の西には、廃墟のモッツ&ルイリーと土塁があります。"
+  },
+  {
+   "speaker": "cv04",
+   "same": 0.815,
+   "others_mean": 0.642,
+   "nearest_is_source": true,
+   "seconds": 0.36,
+   "text": "彼はまた、ストーリー「ニップルジーザス」でコレクションに貢献しました。",
+   "heard": "彼はまたストーリーニプルジーザスでコレクションに貢献しました"
+  },
+  {
+   "speaker": "cv04",
+   "same": 0.787,
+   "others_mean": 0.653,
+   "nearest_is_source": true,
+   "seconds": 0.5,
+   "text": "自分はその不安のために夜々、転輾し、呻吟し、発狂しかけた事さえあります。",
+   "heard": "自分はその不安のために夜夜展望し、ウムギンし、発狂しかけたことさえあります。"
+  },
+  {
+   "speaker": "cv05",
+   "same": 0.862,
+   "others_mean": 0.664,
+   "nearest_is_source": true,
+   "seconds": 0.47,
+   "text": "夕方犬と公園へ散歩に行きました。",
+   "heard": "夕方犬と公園へ散歩に行きました。"
+  },
+  {
+   "speaker": "cv05",
+   "same": 0.858,
+   "others_mean": 0.685,
+   "nearest_is_source": true,
+   "seconds": 0.31,
+   "text": "出かけるとき、電気を消すのを忘れました。",
+   "heard": "出かけるとき、電気を消すのを忘れました。"
+  },
+  {
+   "speaker": "cv05",
+   "same": 0.82,
+   "others_mean": 0.627,
+   "nearest_is_source": true,
+   "seconds": 0.26,
+   "text": "図書館で山田さんといっしょに勉強します。",
+   "heard": "図書館で山田さんといっしょに勉強します。"
+  },
+  {
+   "speaker": "cv01",
+   "same": 0.877,
+   "others_mean": 0.665,
+   "nearest_is_source": true,
+   "seconds": 0.48,
+   "text": "夕方犬と公園へ散歩に行きました。",
+   "heard": "夕方、犬と公園へ散歩に行きました"
+  },
+  {
+   "speaker": "cv01",
+   "same": 0.874,
+   "others_mean": 0.677,
+   "nearest_is_source": true,
+   "seconds": 0.26,
+   "text": "出かけるとき、電気を消すのを忘れました。",
+   "heard": "出かけるとき、電気を消すのを忘れました。"
+  },
+  {
+   "speaker": "cv01",
+   "same": 0.844,
+   "others_mean": 0.632,
+   "nearest_is_source": true,
+   "seconds": 0.25,
+   "text": "図書館で山田さんといっしょに勉強します。",
+   "heard": "図書館で山田さんといっしょに勉強します。"
+  },
+  {
+   "speaker": "cv00",
+   "same": 0.784,
+   "others_mean": 0.594,
+   "nearest_is_source": true,
+   "seconds": 0.68,
+   "text": "まだへこたれたようすは見えません。顔いっぱいにみょうなにが笑いをうかべて、何かいいだしました。",
+   "heard": "まだへこたれた様子は見えません。顔いっぱいに妙なにやが笑いを浮かべて何か言い出しました。"
+  },
+  {
+   "speaker": "cv00",
+   "same": 0.716,
+   "others_mean": 0.569,
+   "nearest_is_source": false,
+   "seconds": 0.39,
+   "text": "物の概念とは、もと社会的制作によって把握せられたものでなければならない。",
+   "heard": "物の概念とは、もと社会的制作によって把握せられたものでなければならない"
+  },
+  {
+   "speaker": "cv00",
+   "same": 0.755,
+   "others_mean": 0.569,
+   "nearest_is_source": true,
+   "seconds": 0.22,
+   "text": "ワシントン州の最大都市はシアトルである。",
+   "heard": "ワシントン州の最大都市はシアトルである"
+  },
+  {
+   "speaker": "cv06",
+   "same": 0.86,
+   "others_mean": 0.621,
+   "nearest_is_source": true,
+   "seconds": 0.63,
+   "text": "科学と哲学との区別は、普通に次の如く理解されている。",
+   "heard": "科学と哲学との区別は、普通に次の如く理解されている。"
+  },
+  {
+   "speaker": "cv06",
+   "same": 0.796,
+   "others_mean": 0.604,
+   "nearest_is_source": true,
+   "seconds": 0.36,
+   "text": "与えられるものは、歴史的個人的に与えられるのである。",
+   "heard": "与えられるものは、歴史的個人的に与えられるのである。"
+  },
+  {
+   "speaker": "cv06",
+   "same": 0.809,
+   "others_mean": 0.622,
+   "nearest_is_source": true,
+   "seconds": 0.34,
+   "text": "そこに科学的知識というものが成立するのである。",
+   "heard": "そこに科学的知識というものが成立するのである。"
+  },
+  {
+   "speaker": "cv02",
+   "same": 0.697,
+   "others_mean": 0.537,
+   "nearest_is_source": false,
+   "seconds": 0.73,
+   "text": "与えられるものは、歴史的個人的に与えられるのである。",
+   "heard": "与えられるものは歴史的個人的に与えられるのである。"
+  },
+  {
+   "speaker": "cv02",
+   "same": 0.76,
+   "others_mean": 0.564,
+   "nearest_is_source": true,
+   "seconds": 0.32,
+   "text": "そこに科学的知識というものが成立するのである。",
+   "heard": "そこに科学的知識というものが成立するのである。"
+  },
+  {
+   "speaker": "cv02",
+   "same": 0.776,
+   "others_mean": 0.544,
+   "nearest_is_source": true,
+   "seconds": 0.25,
+   "text": "外国の影響をほとんど受けません。",
+   "heard": "外国の影響をほとんど受けません"
+  }
+ ]
+}

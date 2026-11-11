@@ -19,7 +19,10 @@ import (
 // variables, so the runner's side of the worker protocol is tested without
 // the engine. FAKE_SPEECHCPP picks the behaviour.
 func TestMain(m *testing.M) {
-	if mode := os.Getenv("FAKE_SPEECHCPP"); mode != "" {
+	if mode := os.Getenv("FAKE_SPEECHCPP"); strings.HasPrefix(mode, "tts") {
+		fakeSynthesizer(mode)
+		os.Exit(0)
+	} else if mode != "" {
 		fakeSpeechcpp(mode, os.Args[1:])
 		os.Exit(0)
 	}
@@ -192,8 +195,8 @@ func TestLoadFailures(t *testing.T) {
 	}
 	m := fakeModel(t, "ok")
 	m.Task = "tts"
-	if _, err := load(m); err == nil {
-		t.Error("a synthesis model was accepted")
+	if _, err := load(m); err == nil || !strings.Contains(err.Error(), "not a synthesis model") {
+		t.Errorf("a recognition model loaded for synthesis: %v", err)
 	}
 }
 

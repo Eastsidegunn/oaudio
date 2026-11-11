@@ -33,6 +33,7 @@ model card, not the export's.
    Qwen3-TTS and Chatterbox
 7. Extras: punctuation, wake word, denoising, language identification: open
 8. Recognition trained for Japanese: filled by Haas-ja through speech.cpp
+9. Japanese synthesis and cloning: filled by Irodori-TTS through speech.cpp
 
 ## On whisper.cpp and sherpa-onnx
 
@@ -133,7 +134,7 @@ from a Korean lab was found other than Supertone's Supertonic.
 ## On speech.cpp
 
 Added as an engine on 2026-11-12 ([ADR 0007](adr/0007-speech-cpp.md)),
-through its worker mode; recognition only so far. Its catalog is in its
+through its worker mode, for recognition and synthesis. Its catalog is in its
 `docs/models.md`; the figures below marked `reported` are its author's.
 
 ### Verified or tried
@@ -141,6 +142,8 @@ through its worker mode; recognition only so far. Its catalog is in its
 | Model | Gap | Licence (weights) | Status | Notes (seen) |
 |---|---|---|---|---|
 | Haas-ja v1.0, 8-bit | 8 | Apache-2.0 | in catalog | FLEURS Japanese CER 4.21%, against 7.67% for SenseVoice and 11.86% for Qwen3-ASR on the same set; identical to speech.cpp's own output on all 650. Writes punctuation. 0.66 GB. |
+| Qwen3-TTS 0.6B CustomVoice, 8-bit | 1 | Apache-2.0 | in catalog | Nine built-in speakers, Korean `sohee` among them; streams. Korean round trip CER 4.3% (Supertonic 3.3% on the same sentences), Japanese 4.7%; real-time factor 0.17 to 0.24; bit-identical to `speech tts` on every one-sentence request. 1.21 GB. |
+| Irodori-TTS v4.1 Small MF, 16-bit | 9 | MIT (codec from Apache-2.0 weights); no cloning without consent | in catalog | Japanese, clones from a recording without its transcript. Japanese round trip CER 3.9%, real-time factor 0.06, bit-identical to `speech tts` on every one-sentence request. Cloning: see `evidence.md` section 5. 1.92 GB. |
 
 ### To try
 
@@ -148,8 +151,8 @@ through its worker mode; recognition only so far. Its catalog is in its
 |---|---|---|---|
 | ReazonSpeech NeMo v2 | 8 | Apache-2.0 | Japanese with punctuation, beam search; CER 7.95% on FLEURS ja, so behind Haas. Takes recordings of many minutes whole. |
 | Parakeet TDT-CTC 0.6B ja | 8 | CC-BY-4.0 | Japanese; CER 5.00% on FLEURS ja. |
-| Qwen3-TTS 0.6B and 1.7B CustomVoice | 1 | Apache-2.0 | Nine built-in speakers including a Korean one (`sohee`), streaming. Needs synthesis in the runner. |
-| Irodori-TTS | — | check | Japanese synthesis with cloning from a WAV file, 48 kHz. Needs synthesis in the runner. |
+| Qwen3-TTS 1.7B CustomVoice | 1 | Apache-2.0 | The 0.6B's larger sibling: follows a spoken-style instruction; CER 4.5% against 8.1% on its author's Japanese set, at 2.6 against 3.7 RTFx; 2.29 GB. |
+| Irodori-TTS v4.1 Small (Euler) and v4 Large | 9 | MIT; Large under the Gemma Terms of Use | Slower relatives of the MF model, with more sampling controls; Large follows a reference more closely. |
 | Nemotron 3.5 Transcribe | 4 | NVIDIA licence, check | 30B (19 GB); speaker labels. Too large for most machines. |
 | Sortformer (Nemotron 3 Diarization) | — | check | Streaming diarization, 106 MB. The worker does not serve diarization models, so it would need `speech diarize`. |
 

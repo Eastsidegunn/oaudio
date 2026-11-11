@@ -1,5 +1,5 @@
-// Command oaudio-runner-speech.cpp runs speech recognition models through
-// speech.cpp (https://github.com/nyosegawa/speech.cpp, MIT).
+// Command oaudio-runner-speech.cpp runs speech recognition and synthesis
+// models through speech.cpp (https://github.com/nyosegawa/speech.cpp, MIT).
 //
 // speech.cpp has a process mode for exactly this, `speech worker`: one model
 // per process, JSON Lines on stdin and stdout, and an exit when stdin closes.
@@ -12,6 +12,8 @@
 // longer than whole_seconds is therefore cut into regions of speech first,
 // by `speech vad` with the defaults of speech.cpp's own `speech asr --vad`,
 // and each region is recognized as its own request.
+//
+// Synthesis is in tts.go.
 package main
 
 import (
@@ -61,6 +63,11 @@ type message struct {
 	Untimed  string     `json:"untimed"`
 	Segments []wSegment `json:"segments"`
 	Error    *wError    `json:"error"`
+
+	// Synthesis: a chunk of audio, and the model ready describes.
+	Seq   int          `json:"seq"`
+	PCM   string       `json:"pcm"`
+	Model *workerModel `json:"model"`
 }
 
 type wSegment struct {
@@ -89,6 +96,8 @@ type engine struct {
 	vadModel string  // path of the detection model, or "" to always recognize whole
 	whole    float64 // seconds: longer recordings are cut into regions
 	next     int     // request ids
+
+	synth *synthesis // set for a synthesis model
 }
 
 func speechBinary() (string, error) {
@@ -108,8 +117,8 @@ func speechBinary() (string, error) {
 }
 
 func load(m runner.Model) (runner.Engine, error) {
-	if m.Task != "stt" {
-		return nil, fmt.Errorf("task %q: this runner recognizes speech only", m.Task)
+	if m.Task != "stt" && m.Task != "tts" {
+		return nil, fmt.Errorf("task %q: this runner recognizes and speaks speech only", m.Task)
 	}
 	cfg := m.EngineConfig
 	if cfg["model"] == "" {
@@ -173,6 +182,12 @@ func load(m runner.Model) (runner.Engine, error) {
 			e.Close()
 			return nil, fmt.Errorf("speechcpp speaks worker protocol %d, this runner %d", msg.Protocol, workerProtocol)
 		}
+		if m.Task == "tts" {
+			if e.synth, err = newSynthesis(m, msg.Model); err != nil {
+				e.Close()
+				return nil, err
+			}
+		}
 	case <-e.dead:
 		e.Close()
 		return nil, fmt.Errorf("speechcpp exited while loading: %v", e.werr)
@@ -219,6 +234,9 @@ func (e *engine) send(v any) error {
 }
 
 func (e *engine) Info() runner.Info {
+	if e.synth != nil {
+		return runner.Info{Engine: "speech.cpp", EngineVersion: engineVersion, Tasks: []string{"tts"}, SampleRate: e.rate}
+	}
 	return runner.Info{Engine: "speech.cpp", EngineVersion: engineVersion, Tasks: []string{"stt"}}
 }
 
@@ -234,6 +252,9 @@ func (e *engine) Close() error {
 }
 
 func (e *engine) Transcribe(ctx context.Context, samples []float32, opts runner.TranscribeOptions, emit func(runner.Segment) error) (string, error) {
+	if e.synth != nil {
+		return "", runner.BadRequest("this model speaks; it does not recognize speech")
+	}
 	if opts.Task == "translate" {
 		return "", runner.BadRequest("this model does not translate")
 	}
