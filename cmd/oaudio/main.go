@@ -53,7 +53,7 @@ Examples:
   oaudio run whisper call.wav --diarize            # who said what
   oaudio run silero-vad call.wav                   # where the speech is
   oaudio voice create anna --audio anna.wav --transcript "What she says in it." --consent "Anna agreed, 2026-11-11"
-  oaudio run zipvoice --voice anna "Spoken in Anna's voice."
+  oaudio run qwen3-tts --voice anna "Spoken in Anna's voice."
 
 Environment:
   OAUDIO_HOST        address to listen on / connect to (default 127.0.0.1:11535)

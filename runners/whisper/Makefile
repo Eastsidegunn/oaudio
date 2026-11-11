@@ -8,6 +8,12 @@ CMAKE_FLAGS := -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DWHISPER_BUIL
 LIBDIRS = $(SRC)/build/src $(SRC)/build/ggml/src $(SRC)/build/ggml/src/ggml-metal $(SRC)/build/ggml/src/ggml-blas
 ifeq ($(UNAME),Darwin)
 CMAKE_FLAGS += -DGGML_METAL=ON -DGGML_METAL_EMBED_LIBRARY=ON
+MACOSX_DEPLOYMENT_TARGET ?= 14.0
+CMAKE_FLAGS += -DCMAKE_OSX_DEPLOYMENT_TARGET=$(MACOSX_DEPLOYMENT_TARGET)
+# Named in the flags, not only the environment, so that Go's build cache
+# cannot reuse C objects compiled for another macOS version.
+export CGO_CFLAGS ?= -O2 -g -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET)
+export CGO_LDFLAGS ?= -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET)
 endif
 
 .PHONY: all clean

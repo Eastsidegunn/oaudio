@@ -2,8 +2,13 @@ VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
 LDFLAGS := -s -w -X main.version=$(VERSION)
 BIN := bin
 UNAME := $(shell uname -s)
+# The oldest macOS the binaries run on. Swift, cgo and the engines' cmake
+# builds all read it from the environment.
+ifeq ($(UNAME),Darwin)
+export MACOSX_DEPLOYMENT_TARGET ?= 14.0
+endif
 
-.PHONY: all build helpers runners test e2e clean
+.PHONY: all build helpers runners test e2e dist clean
 
 all: build helpers
 
@@ -14,7 +19,7 @@ build:
 # Helpers for engines built into the binary. Only macOS has one.
 helpers:
 ifeq ($(UNAME),Darwin)
-	swiftc -O -o $(BIN)/oaudio-apple-stt internal/engines/apple/stt.swift
+	swiftc -O -target $(shell uname -m)-apple-macos$(MACOSX_DEPLOYMENT_TARGET) -o $(BIN)/oaudio-apple-stt internal/engines/apple/stt.swift
 endif
 
 # Engine runners. These compile third-party engines (whisper.cpp and
@@ -36,5 +41,9 @@ test:
 e2e: all
 	./scripts/e2e.sh
 
+# A release archive for this machine's OS and architecture, in dist/.
+dist:
+	./scripts/package.sh
+
 clean:
-	rm -rf $(BIN)
+	rm -rf $(BIN) dist

@@ -26,8 +26,9 @@ It covers recognition, synthesis, voice activity detection, speaker
 diarization, voice cloning and realtime transcription.
 
 > **Status: early, and tested on one machine.** Everything in this README
-> runs on macOS on Apple Silicon. The engine runners have not been built on
-> Linux or Windows, there are no releases, and CI has not run yet.
+> runs on macOS on Apple Silicon. The Linux archives are built and
+> install-tested only by the release workflow, which has not run yet, and
+> neither has CI.
 > [docs/evidence.md](docs/evidence.md) says exactly what was measured and
 > what was not.
 
@@ -56,10 +57,23 @@ runs next to it on a different port.
 
 ## Install
 
-There are no releases yet. Build from source with Go 1.24 or later:
+On macOS 14 or later (Apple Silicon) and on Linux (x86-64 and arm64):
 
 ```sh
-git clone https://github.com/eastsidegunn/oaudio && cd oaudio
+curl -fsSL https://raw.githubusercontent.com/Eastsidegunn/oaudio/main/scripts/install.sh | sh
+oaudio run whisper recording.wav
+```
+
+The script downloads the release for your machine, checks its SHA-256, and
+installs into `~/.local` (set `OAUDIO_PREFIX` for elsewhere); no root, no
+package manager, nothing else is touched. The archive carries every engine
+and the libraries they need. Models download on first use into `~/.oaudio`.
+To uninstall: `rm -rf ~/.local/lib/oaudio ~/.local/bin/oaudio ~/.oaudio`.
+
+To build from source instead, with Go 1.24 or later:
+
+```sh
+git clone https://github.com/Eastsidegunn/oaudio && cd oaudio
 make                # the server and CLI (pure Go, no dependencies)
 make runners        # the whisper.cpp, sherpa-onnx and audio.cpp engines; needs git, cmake, a C++ compiler
 ./bin/oaudio run whisper recording.wav
@@ -67,6 +81,7 @@ make runners        # the whisper.cpp, sherpa-onnx and audio.cpp engines; needs 
 
 On macOS, `make` alone is enough to try it: the speech engines built into
 the system work with nothing to download (`oaudio run apple-say "Hello."`).
+`make dist` builds the release archive for the current machine.
 
 `oaudio` starts its server in the background the first time a command needs
 it. To run it in the foreground: `oaudio serve`.

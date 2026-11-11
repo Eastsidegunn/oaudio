@@ -1,0 +1,64 @@
+name: release
+
+# Pushing a tag such as v0.1.0 builds an archive on each supported platform,
+# installs it with scripts/install.sh on a clean runner, and publishes the
+# archives and their checksums as a draft GitHub release to be reviewed and
+# published by hand.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest       # Apple Silicon
+            name: oaudio-darwin-arm64
+          # The oldest Ubuntu runners, so the binaries need only an older glibc.
+          - os: ubuntu-22.04
+            name: oaudio-linux-amd64
+          - os: ubuntu-22.04-arm
+            name: oaudio-linux-arm64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Linux build tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y patchelf cmake
+      - name: Package
+        run: VERSION="${GITHUB_REF_NAME}" ./scripts/package.sh
+      - name: Install from the archive into an empty home
+        run: |
+          mkdir -p "$RUNNER_TEMP/mirror/download/$GITHUB_REF_NAME" "$RUNNER_TEMP/home"
+          cp dist/${{ matrix.name }}.tar.gz* "$RUNNER_TEMP/mirror/download/$GITHUB_REF_NAME/"
+          (cd "$RUNNER_TEMP/mirror" && python3 -m http.server 18765 --bind 127.0.0.1 &) ; sleep 1
+          env -i HOME="$RUNNER_TEMP/home" PATH=/usr/bin:/bin OAUDIO_VERSION="$GITHUB_REF_NAME" \
+            OAUDIO_DOWNLOAD=http://127.0.0.1:18765 sh scripts/install.sh
+          env -i HOME="$RUNNER_TEMP/home" PATH=/usr/bin:/bin "$RUNNER_TEMP/home/.local/bin/oaudio" version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: dist/${{ matrix.name }}.tar.gz*
+
+  release:
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --draft --title "$GITHUB_REF_NAME" --generate-notes

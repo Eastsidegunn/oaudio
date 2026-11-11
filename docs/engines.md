@@ -13,7 +13,7 @@ engine as a separate runner process (`runner-protocol.md`).
 | `apple` | `apple-say` (synthesis), `apple-speech` (recognition) | macOS; recognition needs macOS 26+ on Apple Silicon | Working and measured. Built into the `oaudio` binary. |
 | `reference` | none | any | Test engine. Tones, not speech. |
 
-None of the external runners has been built or run on Linux or Windows.
+None of the external runners has been built or run on Linux or Windows by hand; the release workflow builds them for Linux.
 
 ```sh
 make            # oaudio and the macOS helper

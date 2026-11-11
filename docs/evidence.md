@@ -46,6 +46,13 @@ turns came back, a median of 0.96 s after the speaker stopped with
 
 Not checked: the JavaScript SDK, Open WebUI, Pipecat, LiveKit Agents.
 
+**Against another server.** `bench/compat_matrix.py` is a neutral version of
+the check, written to be run against any server: every check stands alone,
+errors are judged by exception type only, and recognition is fed a public
+recording rather than the server's own speech. Oaudio passes 23 of 23;
+audio.cpp's own server, release v0.9.4 with Supertonic and Whisper, passes 7
+(`bench/results/compat/`). Other servers were not run.
+
 ## 2. Going through Oaudio returns what the engine returns
 
 **Check:** send every recording of a public test set through the HTTP API
@@ -317,17 +324,33 @@ readiness handshake, stopping a runner ends its process, a runner that fails
 or hangs while loading is reported and killed, and stopping the server
 leaves no runner behind.
 
+## 9. A release installs and runs on its own
+
+**Check:** `scripts/package.sh` built the macOS archive (29 MB, every engine
+and its libraries). `scripts/install.sh` installed it from a local mirror into
+an empty home directory, with `PATH` cut down to `/usr/bin:/bin`: no Go,
+Homebrew, ffmpeg, compiler or source tree. From there, models were pulled
+fresh and each engine ran: whisper.cpp and SenseVoice transcribed an English
+sentence exactly, Supertonic spoke Korean (Apple's recognizer read it back
+exactly), and Qwen3-TTS spoke in a voice cloned from a recording. Every binary
+in the archive declares macOS 14 as its minimum (`otool`), the oldest
+release a Mac with the Metal backend needs.
+
+Not checked: running on macOS 14 or 15 (only 26 was available), and the
+Linux archives, which only the release workflow builds and installs.
+
 ## Not verified
 
-- **Nothing was compared with another runtime.** No competitor was installed
-  or timed. The comparison with Ollama in the README is about features read
-  from its source, not speed or quality.
+- **Speed and quality against other runtimes.** Only API compatibility was
+  compared (section 1). The comparison with Ollama in the README is about
+  features read from its source.
 - **One machine, one operating system.** The runners have not been built or
   run on Linux or Windows. Linux and Windows builds of the server compile and
   were not run.
-- **CI has never run.** `.github/workflows/ci.yml` is untested, and it does
-  not build the runners.
-- **No clean-machine install test.** Everything ran on a developer machine.
+- **CI has never run**, neither `ci.yml` nor `release.yml`.
+- **An install on a second, clean Mac.** Section 9 isolated the install on
+  the development machine; system libraries and frameworks were still that
+  machine's.
 - **Memory use and cold-start time** were not measured systematically.
 - **Diarization and VAD on hard audio**: overlap, noise, telephone or
   far-field speech, languages other than English.

@@ -13,14 +13,17 @@ UNAME := $(shell uname -s)
 CMAKE_FLAGS := -DCMAKE_BUILD_TYPE=Release -DENGINE_ENABLE_CUDA=OFF -DENGINE_ENABLE_VULKAN=OFF \
 	-DENGINE_BUILD_TESTS=OFF -DENGINE_BUILD_EXAMPLES=OFF -DENGINE_BUILD_WARMBENCH=OFF \
 	-DAUDIOCPP_DEPLOYMENT_BUILD=ON -DAUDIOCPP_BUILD_NATIVE_MODEL_MANAGER=OFF \
-	-DAUDIOCPP_MODEL_SET=custom "-DAUDIOCPP_MODELS=$(AUDIOCPP_MODELS)"
+	-DAUDIOCPP_MODEL_SET=custom "-DAUDIOCPP_MODELS=$(AUDIOCPP_MODELS)" \
+	-DENGINE_ENABLE_OPENMP=OFF -DGGML_OPENMP=OFF
+# OpenMP is off everywhere: Apple's compiler does not ship it, and on Linux
+# it would make the release depend on libgomp. ggml has its own thread pool.
 ifeq ($(UNAME),Darwin)
 # Embedding the Metal shaders as source means the build needs only the
 # Command Line Tools, not Xcode's Metal compiler. audio.cpp's own
 # scripts/build_metal.sh insists on the latter.
-# OpenMP is off, as in that script: Apple's compiler does not ship it.
-CMAKE_FLAGS += -DENGINE_ENABLE_METAL=ON -DGGML_METAL_EMBED_LIBRARY=ON \
-	-DENGINE_ENABLE_OPENMP=OFF -DGGML_OPENMP=OFF
+CMAKE_FLAGS += -DENGINE_ENABLE_METAL=ON -DGGML_METAL_EMBED_LIBRARY=ON
+MACOSX_DEPLOYMENT_TARGET ?= 14.0
+CMAKE_FLAGS += -DCMAKE_OSX_DEPLOYMENT_TARGET=$(MACOSX_DEPLOYMENT_TARGET)
 endif
 
 .PHONY: all clean

@@ -70,34 +70,41 @@ func transcribe(path: String, localeID: String) async throws {
     try await consume
 }
 
-guard #available(macOS 26.0, *) else {
-    emit(["error": "on-device recognition needs macOS 26 or later"])
-    exit(2)
-}
-
-while let line = readLine(strippingNewline: true) {
-    guard let data = line.data(using: .utf8),
-          let req = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-          let op = req["op"] as? String else {
-        emit(["error": "malformed request"])
-        continue
-    }
-    switch op {
-    case "locales":
-        let locales = await SpeechTranscriber.supportedLocales
-        emit(["locales": locales.map { $0.identifier(.bcp47) }.sorted()])
-    case "transcribe":
-        guard let path = req["path"] as? String else {
-            emit(["error": "path is required"])
+// The loop is in a function so the availability check covers it: a guard
+// at the top level does not, once the binary targets an older macOS.
+@available(macOS 26.0, *)
+func serve() async {
+    while let line = readLine(strippingNewline: true) {
+        guard let data = line.data(using: .utf8),
+              let req = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let op = req["op"] as? String else {
+            emit(["error": "malformed request"])
             continue
         }
-        do {
-            try await transcribe(path: path, localeID: (req["locale"] as? String) ?? "en-US")
-            emit(["done": true])
-        } catch {
-            emit(["error": error.localizedDescription])
+        switch op {
+        case "locales":
+            let locales = await SpeechTranscriber.supportedLocales
+            emit(["locales": locales.map { $0.identifier(.bcp47) }.sorted()])
+        case "transcribe":
+            guard let path = req["path"] as? String else {
+                emit(["error": "path is required"])
+                continue
+            }
+            do {
+                try await transcribe(path: path, localeID: (req["locale"] as? String) ?? "en-US")
+                emit(["done": true])
+            } catch {
+                emit(["error": error.localizedDescription])
+            }
+        default:
+            emit(["error": "unknown op \(op)"])
         }
-    default:
-        emit(["error": "unknown op \(op)"])
     }
+}
+
+if #available(macOS 26.0, *) {
+    await serve()
+} else {
+    emit(["error": "on-device recognition needs macOS 26 or later"])
+    exit(2)
 }
