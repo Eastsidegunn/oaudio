@@ -431,10 +431,12 @@ for sample (`--direct speechcpp`).
   audio, and still answers in about 0.1 s (108 ms in the median over the 60
   Japanese rows), since its four sampling steps are fast and the codec's
   output is streamed.
-- Asked for `pcm`, a model that does not speak at 24 kHz (Irodori-TTS at 48
-  kHz) gives its first audio only when the sentence is done: the daemon
-  resamples a whole piece at once (`copyPCM`). With `wav` and the other
-  formats it streams.
+- `pcm` from a model that does not speak at 24 kHz (Irodori-TTS at 48 kHz)
+  used to arrive only when each sentence was done, because the daemon
+  resampled a whole piece at once. It now resamples as the audio arrives,
+  and a test checks the result is the same, sample for sample, as resampling
+  the whole (`internal/server/copypcm_test.go`). Not re-timed with
+  Irodori since.
 - Nobody listened to the results.
 
 ## 7. Downloads are the publisher's bytes
